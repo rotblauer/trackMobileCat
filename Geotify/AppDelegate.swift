@@ -89,6 +89,7 @@ extension AppDelegate: CLLocationManagerDelegate {
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
    
+    
     let json = NSMutableDictionary()
     json.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
     json.setValue(manager.location!.coordinate.latitude, forKey: "lat");
@@ -97,9 +98,9 @@ extension AppDelegate: CLLocationManagerDelegate {
     json.setValue(manager.location!.altitude, forKey: "elevation");
     json.setValue(manager.location!.speed, forKey: "speed");
     json.setValue(manager.location!.course, forKey: "heading");
-    json.setValue(Date().iso8601 , forKey: "time");
+    json.setValue(Date().iso8601 , forKey: "time"); //get in golang time mod
 
-    var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)
+    var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)// will up date to cat scratcher main
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
