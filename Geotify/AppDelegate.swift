@@ -88,110 +88,96 @@ extension AppDelegate: CLLocationManagerDelegate {
 
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//    print(manager.location!.coordinate.latitude)
-//    print( manager.location!.coordinate.longitude)
-//    print(manager.location!.speed)
-//    print(manager.location!.altitude)
-//    print(manager.location!.course)
-//    print(UIDevice.current.name)
-//    
-//    let json = NSMutableDictionary()
-//    json.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
-//    json.setValue(manager.location!.coordinate.latitude, forKey: "lat");
-//    json.setValue(manager.location!.coordinate.longitude, forKey: "long");
-//    json.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
-//    json.setValue(manager.location!.altitude, forKey: "elevation");
-//    json.setValue(manager.location!.speed, forKey: "speed");
-//    json.setValue(manager.location!.course, forKey: "heading");
-//    json.setValue(Date().iso8601 , forKey: "time");
-//
-//    var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)
-//    request.httpMethod = "POST"
-//    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//    request.addValue("application/json", forHTTPHeaderField: "Accept")
-//    request.httpBody = try! JSONSerialization.data(withJSONObject: json, options: [])
-//    //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
-//    
-//    URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-//      if error != nil {
-//        print(error ?? "NONE")
-//      } else {
-//        do {
-//          guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
-//          
-//          guard let errors = json?["errors"] as? [[String: Any]] else { return }
-//          if errors.count > 0 {
-//            print(errors)
-//            return
-//          } else {
-//          }
-//        }
-//      }
-//    }).resume()
-    
-//    {"name":"","lat":52.472254,"long":13.398756,"accuracy":0,"elevation":0,"speed":0,"tilt":0,"heading":0,"heartrate":0,"time":"2017-01-15T14:05:00.367100976-06:00","notes":""}
-//    
-    //TODO update distance filter proportional to speed
-    
-//    LongitudeGPS = String(format: "%.10f", manager.location!.coordinate.longitude)
-//    speedGPS = String(format: "%.3f", manager.location!.speed)
-//    Altitude = String(format: "%.3f", manager.location!.altitude)
-//    Course = String(format: "%.3f", manager.location!.course)
-  
+   
+    let json = NSMutableDictionary()
+    json.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
+    json.setValue(manager.location!.coordinate.latitude, forKey: "lat");
+    json.setValue(manager.location!.coordinate.longitude, forKey: "long");
+    json.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
+    json.setValue(manager.location!.altitude, forKey: "elevation");
+    json.setValue(manager.location!.speed, forKey: "speed");
+    json.setValue(manager.location!.course, forKey: "heading");
+    json.setValue(Date().iso8601 , forKey: "time");
 
-
-    // https://github.com/varshylmobile/LocationManager/blob/master/LocationManager.swift
-    let arrayOfLocation = locations as NSArray
-    let location = arrayOfLocation.lastObject as! CLLocation
-    let coordLatLon = location.coordinate
-
-    let latitude  = coordLatLon.latitude
-    let longitude = coordLatLon.longitude
-
-    // latitudeAsString  = coordLatLon.latitude.description
-    // longitudeAsString = coordLatLon.longitude.description
-
-    // http://stackoverflow.com/questions/31937686/how-to-make-http-post-request-with-json-body-in-swift
-    // json in body here
-    // good old rayban https://www.raywenderlich.com/120442/swift-json-tutorial
-    // and http://stackoverflow.com/questions/29512839/create-json-in-swift
-    let json: [String: AnyObject] = [
-      "name": "kitty" as AnyObject,
-      "lat": latitude as AnyObject,
-      "long": longitude as AnyObject
-      //andmoar
-
-      // "altitude":
-      // "transfer": [
-      //   "startDate": "10/04/2015 12:45",
-      //   "endDate": "10/04/2015 16:00"
-      // ],
-      // "custom": savedData
-
-    ]
-
-    let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
-    // create post request
-    let url = URL(string: "http://cattrack-155019.appspot.com/populate/")!
-    var request = URLRequest(url: url)
+    var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)
     request.httpMethod = "POST"
-    // http://stackoverflow.com/questions/39929513/http-post-request-with-json
-    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-
-    // insert json data to the request
-    request.httpBody = jsonData
-
-    _ = URLSession.shared.dataTask(with: request) { data, response, error in
-        guard let data = data, error == nil else {
-            print(error?.localizedDescription ?? "No data")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+    request.httpBody = try! JSONSerialization.data(withJSONObject: json, options: [])
+    //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
+    
+    URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
+      if error != nil {
+        print(error ?? "NONE")
+      } else {
+        do {
+          guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+          
+          guard let errors = json?["errors"] as? [[String: Any]] else { return }
+          if errors.count > 0 {
+            print(errors)
             return
+          } else {
+          }
         }
-        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-        if let responseJSON = responseJSON as? [String: Any] {
-            print(responseJSON)
-        }
-    }
+      }
+    }).resume()
+    
+
+//
+//
+//    // https://github.com/varshylmobile/LocationManager/blob/master/LocationManager.swift
+//    let arrayOfLocation = locations as NSArray
+//    let location = arrayOfLocation.lastObject as! CLLocation
+//    let coordLatLon = location.coordinate
+//
+//    let latitude  = coordLatLon.latitude
+//    let longitude = coordLatLon.longitude
+//
+//    // latitudeAsString  = coordLatLon.latitude.description
+//    // longitudeAsString = coordLatLon.longitude.description
+//
+//    // http://stackoverflow.com/questions/31937686/how-to-make-http-post-request-with-json-body-in-swift
+//    // json in body here
+//    // good old rayban https://www.raywenderlich.com/120442/swift-json-tutorial
+//    // and http://stackoverflow.com/questions/29512839/create-json-in-swift
+//    let json: [String: AnyObject] = [
+//      "name": "kitty" as AnyObject,
+//      "lat": latitude as AnyObject,
+//      "long": longitude as AnyObject
+//      //andmoar
+//
+//      // "altitude":
+//      // "transfer": [
+//      //   "startDate": "10/04/2015 12:45",
+//      //   "endDate": "10/04/2015 16:00"
+//      // ],
+//      // "custom": savedData
+//
+//    ]
+//
+//    let jsonData = try? JSONSerialization.data(withJSONObject: json)
+//
+//    // create post request
+//    let url = URL(string: "http://cattrack-155019.appspot.com/populate/")!
+//    var request = URLRequest(url: url)
+//    request.httpMethod = "POST"
+//    // http://stackoverflow.com/questions/39929513/http-post-request-with-json
+//    request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+//
+//    // insert json data to the request
+//    request.httpBody = jsonData
+//
+//    _ = URLSession.shared.dataTask(with: request) { data, response, error in
+//        guard let data = data, error == nil else {
+//            print(error?.localizedDescription ?? "No data")
+//            return
+//        }
+//        let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+//        if let responseJSON = responseJSON as? [String: Any] {
+//            print(responseJSON)
+//        }
+//    }
 
 
     // ------
