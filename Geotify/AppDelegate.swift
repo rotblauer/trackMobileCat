@@ -34,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-    locationManager.distanceFilter = 50.0; //meters move per update
+    locationManager.distanceFilter = 50.0; //meters move per update, 
+    
+    //TODO sliders and such for distance filter, or convert to once per minute type thing
 
     application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
     UIApplication.shared.cancelAllLocalNotifications()
@@ -63,13 +65,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
 }
+
+
 extension Date {
   static let iso8601Formatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.calendar = Calendar(identifier: .iso8601)
     formatter.locale = Locale(identifier: "en_US_POSIX")
     formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX" //cute time format
     return formatter
   }()
   var iso8601: String {
@@ -105,8 +109,10 @@ extension AppDelegate: CLLocationManagerDelegate {
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try! JSONSerialization.data(withJSONObject: json, options: [])
+    // had to open up the security cleareance to get it to clear customs
     //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
     
+    // needs this, kinda maybe?
     URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
       if error != nil {
         print(error ?? "NONE")
