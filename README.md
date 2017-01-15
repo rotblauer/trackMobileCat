@@ -1,3 +1,3 @@
 # trackMobileCat
 
-Mobile tracker updater, configuration populator
+Mobile cat tracker updater, configuration populator
