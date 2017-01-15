@@ -23,6 +23,7 @@
 import UIKit
 import MapKit
 
+
 protocol AddGeotificationsViewControllerDelegate {
   func addGeotificationViewController(controller: AddGeotificationViewController, didAddCoordinate coordinate: CLLocationCoordinate2D,
     radius: Double, identifier: String, note: String, eventType: EventType)
