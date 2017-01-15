@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    locationManager.distanceFilter = 5.0; //5 meters move per update
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    locationManager.distanceFilter = 50.0; //meters move per update
 
     application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
     UIApplication.shared.cancelAllLocalNotifications()
@@ -63,12 +63,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
 }
+extension Date {
+  static let iso8601Formatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .iso8601)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+    return formatter
+  }()
+  var iso8601: String {
+    return Date.iso8601Formatter.string(from: self)
+  }
+}
+
+extension String {
+  var dateFromISO8601: Date? {
+    return Date.iso8601Formatter.date(from: self)
+  }
+}
+
 
 extension AppDelegate: CLLocationManagerDelegate {
   
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    NSLog("HFID")
+    print(manager.location!.coordinate.latitude)
+    print( manager.location!.coordinate.longitude)
+    print(manager.location!.speed)
+    print(manager.location!.altitude)
+    print(manager.location!.course)
+    print(UIDevice.current.name)
+    
+    let json = NSMutableDictionary()
+    json.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
+    json.setValue(manager.location!.coordinate.latitude, forKey: "lat");
+    json.setValue(manager.location!.coordinate.longitude, forKey: "long");
+    json.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
+    json.setValue(manager.location!.altitude, forKey: "elevation");
+    json.setValue(manager.location!.speed, forKey: "speed");
+    json.setValue(manager.location!.course, forKey: "heading");
+    json.setValue(Date().iso8601 , forKey: "time");
+
+    var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+    request.httpBody = try! JSONSerialization.data(withJSONObject: json, options: [])
+    //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
+    
+    URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
+      if error != nil {
+        print(error ?? "NONE")
+      } else {
+        do {
+          guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
+          
+          guard let errors = json?["errors"] as? [[String: Any]] else { return }
+          if errors.count > 0 {
+            print(errors)
+            return
+          } else {
+          }
+        }
+      }
+    }).resume()
+    
+//    {"name":"","lat":52.472254,"long":13.398756,"accuracy":0,"elevation":0,"speed":0,"tilt":0,"heading":0,"heartrate":0,"time":"2017-01-15T14:05:00.367100976-06:00","notes":""}
+//    
+    //TODO update distance filter proportional to speed
+    
+//    LongitudeGPS = String(format: "%.10f", manager.location!.coordinate.longitude)
+//    speedGPS = String(format: "%.3f", manager.location!.speed)
+//    Altitude = String(format: "%.3f", manager.location!.altitude)
+//    Course = String(format: "%.3f", manager.location!.course)
+  
   }
   
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
