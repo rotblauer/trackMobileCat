@@ -34,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-    locationManager.distanceFilter = 5.0; //meters move per update, 
+    locationManager.distanceFilter = 2.0; //meters move per update,
+    locationManager.allowsBackgroundLocationUpdates = true
     
     //TODO sliders and such for distance filter, or convert to once per minute type thing
 

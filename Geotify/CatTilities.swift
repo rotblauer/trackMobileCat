@@ -32,6 +32,9 @@ func pushLoc(manager: CLLocationManager) {
   json.setValue(Date().iso8601 , forKey: "time"); //get in golang time mod
   
   var request = URLRequest(url: URL(string: "http://cattrack-155019.appspot.com/populate/")!)// will up date to cat scratcher main
+  
+//  var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)// will up date to cat scratcher main
+
   request.httpMethod = "POST"
   request.addValue("application/json", forHTTPHeaderField: "Content-Type")
   request.addValue("application/json", forHTTPHeaderField: "Accept")

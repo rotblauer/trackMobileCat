@@ -37,7 +37,6 @@ class GeotificationsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    super.viewDidLoad()
     // 1
     locationManager.delegate = self
     // 2
