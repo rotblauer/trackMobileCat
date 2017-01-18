@@ -97,14 +97,17 @@ func savePointToCoreData(manager: CLLocationManager) {
 }
 
 func clearTrackPointsCD() {
+  print("Even deleting")
   let moc = DataController().managedObjectContext
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  pointsFetch.includesPropertyValues = false //small feet
   
   do {
-    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
+    let fetchedPoints = try moc.fetch(pointsFetch) as! [NSManagedObject]
     for point in fetchedPoints {
       moc.delete(point)
     }
+    try moc.save() //mhmm
   } catch {
     fatalError("Failed to fetch employees: \(error)")
   }
@@ -130,7 +133,10 @@ func pushLocs() {
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
     if error != nil {
       print(error ?? "NONE")
+      return //giveup. we'll getemnextime
     } else {
+      print("Boldy deleting.")
+      clearTrackPointsCD()
       do {
         guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
         
@@ -141,6 +147,8 @@ func pushLocs() {
         } else {
           // was success
           // delete local corestore points
+          //ornot
+          print("Successfully posted points. Will delete the stockpile now.")
           clearTrackPointsCD()
         }
       }

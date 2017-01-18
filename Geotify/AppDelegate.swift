@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-    locationManager.distanceFilter = 5.0; //meters move per update,
+    locationManager.distanceFilter = 4.0; //meters move per update,
     locationManager.allowsBackgroundLocationUpdates = true
     
     //TODO sliders and such for distance filter, or convert to once per minute type thing
@@ -105,8 +105,13 @@ extension AppDelegate: CLLocationManagerDelegate {
     for _ in points! {
       c += 1
     }
-    if c > 1000 && reachability.isReachableViaWiFi { //TODO check for wifi
+    
+    if c > 100 && reachability.isReachableViaWiFi { //TODO check for wifi
+      print("Have wifi and will push \(c) points.")
       pushLocs()
+      c = 0
+    } else {
+      print("Have not got wifi or only a few points. Have \(c) points stockpiled.")
     }
   }
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
