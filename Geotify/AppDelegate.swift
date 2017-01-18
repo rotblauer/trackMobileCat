@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-    locationManager.distanceFilter = 2.0; //meters move per update,
+    locationManager.distanceFilter = 5.0; //meters move per update,
     locationManager.allowsBackgroundLocationUpdates = true
     
     //TODO sliders and such for distance filter, or convert to once per minute type thing
@@ -82,7 +82,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     for _ in points! {
       c += 1
     }
-    if c > 100 { //TODO check for wifi
+    if c > 1000 { //TODO check for wifi
       pushLocs()
     }
   }
