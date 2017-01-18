@@ -99,17 +99,16 @@ extension AppDelegate: CLLocationManagerDelegate {
     // to the cloud
     // pushLoc(manager: manager)
     savePointToCoreData(manager: manager)
-    let points = fetchPointsFromCoreData()
+    //let points = fetchPointsFromCoreData()
     //cuz i don't know what .length() is..
-    var c = 0
-    for _ in points! {
-      c += 1
-    }
-    
+//    var c = 0
+  //  for _ in points! {
+  //    c += 1
+  //  }
+    let c = numberOfCoreDataTrackpoints()
     if c > 100 && reachability.isReachableViaWiFi { //TODO check for wifi
       print("Have wifi and will push \(c) points.")
       pushLocs()
-      c = 0
     } else {
       print("Have not got wifi or only a few points. Have \(c) points stockpiled.")
     }

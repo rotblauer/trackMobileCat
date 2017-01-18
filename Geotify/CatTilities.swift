@@ -51,14 +51,30 @@ func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
 // {trackpoint json} -> [{trackpoints json}]
 func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
   
-  var points: NSMutableArray = []
+  let points: NSMutableArray = []
   
   for point in trackpoints {
     let jo = objectifyTrackpoint(trackpoint: point)
-    points.add(jo)
+    points.add(jo as AnyObject)
   }
   
   return points
+}
+
+func numberOfCoreDataTrackpoints() -> int_fast64_t {
+  var i : int_fast64_t = 0
+  let moc = DataController().managedObjectContext
+  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  pointsFetch.includesPropertyValues = false
+  do {
+    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
+    for _ in fetchedPoints {
+      i += 1
+    }
+  } catch {
+    fatalError("Failed to fetch employees: \(error)")
+  }
+  return i
 }
 
 // get all trackpoints from data store
@@ -114,8 +130,10 @@ func clearTrackPointsCD() {
 }
 
 // send POST request with array of json pointies
+var amPushing = false
 func pushLocs() {
-  
+  if (amPushing) { return } //catch de dupes
+  amPushing = true
   let json = buildJsonPosterFromTrackpoints(trackpoints: fetchPointsFromCoreData()!)
   
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
@@ -125,12 +143,13 @@ func pushLocs() {
   request.httpMethod = "POST"
   request.addValue("application/json", forHTTPHeaderField: "Content-Type")
   request.addValue("application/json", forHTTPHeaderField: "Accept")
-  request.httpBody = try! JSONSerialization.data(withJSONObject: json, options: [])
+  request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
   // had to open up the security cleareance to get it to clear customs
   //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
   
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
+    amPushing = false
     if error != nil {
       print(error ?? "NONE")
       return //giveup. we'll getemnextime
