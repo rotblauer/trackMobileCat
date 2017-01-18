@@ -16,20 +16,110 @@
 import Foundation
 import CoreLocation
 import UIKit
+import CoreData
+
+@objc(TrackPoint)
+class TrackPoint: NSManagedObject {
+  
+  @NSManaged public var name: String?
+  @NSManaged public var lat: Float
+  @NSManaged public var long: Float
+  @NSManaged public var time: NSDate?
+  @NSManaged public var heading: Float
+  @NSManaged public var elevation: Float
+  @NSManaged public var accuracy: Float
+  @NSManaged public var speed: Float
+  
+}
 
 
-func pushLoc(manager: CLLocationManager) {
+extension TrackPoint {
   
+  @nonobjc public class func fetchRequest() -> NSFetchRequest<TrackPoint> {
+    return NSFetchRequest<TrackPoint>(entityName: "TrackPoint");
+  }
   
-  let json = NSMutableDictionary()
-  json.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
-  json.setValue(manager.location!.coordinate.latitude, forKey: "lat");
-  json.setValue(manager.location!.coordinate.longitude, forKey: "long");
-  json.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
-  json.setValue(manager.location!.altitude, forKey: "elevation");
-  json.setValue(manager.location!.speed, forKey: "speed");
-  json.setValue(manager.location!.course, forKey: "heading");
-  json.setValue(Date().iso8601 , forKey: "time"); //get in golang time mod
+}
+
+// send a TrackPoint model -> plain json dict
+func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
+  let dict = NSMutableDictionary()
+  dict.setValue(trackpoint.name, forKey: "name"); //set all your values..
+  dict.setValue(trackpoint.lat, forKey: "lat");
+  dict.setValue(trackpoint.long, forKey: "long");
+  dict.setValue(trackpoint.accuracy, forKey: "accuracy");
+  dict.setValue(trackpoint.altitude, forKey: "elevation");
+  dict.setValue(trackpoint.speed, forKey: "speed");
+  dict.setValue(trackpoint.course, forKey: "heading");
+  dict.setValue(trackpoint.time.iso8601 , forKey: "time"); //get in golang time mod
+  return dict
+}
+
+// {trackpoint json} -> [{trackpoints json}]
+func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
+  let points = NSMutableArray()
+  
+  for point in trackpoints {
+    let jo = objectifyTrackpoint(point)
+    points.append(jo)
+  }
+  
+  return points
+}
+
+// get all trackpoints from data store
+func fetchPointsFromCoreData() -> [TrackPoint]? {
+  let moc = DataController().managedObjectContext
+  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  
+  do {
+    let fetchedPoints = try moc.executeFetchRequest(pointsFetch) as! [TrackPoint]
+    return fetchedPoints
+  } catch {
+    fatalError("Failed to fetch employees: \(error)")
+  }
+}
+
+// save a single Trackpoint from location
+func savePointToCoreData(manager: CLLocationManager) {
+  let moc = DataController().managedObjectContext
+  let point = NSEntityDescription.insertNewObjectForEntityForName("TrackPoint", inManagedObjectContext: moc) as! TrackPoint
+  
+  point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
+  point.setValue(manager.location!.coordinate.latitude, forKey: "lat");
+  point.setValue(manager.location!.coordinate.longitude, forKey: "long");
+  point.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
+  point.setValue(manager.location!.altitude, forKey: "elevation");
+  point.setValue(manager.location!.speed, forKey: "speed");
+  point.setValue(manager.location!.course, forKey: "heading");
+  point.setValue(Date(), forKey: "time"); //leave ios for now
+  
+  //saver
+  do {
+    try moc.save()
+  } catch {
+    fatalError("Failure to save context: \(error)")
+  }
+}
+
+func clearTrackPointsCD() {
+  let moc = DataController().managedObjectContext
+  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  
+  do {
+    let fetchedPoints = try moc.executeFetchRequest(pointsFetch) as! [TrackPoint]
+    for point in fetchedPoints {
+      moc.delete(point)
+    }
+  } catch {
+    fatalError("Failed to fetch employees: \(error)")
+  }
+}
+
+// send POST request with array of json pointies
+func pushLocs() {
+  
+  let json = buildJsonPosterFromTrackpoints(fetchPointsFromCoreData())
   
   var request = URLRequest(url: URL(string: "http://cattrack-155019.appspot.com/populate/")!)// will up date to cat scratcher main
   
@@ -55,6 +145,9 @@ func pushLoc(manager: CLLocationManager) {
           print(errors)
           return
         } else {
+          // was success
+          // delete local corestore points
+          clearTrackPointsCD()
         }
       }
     }

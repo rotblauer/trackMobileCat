@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6521A739B7A00228A1F /* AppDelegate.swift */; };
 		D90CB6581A739B7A00228A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D90CB6561A739B7A00228A1F /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		083760051E2F938900035CAD /* TrackPoint.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrackPoint.xcdatamodel; sourceTree = "<group>"; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
 		D90CB64D1A739B7A00228A1F /* Geotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Geotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D90CB6511A739B7A00228A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				4F558EA41E2C262A002C3743 /* CatTilities.swift */,
+				083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
 				D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */,
 				D90CB67C1A73B2BD00228A1F /* AddGeotificationViewController.swift */,
@@ -189,6 +192,7 @@
 				D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */,
 				D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
+				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
 				D90CB6801A73C9E200228A1F /* Geotification.swift in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
 			);
@@ -355,6 +359,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				083760051E2F938900035CAD /* TrackPoint.xcdatamodel */,
+			);
+			currentVersion = 083760051E2F938900035CAD /* TrackPoint.xcdatamodel */;
+			path = TrackPoint.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D90CB6451A739B7A00228A1F /* Project object */;
 }

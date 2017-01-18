@@ -22,6 +22,71 @@
 
 import UIKit
 import CoreLocation
+import CoreData
+
+
+
+// class DataController: NSObject {
+//   var managedObjectContext: NSManagedObjectContext
+//   override init() {
+//     // This resource is the same name as your xcdatamodeld contained in your project.
+//     guard let modelURL = Bundle.main.url(forResource: "TrackPoint", withExtension:"momd") else {
+//       fatalError("Error loading model from bundle")
+//     }
+//     // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
+//     guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
+//       fatalError("Error initializing mom from: \(modelURL)")
+//     }
+//     let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
+//     managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+//     managedObjectContext.persistentStoreCoordinator = psc
+//     //dispatch_async(dispatch_get_global_queue(DispatchQueue.GlobalQueuePriority.background, 0)) {
+//       let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//       let docURL = urls[urls.endIndex-1]
+//       /* The directory the application uses to store the Core Data store file.
+//        This code uses a file named "DataModel.sqlite" in the application's documents directory.
+//        */
+//       let storeURL = docURL.URLByAppendingPathComponent("TrackPoint.sqlite")
+//       do {
+//         try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+//       } catch {
+//         fatalError("Error migrating store: \(error)")
+//       }
+//     //}
+//   }
+// }
+
+class DataController: NSObject {
+var managedObjectContext: NSManagedObjectContext
+
+override init() {
+  // This resource is the same name as your xcdatamodeld contained in your project.
+  guard let modelURL = Bundle.main.url(forResource: "Up_and_Running_With_Core_Data", withExtension:"momd") else {
+    fatalError("Error loading model from bundle")
+  }
+  // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
+  guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
+    fatalError("Error initializing mom from: \(modelURL)")
+  }
+  let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
+  self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+  self.managedObjectContext.persistentStoreCoordinator = psc
+  
+  let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+  let docURL = urls[urls.endIndex-1]
+  /* The directory the application uses to store the Core Data store file.
+   This code uses a file named "DataModel.sqlite" in the application's documents directory.
+   */
+  let storeURL = docURL.appendingPathComponent("Up_and_Running_With_Core_Data.sqlite")
+  do {
+    try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+  } catch {
+    fatalError("Error migrating store: \(error)")
+  }
+  
+}
+}
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -75,8 +140,18 @@ extension AppDelegate: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
    
     // to the cloud
-    pushLoc(manager: manager)
-
+    // pushLoc(manager: manager)
+    savePointToCoreData(manager: manager)
+    let points = fetchPointsFromCoreData()
+    //cuz i don't know what .length() is..
+    let c = 0
+    for p in points {
+      c++
+    }
+    if c > 100 { //TODO check for wifi
+      pushLocs()
+    }
+    }
   }
 
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
