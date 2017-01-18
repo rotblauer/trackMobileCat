@@ -23,12 +23,16 @@
 import UIKit
 import CoreLocation
 import CoreData
+import ReachabilitySwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   let locationManager = CLLocationManager()
+  //declare this property where it won't go out of scope relative to your listener
+  let reachability = Reachability()!
+  
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
@@ -69,6 +73,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
+
+  // reachability.whenReachable = { reachability in
+  //     // this is called on a background thread, but UI updates must
+  //     // be on the main thread, like this:
+  //     dispatch_async(dispatch_get_main_queue()) {
+  //         if reachability.isReachableViaWiFi() {
+  //             print("Reachable via WiFi")
+  //         } else {
+  //             print("Reachable via Cellular")
+  //         }
+  //     }
+  // }
+  // reachability.whenUnreachable = { reachability in
+  //     // this is called on a background thread, but UI updates must
+  //     // be on the main thread, like this:
+  //     dispatch_async(dispatch_get_main_queue()) {
+  //         print("Not reachable")
+  //     }
+  // }
   
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -82,7 +105,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     for _ in points! {
       c += 1
     }
-    if c > 1000 { //TODO check for wifi
+    if c > 1000 && reachability.isReachableViaWiFi { //TODO check for wifi
       pushLocs()
     }
   }
