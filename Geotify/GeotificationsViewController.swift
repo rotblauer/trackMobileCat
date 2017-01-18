@@ -31,7 +31,8 @@ struct PreferencesKeys {
 class GeotificationsViewController: UIViewController {
   
   @IBOutlet weak var mapView: MKMapView!
-  
+  //@IBOutlet weak var Pointscount: UILabel!
+
   var geotifications: [Geotification] = []
   var locationManager = CLLocationManager()
   

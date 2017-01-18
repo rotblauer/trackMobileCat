@@ -37,6 +37,7 @@ class AddGeotificationViewController: UITableViewController {
   @IBOutlet weak var radiusTextField: UITextField!
   @IBOutlet weak var noteTextField: UITextField!
   @IBOutlet weak var mapView: MKMapView!
+  
 
   var delegate: AddGeotificationsViewControllerDelegate?
 
