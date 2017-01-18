@@ -83,7 +83,7 @@ func savePointToCoreData(manager: CLLocationManager) {
   point.setValue(manager.location!.coordinate.latitude, forKey: "lat");
   point.setValue(manager.location!.coordinate.longitude, forKey: "long");
   point.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
-  point.setValue(manager.location!.altitude, forKey: "elevation");
+  point.setValue(manager.location!.altitude, forKey: "altitude");
   point.setValue(manager.location!.speed, forKey: "speed");
   point.setValue(manager.location!.course, forKey: "course");
   point.setValue(Date().iso8601, forKey: "time"); //leave ios for now

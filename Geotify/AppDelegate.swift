@@ -104,7 +104,7 @@ class DataController: NSObject {
   
   override init() {
     // This resource is the same name as your xcdatamodeld contained in your project.
-    guard let modelURL = Bundle.main.url(forResource: "Up_and_Running_With_Core_Data", withExtension:"momd") else {
+    guard let modelURL = Bundle.main.url(forResource: "TrackPoint", withExtension:"momd") else {
       fatalError("Error loading model from bundle")
     }
     // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
@@ -120,7 +120,7 @@ class DataController: NSObject {
     /* The directory the application uses to store the Core Data store file.
      This code uses a file named "DataModel.sqlite" in the application's documents directory.
      */
-    let storeURL = docURL.appendingPathComponent("Up_and_Running_With_Core_Data.sqlite")
+    let storeURL = docURL.appendingPathComponent("TrackPoint.sqlite")
     do {
       try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
     } catch {
