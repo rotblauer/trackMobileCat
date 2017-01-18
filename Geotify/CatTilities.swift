@@ -1,8 +1,4 @@
-//MIT License
-//Copyright (c) <2016> <ROTBLAUER LLC>
-//
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-//
+//MIT License //Copyright (c) <2016> <ROTBLAUER LLC> // //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: //
 //The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 //
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -18,28 +14,25 @@ import CoreLocation
 import UIKit
 import CoreData
 
-@objc(TrackPoint)
-class TrackPoint: NSManagedObject {
-  
-  @NSManaged public var name: String?
-  @NSManaged public var lat: Float
-  @NSManaged public var long: Float
-  @NSManaged public var time: NSDate?
-  @NSManaged public var heading: Float
-  @NSManaged public var elevation: Float
-  @NSManaged public var accuracy: Float
-  @NSManaged public var speed: Float
-  
-}
+// @objc(TrackPoint)
+// public class TrackPoint: NSManagedObject {
+//   @NSManaged public var name: String?
+//   @NSManaged public var lat: Float
+//   @NSManaged public var long: Float
+//   @NSManaged public var time: NSDate?
+//   @NSManaged public var heading: Float
+//   @NSManaged public var elevation: Float
+//   @NSManaged public var accuracy: Float
+//   @NSManaged public var speed: Float
+// }
 
 
-extension TrackPoint {
-  
-  @nonobjc public class func fetchRequest() -> NSFetchRequest<TrackPoint> {
-    return NSFetchRequest<TrackPoint>(entityName: "TrackPoint");
-  }
-  
-}
+// extension TrackPoint {
+//   @nonobjc public class func fetchRequest() -> NSFetchRequest<TrackPoint> {
+//     return NSFetchRequest<TrackPoint>(entityName: "TrackPoint");
+//   }
+// }
+
 
 // send a TrackPoint model -> plain json dict
 func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
@@ -51,17 +44,18 @@ func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   dict.setValue(trackpoint.altitude, forKey: "elevation");
   dict.setValue(trackpoint.speed, forKey: "speed");
   dict.setValue(trackpoint.course, forKey: "heading");
-  dict.setValue(trackpoint.time.iso8601 , forKey: "time"); //get in golang time mod
+  dict.setValue(trackpoint.time, forKey: "time"); //get in golang time mod
   return dict
 }
 
 // {trackpoint json} -> [{trackpoints json}]
 func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
-  let points = NSMutableArray()
+  
+  var points: NSMutableArray = []
   
   for point in trackpoints {
-    let jo = objectifyTrackpoint(point)
-    points.append(jo)
+    let jo = objectifyTrackpoint(trackpoint: point)
+    points.add(jo)
   }
   
   return points
@@ -73,7 +67,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
   
   do {
-    let fetchedPoints = try moc.executeFetchRequest(pointsFetch) as! [TrackPoint]
+    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
     return fetchedPoints
   } catch {
     fatalError("Failed to fetch employees: \(error)")
@@ -83,7 +77,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager) {
   let moc = DataController().managedObjectContext
-  let point = NSEntityDescription.insertNewObjectForEntityForName("TrackPoint", inManagedObjectContext: moc) as! TrackPoint
+  let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
   
   point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
   point.setValue(manager.location!.coordinate.latitude, forKey: "lat");
@@ -91,8 +85,8 @@ func savePointToCoreData(manager: CLLocationManager) {
   point.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
   point.setValue(manager.location!.altitude, forKey: "elevation");
   point.setValue(manager.location!.speed, forKey: "speed");
-  point.setValue(manager.location!.course, forKey: "heading");
-  point.setValue(Date(), forKey: "time"); //leave ios for now
+  point.setValue(manager.location!.course, forKey: "course");
+  point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
   
   //saver
   do {
@@ -107,7 +101,7 @@ func clearTrackPointsCD() {
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
   
   do {
-    let fetchedPoints = try moc.executeFetchRequest(pointsFetch) as! [TrackPoint]
+    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
     for point in fetchedPoints {
       moc.delete(point)
     }
@@ -119,9 +113,9 @@ func clearTrackPointsCD() {
 // send POST request with array of json pointies
 func pushLocs() {
   
-  let json = buildJsonPosterFromTrackpoints(fetchPointsFromCoreData())
+  let json = buildJsonPosterFromTrackpoints(trackpoints: fetchPointsFromCoreData()!)
   
-  var request = URLRequest(url: URL(string: "http://cattrack-155019.appspot.com/populate/")!)// will up date to cat scratcher main
+  var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
   
 //  var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)// will up date to cat scratcher main
 
@@ -156,25 +150,6 @@ func pushLocs() {
 }
 
 
-extension Date {
-  static let iso8601Formatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.calendar = Calendar(identifier: .iso8601)
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX" //cute time format
-    return formatter
-  }()
-  var iso8601: String {
-    return Date.iso8601Formatter.string(from: self)
-  }
-}
-
-extension String {
-  var dateFromISO8601: Date? {
-    return Date.iso8601Formatter.date(from: self)
-  }
-}
 
 
 //

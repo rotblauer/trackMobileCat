@@ -24,6 +24,111 @@ import UIKit
 import CoreLocation
 import CoreData
 
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+  
+  var window: UIWindow?
+  let locationManager = CLLocationManager()
+  
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    locationManager.delegate = self
+    locationManager.requestAlwaysAuthorization()
+    locationManager.startUpdatingLocation()
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    locationManager.distanceFilter = 2.0; //meters move per update,
+    locationManager.allowsBackgroundLocationUpdates = true
+    
+    //TODO sliders and such for distance filter, or convert to once per minute type thing
+    
+    application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
+    UIApplication.shared.cancelAllLocalNotifications()
+    return true
+  }
+  
+  func handleEvent(forRegion region: CLRegion!) {
+    // Show an alert if application is active
+    if UIApplication.shared.applicationState == .active {
+      guard let message = note(fromRegionIdentifier: region.identifier) else { return }
+      window?.rootViewController?.showAlert(withTitle: nil, message: message)
+    } else {
+      // Otherwise present a local notification
+      let notification = UILocalNotification()
+      notification.alertBody = note(fromRegionIdentifier: region.identifier)
+      notification.soundName = "Default"
+      UIApplication.shared.presentLocalNotificationNow(notification)
+    }
+  }
+  
+  func note(fromRegionIdentifier identifier: String) -> String? {
+    let savedItems = UserDefaults.standard.array(forKey: PreferencesKeys.savedItems) as? [NSData]
+    let geotifications = savedItems?.map { NSKeyedUnarchiver.unarchiveObject(with: $0 as Data) as? Geotification }
+    let index = geotifications?.index { $0?.identifier == identifier }
+    return index != nil ? geotifications?[index!]?.note : nil
+  }
+  
+}
+
+extension AppDelegate: CLLocationManagerDelegate {
+  
+  // Runs when the location is updated
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
+    // to the cloud
+    // pushLoc(manager: manager)
+    savePointToCoreData(manager: manager)
+    let points = fetchPointsFromCoreData()
+    //cuz i don't know what .length() is..
+    var c = 0
+    for _ in points! {
+      c += 1
+    }
+    if c > 100 { //TODO check for wifi
+      pushLocs()
+    }
+  }
+  func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+    if region is CLCircularRegion {
+      handleEvent(forRegion: region)
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+    if region is CLCircularRegion {
+      handleEvent(forRegion: region)
+    }
+  }
+}
+
+class DataController: NSObject {
+  var managedObjectContext: NSManagedObjectContext
+  
+  override init() {
+    // This resource is the same name as your xcdatamodeld contained in your project.
+    guard let modelURL = Bundle.main.url(forResource: "Up_and_Running_With_Core_Data", withExtension:"momd") else {
+      fatalError("Error loading model from bundle")
+    }
+    // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
+    guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
+      fatalError("Error initializing mom from: \(modelURL)")
+    }
+    let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
+    self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    self.managedObjectContext.persistentStoreCoordinator = psc
+    
+    let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    let docURL = urls[urls.endIndex-1]
+    /* The directory the application uses to store the Core Data store file.
+     This code uses a file named "DataModel.sqlite" in the application's documents directory.
+     */
+    let storeURL = docURL.appendingPathComponent("Up_and_Running_With_Core_Data.sqlite")
+    do {
+      try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
+    } catch {
+      fatalError("Error migrating store: \(error)")
+    }
+    
+}
+}
 
 
 // class DataController: NSObject {
@@ -56,113 +161,8 @@ import CoreData
 //   }
 // }
 
-class DataController: NSObject {
-var managedObjectContext: NSManagedObjectContext
-
-override init() {
-  // This resource is the same name as your xcdatamodeld contained in your project.
-  guard let modelURL = Bundle.main.url(forResource: "Up_and_Running_With_Core_Data", withExtension:"momd") else {
-    fatalError("Error loading model from bundle")
-  }
-  // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
-  guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
-    fatalError("Error initializing mom from: \(modelURL)")
-  }
-  let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
-  self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-  self.managedObjectContext.persistentStoreCoordinator = psc
-  
-  let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-  let docURL = urls[urls.endIndex-1]
-  /* The directory the application uses to store the Core Data store file.
-   This code uses a file named "DataModel.sqlite" in the application's documents directory.
-   */
-  let storeURL = docURL.appendingPathComponent("Up_and_Running_With_Core_Data.sqlite")
-  do {
-    try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
-  } catch {
-    fatalError("Error migrating store: \(error)")
-  }
-  
-}
-}
-
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-  var window: UIWindow?
-  let locationManager = CLLocationManager()
-
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-    locationManager.delegate = self
-    locationManager.requestAlwaysAuthorization()
-    locationManager.startUpdatingLocation()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-    locationManager.distanceFilter = 2.0; //meters move per update,
-    locationManager.allowsBackgroundLocationUpdates = true
-    
-    //TODO sliders and such for distance filter, or convert to once per minute type thing
-
-    application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
-    UIApplication.shared.cancelAllLocalNotifications()
-    return true
-  }
-
-  func handleEvent(forRegion region: CLRegion!) {
-    // Show an alert if application is active
-    if UIApplication.shared.applicationState == .active {
-      guard let message = note(fromRegionIdentifier: region.identifier) else { return }
-      window?.rootViewController?.showAlert(withTitle: nil, message: message)
-    } else {
-      // Otherwise present a local notification
-      let notification = UILocalNotification()
-      notification.alertBody = note(fromRegionIdentifier: region.identifier)
-      notification.soundName = "Default"
-      UIApplication.shared.presentLocalNotificationNow(notification)
-    }
-  }
-
-  func note(fromRegionIdentifier identifier: String) -> String? {
-    let savedItems = UserDefaults.standard.array(forKey: PreferencesKeys.savedItems) as? [NSData]
-    let geotifications = savedItems?.map { NSKeyedUnarchiver.unarchiveObject(with: $0 as Data) as? Geotification }
-    let index = geotifications?.index { $0?.identifier == identifier }
-    return index != nil ? geotifications?[index!]?.note : nil
-  }
-
-}
 
 
 
-extension AppDelegate: CLLocationManagerDelegate {
 
-  // Runs when the location is updated
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-   
-    // to the cloud
-    // pushLoc(manager: manager)
-    savePointToCoreData(manager: manager)
-    let points = fetchPointsFromCoreData()
-    //cuz i don't know what .length() is..
-    let c = 0
-    for p in points {
-      c++
-    }
-    if c > 100 { //TODO check for wifi
-      pushLocs()
-    }
-    }
-  }
 
-  func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-    if region is CLCircularRegion {
-      handleEvent(forRegion: region)
-    }
-  }
-
-  func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-    if region is CLCircularRegion {
-      handleEvent(forRegion: region)
-    }
-  }
-}
