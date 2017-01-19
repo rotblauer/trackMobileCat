@@ -31,7 +31,7 @@ struct PreferencesKeys {
 class GeotificationsViewController: UIViewController {
   
   @IBOutlet weak var mapView: MKMapView!
-  //@IBOutlet weak var Pointscount: UILabel!
+  @IBOutlet weak var pointsCountLable: UILabel!
 
   var geotifications: [Geotification] = []
   var locationManager = CLLocationManager()
@@ -95,6 +95,10 @@ class GeotificationsViewController: UIViewController {
     navigationItem.rightBarButtonItem?.isEnabled = (geotifications.count < 20)
   }
   
+  func updatePointsCount(stringer : String) {
+    pointsCountLable.text = stringer
+  }
+  
   // MARK: Map overlay functions
   func addRadiusOverlay(forGeotification geotification: Geotification) {
     mapView?.add(MKCircle(center: geotification.coordinate, radius: geotification.radius))
@@ -113,9 +117,26 @@ class GeotificationsViewController: UIViewController {
     }
   }
   
+  func addPolyPoints() {
+    let tpoints : [TrackPoint] = fetchPointsFromCoreData()!
+    var points = [CLLocationCoordinate2D]()
+    
+    for p in tpoints {
+      let coord = CLLocationCoordinate2DMake(CLLocationDegrees(p.lat), CLLocationDegrees(p.long))
+      points.append(coord)
+    }
+  
+    let polyline = MKPolyline(coordinates: &points, count: points.count)
+    
+    mapView.add(polyline)
+  }
+  
   // MARK: Other mapview functions
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
     mapView.zoomToUserLocation()
+    let c = numberOfCoreDataTrackpoints()
+    updatePointsCount(stringer: "\(c)")
+    addPolyPoints()
   }
   
   func region(withGeotification geotification: Geotification) -> CLCircularRegion {
@@ -206,7 +227,6 @@ extension GeotificationsViewController: MKMapViewDelegate {
     return nil
   }
   
-  
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
     if overlay is MKCircle {
       let circleRenderer = MKCircleRenderer(overlay: overlay)
@@ -214,6 +234,12 @@ extension GeotificationsViewController: MKMapViewDelegate {
       circleRenderer.strokeColor = .purple
       circleRenderer.fillColor = UIColor.purple.withAlphaComponent(0.4)
       return circleRenderer
+    }
+    if overlay is MKPolyline {
+      let polylineView = MKPolylineRenderer(overlay: overlay)
+      polylineView.strokeColor = UIColor.magenta
+      
+      return polylineView
     }
     return MKOverlayRenderer(overlay: overlay)
   }

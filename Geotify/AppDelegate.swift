@@ -103,7 +103,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     savePointToCoreData(manager: manager)
 
     let c = numberOfCoreDataTrackpoints()
-    // Pointscount.text = "\(c)"
     if c > 100 && reachability.isReachableViaWiFi { //TODO check for wifi
       print("Have wifi and will push \(c) points.")
       pushLocs() // to the cloud
