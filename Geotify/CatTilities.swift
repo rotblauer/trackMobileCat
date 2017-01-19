@@ -149,7 +149,7 @@ func pushLocs() {
   
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-    amPushing = false // this here ?
+    amPushing = false // ja
     if error != nil {
       print(error ?? "NONE")
       return //giveup. we'll getemnextime
