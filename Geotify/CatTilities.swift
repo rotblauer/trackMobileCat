@@ -112,21 +112,41 @@ func savePointToCoreData(manager: CLLocationManager) {
   }
 }
 
+var amDeleting : BooleanLiteralType = false
+func getAmDeleting() -> BooleanLiteralType {
+  return amDeleting
+}
 func clearTrackPointsCD() {
   print("Even deleting")
+  amDeleting = true
   let moc = DataController().managedObjectContext
-  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  pointsFetch.includesPropertyValues = false //small feet
+  //let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  //pointsFetch.includesPropertyValues = false //small feet
+  
+  // do {
+  //   let fetchedPoints = try moc.fetch(pointsFetch) as! [NSManagedObject]
+  //   for point in fetchedPoints {
+  //     moc.delete(point)
+  //   }
+  //   try moc.save() //mhmm
+  // } catch {
+  //   fatalError("Failed to fetch employees: \(error)")
+  // }
+  
+  // Create Fetch Request
+  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  
+  // Create Batch Delete Request
+  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
   
   do {
-    let fetchedPoints = try moc.fetch(pointsFetch) as! [NSManagedObject]
-    for point in fetchedPoints {
-      moc.delete(point)
-    }
-    try moc.save() //mhmm
+    try moc.execute(batchDeleteRequest)
+    try moc.save()
   } catch {
-    fatalError("Failed to fetch employees: \(error)")
+    // Error Handling
   }
+  amDeleting = false
+  
 }
 
 // send POST request with array of json pointies

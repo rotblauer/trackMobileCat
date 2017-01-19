@@ -96,20 +96,17 @@ extension AppDelegate: CLLocationManagerDelegate {
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     
-    // to the cloud
-    // pushLoc(manager: manager)
+    if (amDeleting) {
+      print("Location changed but delete in progress. Returning.")
+      return
+    }
     savePointToCoreData(manager: manager)
-    //let points = fetchPointsFromCoreData()
-    //cuz i don't know what .length() is..
-//    var c = 0
-  //  for _ in points! {
-  //    c += 1
-  //  }
+
     let c = numberOfCoreDataTrackpoints()
     // Pointscount.text = "\(c)"
     if c > 100 && reachability.isReachableViaWiFi { //TODO check for wifi
       print("Have wifi and will push \(c) points.")
-      pushLocs()
+      pushLocs() // to the cloud
     } else {
       print("Have not got wifi or only a few points. Have \(c) points stockpiled.")
     }
