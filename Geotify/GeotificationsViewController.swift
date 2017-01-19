@@ -237,7 +237,11 @@ extension GeotificationsViewController: MKMapViewDelegate {
     }
     if overlay is MKPolyline {
       let polylineView = MKPolylineRenderer(overlay: overlay)
-      polylineView.strokeColor = UIColor.magenta
+      
+      polylineView.lineWidth = CGFloat(0.5)
+      polylineView.lineJoin = CGLineJoin.round
+      polylineView.lineCap = CGLineCap.round
+      polylineView.strokeColor = UIColor.blue
       
       return polylineView
     }
