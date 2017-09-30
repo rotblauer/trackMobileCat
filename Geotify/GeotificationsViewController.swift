@@ -32,8 +32,9 @@ class GeotificationsViewController: UIViewController {
   
   @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var pointsCountLable: UILabel!
+  @IBOutlet weak var pushPointsButton: UIBarButtonItem!
   
-  var locationManager = CLLocationManager()
+    var locationManager = CLLocationManager()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -69,9 +70,11 @@ class GeotificationsViewController: UIViewController {
     addPolyPoints()
   }
   
-  @IBAction func pushPoints(sender: AnyObject) {
-    pushLocs()
-  }
+    @IBAction func pushPoints(_ sender: Any) {
+      pushLocs()
+      let c = numberOfCoreDataTrackpoints()
+      updatePointsCount(stringer: "\(c)")
+    }
 }
 
 // MARK: - Location Manager Delegate
