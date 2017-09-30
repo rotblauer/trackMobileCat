@@ -38,29 +38,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-    locationManager.distanceFilter = 4.0; //meters move per update,
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
     
     //TODO sliders and such for distance filter, or convert to once per minute type thing
     
-    application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
+    // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
     UIApplication.shared.cancelAllLocalNotifications()
     return true
-  }
-  
-  func handleEvent(forRegion region: CLRegion!) {
-    // Show an alert if application is active
-    if UIApplication.shared.applicationState == .active {
-      guard let message = note(fromRegionIdentifier: region.identifier) else { return }
-      window?.rootViewController?.showAlert(withTitle: nil, message: message)
-    } else {
-      // Otherwise present a local notification
-      let notification = UILocalNotification()
-      notification.alertBody = note(fromRegionIdentifier: region.identifier)
-      notification.soundName = "Default"
-      UIApplication.shared.presentLocalNotificationNow(notification)
-    }
   }
   
   func note(fromRegionIdentifier identifier: String) -> String? {
@@ -73,25 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
-
-  // reachability.whenReachable = { reachability in
-  //     // this is called on a background thread, but UI updates must
-  //     // be on the main thread, like this:
-  //     dispatch_async(dispatch_get_main_queue()) {
-  //         if reachability.isReachableViaWiFi() {
-  //             print("Reachable via WiFi")
-  //         } else {
-  //             print("Reachable via Cellular")
-  //         }
-  //     }
-  // }
-  // reachability.whenUnreachable = { reachability in
-  //     // this is called on a background thread, but UI updates must
-  //     // be on the main thread, like this:
-  //     dispatch_async(dispatch_get_main_queue()) {
-  //         print("Not reachable")
-  //     }
-  // }
   
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -103,22 +69,11 @@ extension AppDelegate: CLLocationManagerDelegate {
     savePointToCoreData(manager: manager)
 
     let c = numberOfCoreDataTrackpoints()
-    if c > 100 && reachability.isReachableViaWiFi { //TODO check for wifi
+    if c > 1000 && reachability.isReachableViaWiFi { //TODO check for wifi
       print("Have wifi and will push \(c) points.")
       pushLocs() // to the cloud
     } else {
       print("Have not got wifi or only a few points. Have \(c) points stockpiled.")
-    }
-  }
-  func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-    if region is CLCircularRegion {
-      handleEvent(forRegion: region)
-    }
-  }
-  
-  func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-    if region is CLCircularRegion {
-      handleEvent(forRegion: region)
     }
   }
 }
