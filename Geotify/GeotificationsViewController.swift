@@ -30,7 +30,6 @@ struct PreferencesKeys {
 
 class GeotificationsViewController: UIViewController {
   
-  @IBOutlet weak var mapView: MKMapView!
   @IBOutlet weak var pointsCountLable: UILabel!
   @IBOutlet weak var pushPointsButton: UIBarButtonItem!
   
@@ -47,65 +46,22 @@ class GeotificationsViewController: UIViewController {
   func updatePointsCount(stringer : String) {
     pointsCountLable.text = stringer
   }
-  
-  func addPolyPoints() {
-    let tpoints : [TrackPoint] = fetchPointsFromCoreData()!
-    var points = [CLLocationCoordinate2D]()
-    
-    for p in tpoints {
-      let coord = CLLocationCoordinate2DMake(CLLocationDegrees(p.lat), CLLocationDegrees(p.long))
-      points.append(coord)
-    }
-  
-    let polyline = MKPolyline(coordinates: &points, count: points.count)
-    
-    mapView.add(polyline)
-  }
+
   
   // MARK: Other mapview functions
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
-    mapView.zoomToUserLocation()
     let c = numberOfCoreDataTrackpoints()
     updatePointsCount(stringer: "\(c)")
-    addPolyPoints()
   }
   
     @IBAction func pushPoints(_ sender: Any) {
       pushLocs()
-      let c = numberOfCoreDataTrackpoints()
-      updatePointsCount(stringer: "\(c)")
     }
 }
 
 // MARK: - Location Manager Delegate
 extension GeotificationsViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    mapView.showsUserLocation = status == .authorizedAlways
+//    mapView.showsUserLocation = status == .authorizedAlways
   }
-}
-
-// MARK: - MapView Delegate
-extension GeotificationsViewController: MKMapViewDelegate {
-  
-  func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-    if overlay is MKCircle {
-      let circleRenderer = MKCircleRenderer(overlay: overlay)
-      circleRenderer.lineWidth = 1.0
-      circleRenderer.strokeColor = .purple
-      circleRenderer.fillColor = UIColor.purple.withAlphaComponent(0.4)
-      return circleRenderer
-    }
-    if overlay is MKPolyline {
-      let polylineView = MKPolylineRenderer(overlay: overlay)
-      
-      polylineView.lineWidth = CGFloat(0.5)
-      polylineView.lineJoin = CGLineJoin.round
-      polylineView.lineCap = CGLineCap.round
-      polylineView.strokeColor = UIColor.blue
-      
-      return polylineView
-    }
-    return MKOverlayRenderer(overlay: overlay)
-  }
-  
 }

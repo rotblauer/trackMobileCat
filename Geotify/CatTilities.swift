@@ -71,7 +71,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 }
 
 // save a single Trackpoint from location
-func savePointToCoreData(manager: CLLocationManager) {
+func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   let moc = DataController().managedObjectContext
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
   
@@ -90,6 +90,7 @@ func savePointToCoreData(manager: CLLocationManager) {
   } catch {
     fatalError("Failure to save context: \(error)")
   }
+  return point
 }
 
 var amDeleting : BooleanLiteralType = false
@@ -114,7 +115,6 @@ func clearTrackPointsCD() {
     // Error Handling
   }
   amDeleting = false
-  
 }
 
 // send POST request with array of json pointies
@@ -125,8 +125,6 @@ func pushLocs() {
   let json = buildJsonPosterFromTrackpoints(trackpoints: fetchPointsFromCoreData()!)
   
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
-  
-//  var request = URLRequest(url: URL(string: "http://localhost:8080/populate/")!)// will up date to cat scratcher main
 
   request.httpMethod = "POST"
   request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -144,6 +142,7 @@ func pushLocs() {
     } else {
       print("Boldy deleting.")
       clearTrackPointsCD()
+
       do {
         guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
         
