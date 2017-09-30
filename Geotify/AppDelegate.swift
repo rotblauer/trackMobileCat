@@ -47,14 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.shared.cancelAllLocalNotifications()
     return true
   }
-  
-  func note(fromRegionIdentifier identifier: String) -> String? {
-    let savedItems = UserDefaults.standard.array(forKey: PreferencesKeys.savedItems) as? [NSData]
-    let geotifications = savedItems?.map { NSKeyedUnarchiver.unarchiveObject(with: $0 as Data) as? Geotification }
-    let index = geotifications?.index { $0?.identifier == identifier }
-    return index != nil ? geotifications?[index!]?.note : nil
-  }
-  
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
@@ -106,42 +98,8 @@ class DataController: NSObject {
       fatalError("Error migrating store: \(error)")
     }
     
+  }
 }
-}
-
-
-// class DataController: NSObject {
-//   var managedObjectContext: NSManagedObjectContext
-//   override init() {
-//     // This resource is the same name as your xcdatamodeld contained in your project.
-//     guard let modelURL = Bundle.main.url(forResource: "TrackPoint", withExtension:"momd") else {
-//       fatalError("Error loading model from bundle")
-//     }
-//     // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
-//     guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
-//       fatalError("Error initializing mom from: \(modelURL)")
-//     }
-//     let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
-//     managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-//     managedObjectContext.persistentStoreCoordinator = psc
-//     //dispatch_async(dispatch_get_global_queue(DispatchQueue.GlobalQueuePriority.background, 0)) {
-//       let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-//       let docURL = urls[urls.endIndex-1]
-//       /* The directory the application uses to store the Core Data store file.
-//        This code uses a file named "DataModel.sqlite" in the application's documents directory.
-//        */
-//       let storeURL = docURL.URLByAppendingPathComponent("TrackPoint.sqlite")
-//       do {
-//         try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
-//       } catch {
-//         fatalError("Error migrating store: \(error)")
-//       }
-//     //}
-//   }
-// }
-
-
-
 
 
 

@@ -18,8 +18,6 @@
 		D90CB6731A739D4300228A1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90CB6721A739D4300228A1F /* CoreLocation.framework */; };
 		D90CB6751A73A16700228A1F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90CB6741A73A16700228A1F /* MapKit.framework */; };
 		D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */; };
-		D90CB6801A73C9E200228A1F /* Geotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB67E1A73C4B200228A1F /* Geotification.swift */; };
-		D90CB6821A73CBC600228A1F /* AddGeotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB67C1A73B2BD00228A1F /* AddGeotificationViewController.swift */; };
 		D9835AF31AA6076800D265BC /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9835AF21AA6076800D265BC /* Utilities.swift */; };
 		D9C1AF6C1A77CD6C00A06B2F /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */; };
 /* End PBXBuildFile section */
@@ -39,8 +37,6 @@
 		D90CB6721A739D4300228A1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D90CB6741A73A16700228A1F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeotificationsViewController.swift; sourceTree = "<group>"; };
-		D90CB67C1A73B2BD00228A1F /* AddGeotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGeotificationViewController.swift; sourceTree = "<group>"; };
-		D90CB67E1A73C4B200228A1F /* Geotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Geotification.swift; sourceTree = "<group>"; };
 		D9835AF21AA6076800D265BC /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
 		E8DB7C6E862A73FE9500FC40 /* Pods_Geotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Geotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,8 +83,6 @@
 				083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
 				D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */,
-				D90CB67C1A73B2BD00228A1F /* AddGeotificationViewController.swift */,
-				D90CB67E1A73C4B200228A1F /* Geotification.swift */,
 				D9835AF21AA6076800D265BC /* Utilities.swift */,
 				D90CB6561A739B7A00228A1F /* Main.storyboard */,
 				D90CB6591A739B7A00228A1F /* Images.xcassets */,
@@ -259,12 +253,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D90CB6821A73CBC600228A1F /* AddGeotificationViewController.swift in Sources */,
 				D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */,
 				D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
 				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
-				D90CB6801A73C9E200228A1F /* Geotification.swift in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
