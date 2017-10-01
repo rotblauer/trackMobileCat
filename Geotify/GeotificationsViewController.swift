@@ -57,21 +57,21 @@ class GeotificationsViewController: UIViewController {
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
     let data = numberAndLastOfCoreDataTrackpoints()
     updatePointsCount(stringer: "\(data.count)")
-    
-    if data.lastPoint !== nil {
+    var ps : String = ""
+    if data.count > 0 && data.lastPoint !== nil {
       let p = data.lastPoint
-      let acc = String(format: "%.2f", (p.accuracy))
-      let lat = String(format: "%.9f", (p.lat))
-      let lon = String(format: "%.9f", (p.long))
-      let alt = String(format: "%.9f", (p.altitude))
-      let course = String(format: "%.3f", (p.course))
-      let speed = String(format: "%.9f", (p.speed))
-      let t = p.time
-      
-      let ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)"
-      
-      updateLastPoint(stringer: ps)
+      let acc = String(format: "%.2f", (p?.accuracy)!)
+      let lat = String(format: "%.9f", (p?.lat)!)
+      let lon = String(format: "%.9f", (p?.long)!)
+      let alt = String(format: "%.9f", (p?.altitude)!)
+      let course = String(format: "%.3f", (p?.course)!)
+      let speed = String(format: "%.9f", (p?.speed)!)
+      let t = p?.time
+      ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)"
+    } else {
+      ps = "No points yet."
     }
+    updateLastPoint(stringer: ps)
   }
   
     @IBAction func pushPoints(_ sender: Any) {

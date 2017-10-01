@@ -28,6 +28,7 @@ func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   return dict
 }
 
+
 // {trackpoint json} -> [{trackpoints json}]
 func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
   
@@ -41,38 +42,22 @@ func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray
   return points
 }
 
-func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint) {
+func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {
   var i : int_fast64_t = 0
   var lastP : TrackPoint? = nil
   let moc = DataController().managedObjectContext
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
   pointsFetch.includesPropertyValues = false
-//  
-//  let dateFormatter = DateFormatter()
-//  dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-//  
   do {
     let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
-    lastP = fetchedPoints.last // thinkin tis last not first nor middle child
-
-    //    var lastDate = dateFormatter.date(from: (lastP?.time!)!)
-    
-//    for _ in fetchedPoints { // can use 'for p in...' to compare dates)
-//      i += 1
-//      
-//      // but pretty dang sure is always 'last' point
-////      let date = dateFormatter.date(from: p.time!)
-////      if date?.compare(lastDate!) == ComparisonResult.orderedDescending {
-////        print("found laster date")
-////        lastP = p
-////        lastDate = date
-////      }
-//    }
     i = Int64(fetchedPoints.count)
+    if i > 0 {
+      lastP = fetchedPoints.last // thinkin tis last not first nor middle child
+    }
   } catch {
-    fatalError("Failed to fetch employees: \(error)")
+    print("Failed to fetch employees \(error)")
   }
-  return (i, lastP!)
+  return (i, lastP)
 }
 
 // get all trackpoints from data store
@@ -84,7 +69,8 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
     let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
     return fetchedPoints
   } catch {
-    fatalError("Failed to fetch employees: \(error)")
+    print("Failed to fetch employees: \(error)")
+    return []
   }
 }
 
@@ -139,8 +125,16 @@ func clearTrackPointsCD() {
 var amPushing = false
 func pushLocs() {
   if (amPushing) { return } //catch de dupes
+
+  // Catch no or unavailable points.
+  let points = fetchPointsFromCoreData()!
+  if points.count == 0 {
+    print("No points to push, returning.")
+    return
+  }
+  
   amPushing = true
-  let json = buildJsonPosterFromTrackpoints(trackpoints: fetchPointsFromCoreData()!)
+  let json = buildJsonPosterFromTrackpoints(trackpoints: points)
   
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
 
