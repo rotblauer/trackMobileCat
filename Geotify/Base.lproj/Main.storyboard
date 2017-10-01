@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -39,15 +40,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnH-BY-OcH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnH-BY-OcH">
                                 <rect key="frame" x="58" y="465" width="258" height="123"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="64"/>
                                 <color key="textColor" red="0.093308731749999999" green="0.68869601349999998" blue="0.36501130570000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5V-2C-Fyg">
+                                <rect key="frame" x="0.0" y="64" width="375" height="320"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="320" id="Cdc-TY-zKs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="gnH-BY-OcH" firstAttribute="top" secondItem="K5V-2C-Fyg" secondAttribute="bottom" constant="81" id="109-gn-fTn"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="top" secondItem="kGy-dK-Sza" secondAttribute="bottom" id="2AO-Ck-y20"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="leading" secondItem="YSL-HX-BG1" secondAttribute="leadingMargin" constant="-16" id="MqU-6R-JdZ"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="centerX" secondItem="gnH-BY-OcH" secondAttribute="centerX" id="gfH-IX-xMG"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="centerX" secondItem="YSL-HX-BG1" secondAttribute="centerX" id="usb-PL-9iG"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="cat &lt; tracks" id="dS8-nZ-3oV">
@@ -65,6 +81,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="lastPointLabel" destination="K5V-2C-Fyg" id="67W-n9-7oY"/>
                         <outlet property="pointsCountLable" destination="gnH-BY-OcH" id="g0r-gO-InY"/>
                         <outlet property="pushPointsButton" destination="olE-Yn-zW9" id="wHi-wE-Ka6"/>
                     </connections>

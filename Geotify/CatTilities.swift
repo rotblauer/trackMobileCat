@@ -41,20 +41,38 @@ func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray
   return points
 }
 
-func numberOfCoreDataTrackpoints() -> int_fast64_t {
+func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint) {
   var i : int_fast64_t = 0
+  var lastP : TrackPoint? = nil
   let moc = DataController().managedObjectContext
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
   pointsFetch.includesPropertyValues = false
+//  
+//  let dateFormatter = DateFormatter()
+//  dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+//  
   do {
     let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
-    for _ in fetchedPoints {
-      i += 1
-    }
+    lastP = fetchedPoints.last // thinkin tis last not first nor middle child
+
+    //    var lastDate = dateFormatter.date(from: (lastP?.time!)!)
+    
+//    for _ in fetchedPoints { // can use 'for p in...' to compare dates)
+//      i += 1
+//      
+//      // but pretty dang sure is always 'last' point
+////      let date = dateFormatter.date(from: p.time!)
+////      if date?.compare(lastDate!) == ComparisonResult.orderedDescending {
+////        print("found laster date")
+////        lastP = p
+////        lastDate = date
+////      }
+//    }
+    i = Int64(fetchedPoints.count)
   } catch {
     fatalError("Failed to fetch employees: \(error)")
   }
-  return i
+  return (i, lastP!)
 }
 
 // get all trackpoints from data store

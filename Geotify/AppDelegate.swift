@@ -58,15 +58,16 @@ extension AppDelegate: CLLocationManagerDelegate {
       print("Location changed but delete in progress. Returning.")
       return
     }
+    // TODO: use me to update UI
     savePointToCoreData(manager: manager)
     
 
-    let c = numberOfCoreDataTrackpoints()
-    if c > 1000 && reachability.isReachableViaWiFi {
-      print("Have wifi and will push \(c) points.")
+    let data = numberAndLastOfCoreDataTrackpoints()
+    if data.count > 1000 && reachability.isReachableViaWiFi {
+      print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
     } else {
-      print("Have not got wifi or only a few points. Have \(c) points stockpiled.")
+      print("Have not got wifi or only a few points. Have \(data.count) points stockpiled.")
     }
   }
 }

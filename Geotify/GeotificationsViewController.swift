@@ -32,6 +32,7 @@ class GeotificationsViewController: UIViewController {
   
   @IBOutlet weak var pointsCountLable: UILabel!
   @IBOutlet weak var pushPointsButton: UIBarButtonItem!
+    @IBOutlet weak var lastPointLabel: UILabel!
   
     var locationManager = CLLocationManager()
   
@@ -46,12 +47,31 @@ class GeotificationsViewController: UIViewController {
   func updatePointsCount(stringer : String) {
     pointsCountLable.text = stringer
   }
+  
+  func updateLastPoint(stringer : String) {
+    lastPointLabel.text = stringer
+  }
 
   
   // MARK: Other mapview functions
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
-    let c = numberOfCoreDataTrackpoints()
-    updatePointsCount(stringer: "\(c)")
+    let data = numberAndLastOfCoreDataTrackpoints()
+    updatePointsCount(stringer: "\(data.count)")
+    
+    if data.lastPoint !== nil {
+      let p = data.lastPoint
+      let acc = String(format: "%.2f", (p.accuracy))
+      let lat = String(format: "%.9f", (p.lat))
+      let lon = String(format: "%.9f", (p.long))
+      let alt = String(format: "%.9f", (p.altitude))
+      let course = String(format: "%.3f", (p.course))
+      let speed = String(format: "%.9f", (p.speed))
+      let t = p.time
+      
+      let ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)"
+      
+      updateLastPoint(stringer: ps)
+    }
   }
   
     @IBAction func pushPoints(_ sender: Any) {
@@ -65,3 +85,4 @@ extension GeotificationsViewController: CLLocationManagerDelegate {
 //    mapView.showsUserLocation = status == .authorizedAlways
   }
 }
+
