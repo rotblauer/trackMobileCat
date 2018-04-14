@@ -41,10 +41,29 @@ class GeotificationsViewController: UIViewController {
         setCurrentTripNotes(s: (sender as! UITextField).text!)
         (sender as! UITextField).resignFirstResponder()
     }
-    @IBAction func stopTrip(_ sender: Any) {
+    func doStopTrip() {
         setCurrentTripNotes(s: "");
         setNoteField.text = getCurrentTripNotes();
         updatePointDisplay();
+    }
+    @IBAction func stopTrip(_ sender: Any) {
+        if (getCurrentTripNotes() != "") {
+            // create the alert
+            let alert = UIAlertController(title: "UIAlertController", message: "Be sure you want to finish this trip.", preferredStyle: UIAlertControllerStyle.alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Do Stop", style: UIAlertActionStyle.default, handler: { action in
+                self.doStopTrip();
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { action in
+                self.updatePointDisplay();
+            }))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            updatePointDisplay();
+        }
     }
     @IBOutlet weak var pointsCountLable: UILabel!
     @IBOutlet weak var pushPointsButton: UIBarButtonItem!

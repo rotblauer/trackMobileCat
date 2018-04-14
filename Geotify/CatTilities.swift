@@ -138,6 +138,7 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
       lastPoint = nil;
       currentTripDistance = 0;
       currentTripDistanceFromStart = 0;
+      currentTripStart = NSDate();
     }
   }
   
