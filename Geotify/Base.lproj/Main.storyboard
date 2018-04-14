@@ -28,7 +28,7 @@
             </objects>
             <point key="canvasLocation" x="-586" y="505"/>
         </scene>
-        <!--cat < tracks-->
+        <!--cat tracks-->
         <scene sceneID="QSg-Wp-O1B">
             <objects>
                 <viewController id="LYI-dq-R4y" customClass="GeotificationsViewController" customModule="Geotify" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,34 +40,113 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eSW-Hp-0Kv">
+                                <rect key="frame" x="36" y="99" width="303" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="doneField:" destination="LYI-dq-R4y" eventType="editingDidEndOnExit" id="2dU-UH-coR"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8R-xo-jOj">
+                                <rect key="frame" x="168" y="282" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="STOP">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopTrip:" destination="LYI-dq-R4y" eventType="touchUpInside" id="vMo-Zw-7B8"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnH-BY-OcH">
-                                <rect key="frame" x="58" y="465" width="258" height="123"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="64"/>
-                                <color key="textColor" red="0.093308731749999999" green="0.68869601349999998" blue="0.36501130570000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
+                                <rect key="frame" x="118" y="137" width="138" height="50"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.093308731749999999" green="0.68869601349999998" blue="0.36501130570000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4l-DM-Kq3">
+                                <rect key="frame" x="36" y="228" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="bike">
+                                    <color key="titleColor" red="1" green="0.84254951721728011" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="setFieldPremade:" destination="LYI-dq-R4y" eventType="touchUpInside" id="Mw2-Il-Mtf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pf7-q3-EBc">
+                                <rect key="frame" x="126" y="228" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="run">
+                                    <color key="titleColor" red="0.34512792173747764" green="1" blue="0.74197697901311077" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="setFieldPremade:" destination="LYI-dq-R4y" eventType="touchUpInside" id="8jU-hS-fsy"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01r-cf-ed7">
+                                <rect key="frame" x="201" y="228" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="roadtrip">
+                                    <color key="titleColor" red="0.72883112443940679" green="0.77654246794871795" blue="0.33732447080944183" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="setFieldPremade:" destination="LYI-dq-R4y" eventType="touchUpInside" id="oyA-Ic-bgA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brf-Xv-Xqd">
+                                <rect key="frame" x="309" y="228" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <state key="normal" title="fly">
+                                    <color key="titleColor" red="0.0" green="0.32961782740000001" blue="0.69085385099999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="setFieldPremade:" destination="LYI-dq-R4y" eventType="touchUpInside" id="G5Y-81-Tkb"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5V-2C-Fyg">
-                                <rect key="frame" x="0.0" y="64" width="375" height="320"/>
+                                <rect key="frame" x="0.0" y="363" width="375" height="218"/>
+                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="320" id="Cdc-TY-zKs"/>
+                                    <constraint firstAttribute="height" constant="218" id="Cdc-TY-zKs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VqF-xd-yHw">
+                                <rect key="frame" x="30" y="199" width="130" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.98463119738730653" green="1" blue="0.95877221861940787" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYk-SH-O8q">
+                                <rect key="frame" x="168" y="166" width="171" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.16614978865170471" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="gnH-BY-OcH" firstAttribute="top" secondItem="K5V-2C-Fyg" secondAttribute="bottom" constant="81" id="109-gn-fTn"/>
-                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="top" secondItem="kGy-dK-Sza" secondAttribute="bottom" id="2AO-Ck-y20"/>
+                            <constraint firstItem="gnH-BY-OcH" firstAttribute="top" secondItem="K5V-2C-Fyg" secondAttribute="bottom" constant="-444" id="109-gn-fTn"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="top" secondItem="kGy-dK-Sza" secondAttribute="bottom" constant="299" id="2AO-Ck-y20"/>
                             <constraint firstItem="K5V-2C-Fyg" firstAttribute="leading" secondItem="YSL-HX-BG1" secondAttribute="leadingMargin" constant="-16" id="MqU-6R-JdZ"/>
                             <constraint firstItem="K5V-2C-Fyg" firstAttribute="centerX" secondItem="gnH-BY-OcH" secondAttribute="centerX" id="gfH-IX-xMG"/>
                             <constraint firstItem="K5V-2C-Fyg" firstAttribute="centerX" secondItem="YSL-HX-BG1" secondAttribute="centerX" id="usb-PL-9iG"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="cat &lt; tracks" id="dS8-nZ-3oV">
+                    <navigationItem key="navigationItem" title="cat tracks" id="dS8-nZ-3oV">
                         <barButtonItem key="leftBarButtonItem" image="CurrentLocation" id="FIG-L9-xbZ">
+                            <color key="tintColor" red="0.0" green="0.32961782740000001" blue="0.69085385099999996" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="zoomToCurrentLocationWithSender:" destination="LYI-dq-R4y" id="e7K-H3-omj"/>
                             </connections>
@@ -84,9 +163,17 @@
                         <outlet property="lastPointLabel" destination="K5V-2C-Fyg" id="67W-n9-7oY"/>
                         <outlet property="pointsCountLable" destination="gnH-BY-OcH" id="g0r-gO-InY"/>
                         <outlet property="pushPointsButton" destination="olE-Yn-zW9" id="wHi-wE-Ka6"/>
+                        <outlet property="setNoteField" destination="eSW-Hp-0Kv" id="YaW-Bk-NnJ"/>
+                        <outlet property="tripDistLabel" destination="pYk-SH-O8q" id="3PJ-uM-byv"/>
+                        <outlet property="tripTimeSince" destination="VqF-xd-yHw" id="YV3-Nd-cCk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="81v-DC-JL1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="44j-Fu-akg">
+                    <connections>
+                        <action selector="swiper:" destination="LYI-dq-R4y" id="Ghs-6V-sBH"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="32.799999999999997" y="504.19790104947532"/>
         </scene>

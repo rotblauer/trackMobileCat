@@ -60,7 +60,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     // TODO: use me to update UI
     savePointToCoreData(manager: manager)
-    
 
     let data = numberAndLastOfCoreDataTrackpoints()
     if data.count > 1000 && reachability.isReachableViaWiFi {

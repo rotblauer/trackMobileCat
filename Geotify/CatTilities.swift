@@ -14,6 +14,26 @@ import CoreLocation
 import UIKit
 import CoreData
 
+var currentTripStart:NSDate = NSDate();
+var currentTripDistance:Double = 0;
+var currentTripDistanceFromStart:Double = 0;
+var currentTripNotes = "";
+var firstPoint:CLLocation? = nil;
+var lastPoint:CLLocation? = nil;
+
+func setCurrentTripNotes(s: String) {
+  currentTripNotes = s;
+}
+func getCurrentTripNotes() -> String {
+  return currentTripNotes;
+}
+func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
+  return (currentTripDistance, currentTripDistanceFromStart);
+}
+func getCurrentTripTime() -> TimeInterval {
+  return currentTripStart.timeIntervalSinceNow;
+}
+
 // send a TrackPoint model -> plain json dict
 func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
@@ -25,6 +45,7 @@ func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   dict.setValue(trackpoint.speed, forKey: "speed");
   dict.setValue(trackpoint.course, forKey: "heading");
   dict.setValue(trackpoint.time, forKey: "time"); //get in golang time mod
+  dict.setValue(trackpoint.notes, forKey: "notes");
   return dict
 }
 
@@ -80,13 +101,16 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
   
   point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
-  point.setValue(manager.location!.coordinate.latitude, forKey: "lat");
-  point.setValue(manager.location!.coordinate.longitude, forKey: "long");
+  let lat = manager.location!.coordinate.latitude;
+  let lng = manager.location!.coordinate.longitude;
+  point.setValue(lat, forKey: "lat");
+  point.setValue(lng, forKey: "long");
   point.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
   point.setValue(manager.location!.altitude, forKey: "altitude");
   point.setValue(manager.location!.speed, forKey: "speed");
   point.setValue(manager.location!.course, forKey: "course");
   point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
+  point.setValue(getCurrentTripNotes(), forKey: "notes");
   
   //saver
   do {
@@ -94,6 +118,29 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   } catch {
     fatalError("Failure to save context: \(error)")
   }
+  
+  if (currentTripNotes != "") {
+    if (lastPoint == nil) {
+      currentTripStart = NSDate();
+      lastPoint = CLLocation(latitude: lat, longitude: lng);
+      firstPoint = lastPoint;
+    } else {
+        let curPoint = CLLocation(latitude: lat, longitude: lng);
+      // increment
+        currentTripDistance = currentTripDistance + (lastPoint?.distance(from: curPoint))!;
+      // overall
+      currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
+      
+      lastPoint = curPoint; // update
+    }
+  } else {
+    if (currentTripDistance != 0 || lastPoint != nil) {
+      lastPoint = nil;
+      currentTripDistance = 0;
+      currentTripDistanceFromStart = 0;
+    }
+  }
+  
   return point
 }
 
@@ -123,6 +170,9 @@ func clearTrackPointsCD() {
 
 // send POST request with array of json pointies
 var amPushing = false
+func getAmPushing() -> Bool {
+  return amPushing
+}
 func pushLocs() {
   if (amPushing) { return } //catch de dupes
 
@@ -154,7 +204,6 @@ func pushLocs() {
     } else {
       print("Boldy deleting.")
       clearTrackPointsCD()
-
       do {
         guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
         
@@ -171,6 +220,6 @@ func pushLocs() {
         }
       }
     }
+    
   }).resume()
-  
 }

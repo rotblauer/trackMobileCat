@@ -29,10 +29,28 @@ struct PreferencesKeys {
 }
 
 class GeotificationsViewController: UIViewController {
-  
-  @IBOutlet weak var pointsCountLable: UILabel!
-  @IBOutlet weak var pushPointsButton: UIBarButtonItem!
+    
+
+    @IBAction func setFieldPremade(_ sender: UIButton) {
+        setCurrentTripNotes(s: sender.currentTitle!)
+        setNoteField.text = getCurrentTripNotes();
+        updatePointDisplay();
+    }
+    @IBOutlet weak var setNoteField: UITextField!
+    @IBAction func doneField(_ sender: Any) {
+        setCurrentTripNotes(s: (sender as! UITextField).text!)
+        (sender as! UITextField).resignFirstResponder()
+    }
+    @IBAction func stopTrip(_ sender: Any) {
+        setCurrentTripNotes(s: "");
+        setNoteField.text = getCurrentTripNotes();
+        updatePointDisplay();
+    }
+    @IBOutlet weak var pointsCountLable: UILabel!
+    @IBOutlet weak var pushPointsButton: UIBarButtonItem!
     @IBOutlet weak var lastPointLabel: UILabel!
+    @IBOutlet weak var tripTimeSince: UILabel!
+    @IBOutlet weak var tripDistLabel: UILabel!
   
     var locationManager = CLLocationManager()
   
@@ -43,7 +61,7 @@ class GeotificationsViewController: UIViewController {
     // 2
     locationManager.requestAlwaysAuthorization()
   }
-  
+    
   func updatePointsCount(stringer : String) {
     pointsCountLable.text = stringer
   }
@@ -51,10 +69,19 @@ class GeotificationsViewController: UIViewController {
   func updateLastPoint(stringer : String) {
     lastPointLabel.text = stringer
   }
+    // https://stackoverflow.com/questions/28872450/conversion-from-nstimeinterval-to-hour-minutes-seconds-milliseconds-in-swift#28872601
+    func stringFromTimeInterval(interval: TimeInterval) -> NSString {
+        
+        let ti = NSInteger(-interval) // neg cuz backwards
+        
+        let seconds = ti % 60
+        let minutes = (ti / 60) % 60
+        let hours = (ti / 3600)
+        
+        return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
+    }
 
-  
-  // MARK: Other mapview functions
-  @IBAction func zoomToCurrentLocation(sender: AnyObject) {
+  func updatePointDisplay() {
     let data = numberAndLastOfCoreDataTrackpoints()
     updatePointsCount(stringer: "\(data.count)")
     var ps : String = ""
@@ -67,16 +94,45 @@ class GeotificationsViewController: UIViewController {
       let course = String(format: "%.3f", (p?.course)!)
       let speed = String(format: "%.9f", (p?.speed)!)
       let t = p?.time
-      ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)"
+      let notes = String((p?.notes)!)
+      ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)\n NOTES: \(notes)"
     } else {
       ps = "No points yet."
     }
     updateLastPoint(stringer: ps)
+    
+    if (getCurrentTripNotes() != "") {
+        tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
+        
+      let d = getCurrentTripDistance()
+      let curdist = d.traveled;
+      let curdistFromStart = d.fromStart;
+        let meters = String(format: "%.2fme", curdist)
+        let miles = String(format: "%.2fmi", curdist/1609)
+      
+      let metersFStart = String(format: "%.2fme", curdistFromStart)
+      let milesFStart = String(format: "%.2fmi", curdistFromStart/1609)
+        tripDistLabel.text = "o:\(meters), \(miles)\nfs:\(metersFStart), \(milesFStart)"
+        
+    } else {
+        tripTimeSince.text = "";
+        tripDistLabel.text = "";
+    }
+  }
+
+    @IBAction func swiper(_ sender: UISwipeGestureRecognizer) {
+    
+        updatePointDisplay()
+    }
+
+  // MARK: Other mapview functions
+  @IBAction func zoomToCurrentLocation(sender: AnyObject) {
+    updatePointDisplay()
   }
   
-    @IBAction func pushPoints(_ sender: Any) {
-      pushLocs()
-    }
+  @IBAction func pushPoints(_ sender: Any) {
+    pushLocs()
+  }
 }
 
 // MARK: - Location Manager Delegate
