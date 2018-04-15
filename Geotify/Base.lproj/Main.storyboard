@@ -143,6 +143,15 @@
                                     <action selector="setFieldPremade:" destination="LYI-dq-R4y" eventType="touchUpInside" id="oyA-Ic-bgA"/>
                                 </connections>
                             </button>
+                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EQW-x7-j1b">
+                                <rect key="frame" x="-4" y="623" width="375" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem systemItem="favorites" id="NcQ-C0-g0i"/>
+                                    <tabBarItem systemItem="more" id="Ffr-fo-rzh"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>

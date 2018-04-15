@@ -38,8 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
+    locationManager.pausesLocationUpdatesAutomatically = true
+//    locationManager.activityType = CLActivityTypeFitness
     
     //TODO sliders and such for distance filter, or convert to once per minute type thing
     
@@ -60,6 +62,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     // TODO: use me to update UI
     savePointToCoreData(manager: manager)
+    
 
     let data = numberAndLastOfCoreDataTrackpoints()
     if data.count > 1000 && reachability.isReachableViaWiFi {

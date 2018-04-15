@@ -95,6 +95,32 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
   }
 }
 
+func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
+  if (currentTripNotes != "") {
+    if (lastPoint == nil) {
+      currentTripStart = NSDate();
+      lastPoint = CLLocation(latitude: lat, longitude: lng);
+      firstPoint = lastPoint;
+    } else {
+      let curPoint = CLLocation(latitude: lat, longitude: lng);
+      // increment
+      currentTripDistance = currentTripDistance + (lastPoint?.distance(from: curPoint))!;
+      // overall
+      currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
+      
+      lastPoint = curPoint; // update
+    }
+  } else {
+    if (currentTripDistance != 0 || lastPoint != nil) {
+      lastPoint = nil;
+      currentTripDistance = 0;
+      currentTripDistanceFromStart = 0;
+      currentTripStart = NSDate();
+    }
+  }
+  
+}
+
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   let moc = DataController().managedObjectContext
@@ -118,30 +144,8 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   } catch {
     fatalError("Failure to save context: \(error)")
   }
-  
-  if (currentTripNotes != "") {
-    if (lastPoint == nil) {
-      currentTripStart = NSDate();
-      lastPoint = CLLocation(latitude: lat, longitude: lng);
-      firstPoint = lastPoint;
-    } else {
-        let curPoint = CLLocation(latitude: lat, longitude: lng);
-      // increment
-        currentTripDistance = currentTripDistance + (lastPoint?.distance(from: curPoint))!;
-      // overall
-      currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
-      
-      lastPoint = curPoint; // update
-    }
-  } else {
-    if (currentTripDistance != 0 || lastPoint != nil) {
-      lastPoint = nil;
-      currentTripDistance = 0;
-      currentTripDistanceFromStart = 0;
-      currentTripStart = NSDate();
-    }
-  }
-  
+    manageTripVals(lat: lat, lng: lng)
+
   return point
 }
 
