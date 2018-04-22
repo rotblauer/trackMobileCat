@@ -156,6 +156,11 @@ class GeotificationsViewController: UIViewController {
   @IBAction func pushPoints(_ sender: Any) {
     pushLocs()
   }
+
+  @IBAction func switchRequireWifi(_ sender: UISwitch) {
+    setRequireWifi(requireWifi: !getRequireWifi())
+    sender.setOn(!getRequireWifi(), animated: true) // truthy?
+  }
 }
 
 // MARK: - Location Manager Delegate

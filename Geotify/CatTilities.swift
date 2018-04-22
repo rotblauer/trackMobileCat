@@ -14,12 +14,22 @@ import CoreLocation
 import UIKit
 import CoreData
 
+// mem only
 var currentTripStart:NSDate = NSDate();
 var currentTripDistance:Double = 0;
 var currentTripDistanceFromStart:Double = 0;
 var currentTripNotes = "";
 var firstPoint:CLLocation? = nil;
 var lastPoint:CLLocation? = nil;
+
+var requireWifiForPush:Bool = true;
+
+func getRequireWifi() -> Bool {
+  return requireWifiForPush;
+}
+func setRequireWifi(requireWifi: Bool) {
+  requireWifiForPush = requireWifi;
+}
 
 func setCurrentTripNotes(s: String) {
   currentTripNotes = s;

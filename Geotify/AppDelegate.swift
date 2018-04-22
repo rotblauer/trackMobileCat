@@ -81,7 +81,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     // print("locacc", locationManager.desiredAccuracy)
     
     let data = numberAndLastOfCoreDataTrackpoints()
-    if data.count > 1000 && reachability.isReachableViaWiFi {
+    if data.count > 1000 && (!getRequireWifi() || reachability.isReachableViaWiFi) {
       print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
     } else {
