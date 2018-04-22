@@ -40,8 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startUpdatingLocation()
     locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
-    locationManager.pausesLocationUpdatesAutomatically = true
-//    locationManager.activityType = CLActivityTypeFitness
+//    locationManager.pausesLocationUpdatesAutomatically = true
+//    locationManager.allowDeferredLocationUpdates(untilTraveled: 20, timeout: 120)
+
+    //    locationManager.activityType = CLActivityTypeFitness
     
     //TODO sliders and such for distance filter, or convert to once per minute type thing
     
@@ -61,9 +63,23 @@ extension AppDelegate: CLLocationManagerDelegate {
       return
     }
     // TODO: use me to update UI
-    savePointToCoreData(manager: manager)
+//    savePointToCoreData(manager: manager)
+    savePointsToCoreData(locations: locations)
     
-
+      // > ~120mph (planeish)
+    if (locations[0].speed > 50 && locationManager.desiredAccuracy != kCLLocationAccuracyThreeKilometers) {
+      locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+      // > ~30mph (carish)
+    } else if (locations[0].speed > 15 && locationManager.desiredAccuracy != kCLLocationAccuracyHundredMeters) {
+      locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+      // > ~15mph (bike)
+    } else if (locations[0].speed > 7 && locationManager.desiredAccuracy != kCLLocationAccuracyNearestTenMeters) {
+      locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
+      locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    // print("locacc", locationManager.desiredAccuracy)
+    
     let data = numberAndLastOfCoreDataTrackpoints()
     if data.count > 1000 && reachability.isReachableViaWiFi {
       print("Have wifi and will push \(data.count) points.")
@@ -72,6 +88,12 @@ extension AppDelegate: CLLocationManagerDelegate {
       print("Have not got wifi or only a few points. Have \(data.count) points stockpiled.")
     }
   }
+//  func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError!) {
+//    // Stop deferring updates
+//    manager.deferringUpdates = false
+//    
+//    // Adjust for the next goal
+//  }
 }
 
 class DataController: NSObject {

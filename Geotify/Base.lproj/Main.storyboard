@@ -14,11 +14,10 @@
         <scene sceneID="Md4-q9-2ef">
             <objects>
                 <navigationController id="Zci-E9-QA1" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="ZHC-OJ-4RH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.094117647058823528" green="0.69019607843137254" blue="0.36470588235294116" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="LYI-dq-R4y" kind="relationship" relationship="rootViewController" id="LwB-ov-x3m"/>
@@ -143,15 +142,17 @@
                                     <action selector="setFieldPremade:" destination="LYI-dq-R4y" eventType="touchUpInside" id="oyA-Ic-bgA"/>
                                 </connections>
                             </button>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EQW-x7-j1b">
-                                <rect key="frame" x="-4" y="623" width="375" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <tabBarItem systemItem="favorites" id="NcQ-C0-g0i"/>
-                                    <tabBarItem systemItem="more" id="Ffr-fo-rzh"/>
-                                </items>
-                            </tabBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mGp-H5-9dQ">
+                                <rect key="frame" x="140" y="572" width="95" height="95"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="iTunesArtwork@1x">
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="zoomToCurrentLocationButton:" destination="LYI-dq-R4y" eventType="touchUpInside" id="fuJ-G8-VOg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -199,6 +200,7 @@
     </scenes>
     <resources>
         <image name="CurrentLocation" width="15" height="15"/>
+        <image name="iTunesArtwork@1x" width="512" height="512"/>
     </resources>
-    <color key="tintColor" red="0.093308731749999999" green="0.68869601349999998" blue="0.36501130570000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <color key="tintColor" red="0.32123821189517454" green="0.72959543756737477" blue="0.91067979916548114" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -157,7 +157,7 @@
 				TargetAttributes = {
 					D90CB64C1A739B7A00228A1F = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 9KZ74686VP;
+						DevelopmentTeam = 3T8C45E2VR;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -376,7 +376,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9KZ74686VP;
+				DEVELOPMENT_TEAM = 3T8C45E2VR;
 				INFOPLIST_FILE = Geotify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -394,7 +394,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9KZ74686VP;
+				DEVELOPMENT_TEAM = 3T8C45E2VR;
 				INFOPLIST_FILE = Geotify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

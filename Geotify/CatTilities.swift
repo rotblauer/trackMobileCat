@@ -23,6 +23,7 @@ var lastPoint:CLLocation? = nil;
 
 func setCurrentTripNotes(s: String) {
   currentTripNotes = s;
+  savePointToCoreData(manager: CLLocationManager())
 }
 func getCurrentTripNotes() -> String {
   return currentTripNotes;
@@ -123,6 +124,10 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
 
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
+  if (amPushing) {
+    postponedPoints.append(manager.location!)
+    return nil;
+  }
   let moc = DataController().managedObjectContext
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
   
@@ -147,6 +152,44 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
     manageTripVals(lat: lat, lng: lng)
 
   return point
+}
+
+var postponedPoints:[CLLocation] = [];
+
+// save multiple Trackpoints
+func savePointsToCoreData(locations: [CLLocation]) -> Bool {
+  if (amPushing) {
+    postponedPoints.append(contentsOf: locations);
+    return true;
+  }
+  let moc = DataController().managedObjectContext
+//  print("saving n points", locations.count)
+  for p in locations {
+    let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
+    
+    point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
+    let lat = p.coordinate.latitude;
+    let lng = p.coordinate.longitude;
+    point.setValue(lat, forKey: "lat");
+    point.setValue(lng, forKey: "long");
+    point.setValue(p.horizontalAccuracy, forKey: "accuracy");
+    point.setValue(p.altitude, forKey: "altitude");
+    point.setValue(p.speed, forKey: "speed");
+    point.setValue(p.course, forKey: "course");
+    point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
+    point.setValue(getCurrentTripNotes(), forKey: "notes");
+    
+    //saver
+    do {
+      try moc.save()
+    } catch {
+      fatalError("Failure to save context: \(error)")
+    }
+    manageTripVals(lat: lat, lng: lng)
+
+  }
+  
+  return true
 }
 
 var amDeleting : BooleanLiteralType = false
@@ -203,6 +246,11 @@ func pushLocs() {
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
     amPushing = false // ja
+    if (postponedPoints.count > 0) {
+      if (savePointsToCoreData(locations: postponedPoints)) {
+        postponedPoints.removeAll();
+      }
+    }
     if error != nil {
       print(error ?? "NONE")
       return //giveup. we'll getemnextime

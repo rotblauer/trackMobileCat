@@ -40,6 +40,7 @@ class GeotificationsViewController: UIViewController {
     @IBAction func doneField(_ sender: Any) {
         setCurrentTripNotes(s: (sender as! UITextField).text!)
         (sender as! UITextField).resignFirstResponder()
+        updatePointDisplay();
     }
     func doStopTrip() {
         setCurrentTripNotes(s: "");
@@ -148,6 +149,9 @@ class GeotificationsViewController: UIViewController {
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
     updatePointDisplay()
   }
+    @IBAction func zoomToCurrentLocationButton(_ sender: UIButton) {
+        updatePointDisplay()
+    }
   
   @IBAction func pushPoints(_ sender: Any) {
     pushLocs()
