@@ -246,17 +246,23 @@ func pushLocs() {
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
     amPushing = false // ja
-    if (postponedPoints.count > 0) {
-      if (savePointsToCoreData(locations: postponedPoints)) {
-        postponedPoints.removeAll();
-      }
-    }
     if error != nil {
       print(error ?? "NONE")
+      if (postponedPoints.count > 0) {
+        if (savePointsToCoreData(locations: postponedPoints)) {
+          postponedPoints.removeAll();
+        }
+      }
       return //giveup. we'll getemnextime
     } else {
       print("Boldy deleting.")
       clearTrackPointsCD()
+      if (postponedPoints.count > 0) {
+        if (savePointsToCoreData(locations: postponedPoints)) {
+          postponedPoints.removeAll();
+        }
+      }
+      // this never runs
       do {
         guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
         
