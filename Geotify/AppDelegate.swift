@@ -61,7 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
+let updateAccuracySettingsEvery:int_fast64_t = 10;
+let mayAttemptPushEvery:int_fast64_t = 100;
+var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
+var lastAttemptPushEvery:int_fast64_t = 0;
+
 extension AppDelegate: CLLocationManagerDelegate {
+  
+  
   
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -73,33 +80,51 @@ extension AppDelegate: CLLocationManagerDelegate {
     // TODO: use me to update UI
 //    savePointToCoreData(manager: manager)
     savePointsToCoreData(locations: locations)
-    
-      // > ~120mph (planeish)
-    if (locations[0].speed > 50 && locationManager.desiredAccuracy != kCLLocationAccuracyThreeKilometers) {
-      locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-      // > ~30mph (carish)
-    } else if (locations[0].speed > 15 && locationManager.desiredAccuracy != kCLLocationAccuracyHundredMeters) {
-      locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-      // > ~15mph (bike)
-    } else if (locations[0].speed > 7 && locationManager.desiredAccuracy != kCLLocationAccuracyNearestTenMeters) {
-      locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-    } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
-      locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
-      locationManager.activityType = CLActivityType.automotiveNavigation
-      // > ~30mph (carish)
-    } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
-      locationManager.activityType = CLActivityType.automotiveNavigation
-      // > ~15mph (bike)
-    } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
-      locationManager.activityType = CLActivityType.fitness
-    } else if (locationManager.activityType != CLActivityType.fitness) {
-      locationManager.activityType = CLActivityType.fitness
-    }
-    
     let data = numberAndLastOfCoreDataTrackpoints()
-    if data.count > 1000 && (!getRequireWifi() || reachability.isReachableViaWiFi) {
+    
+    if (lastAttemptUpdateAccuracySettings > updateAccuracySettingsEvery) {
+      lastAttemptUpdateAccuracySettings = 0;
+      // every 10
+      // > ~120mph (planeish)
+      if (locations[0].speed > 50 && locationManager.desiredAccuracy != kCLLocationAccuracyThreeKilometers) {
+        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        // > ~30mph (carish)
+      } else if (locations[0].speed > 15 && locationManager.desiredAccuracy != kCLLocationAccuracyHundredMeters) {
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        // > ~15mph (bike)
+      } else if (locations[0].speed > 7 && locationManager.desiredAccuracy != kCLLocationAccuracyNearestTenMeters) {
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+      } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+      }
+      
+      if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+        locationManager.activityType = CLActivityType.automotiveNavigation
+        // > ~30mph (carish)
+      } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+        locationManager.activityType = CLActivityType.automotiveNavigation
+        // > ~15mph (bike)
+      } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
+        locationManager.activityType = CLActivityType.fitness
+      } else if (locationManager.activityType != CLActivityType.fitness) {
+        locationManager.activityType = CLActivityType.fitness
+      }
+    } else {
+      lastAttemptUpdateAccuracySettings = lastAttemptUpdateAccuracySettings + locations.count;
+    }
+
+    
+    // every 100
+    
+    if (data.count < 1000) { return; }
+    
+    lastAttemptPushEvery = lastAttemptPushEvery + locations.count;
+    if (lastAttemptPushEvery < mayAttemptPushEvery) {
+      return;
+    }
+    lastAttemptPushEvery = 0;
+    
+    if (!getRequireWifi() || reachability.isReachableViaWiFi) {
       print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
     } else {

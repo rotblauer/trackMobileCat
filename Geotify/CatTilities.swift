@@ -272,23 +272,28 @@ func pushLocs() {
           postponedPoints.removeAll();
         }
       }
-      // this never runs
-      do {
-        guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
-        
-        guard let errors = json?["errors"] as? [[String: Any]] else { return }
-        if errors.count > 0 {
-          print(errors)
-          return
-        } else {
-          // was success
-          // delete local corestore points
-          //ornot
-          print("Successfully posted points. Will delete the stockpile now.")
-          clearTrackPointsCD()
-        }
-      }
+//      // this hits 'ret 2' with json == nil
+//      do {
+//        print("doing do")
+//        guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else {
+//          print("ret1");
+//          return;
+//        }
+//        
+//        guard let errors = json?["errors"] as? [[String: Any]] else { print("ret 2", json.debugDescription); return; }
+//        if errors.count > 0 {
+//          print(errors)
+//          return
+//        } else {
+//          // was success
+//          // delete local corestore points
+//          //ornot
+//          print("Successfully posted points. Will delete the stockpile now.")
+//          clearTrackPointsCD()
+//        }
+//      }
     }
+//  GeotificationsViewController.updatePointDisplay()
     
   }).resume()
 }

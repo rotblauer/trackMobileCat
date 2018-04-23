@@ -101,6 +101,7 @@ class GeotificationsViewController: UIViewController {
         return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
     }
 
+  
   func updatePointDisplay() {
     let data = numberAndLastOfCoreDataTrackpoints()
     updatePointsCount(stringer: "\(data.count)")
@@ -167,6 +168,11 @@ class GeotificationsViewController: UIViewController {
 extension GeotificationsViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 //    mapView.showsUserLocation = status == .authorizedAlways
+    
   }
+//  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//    print("updated pts vc", locations.count)
+////    updatePointDisplay()
+//    
+//  }
 }
-
