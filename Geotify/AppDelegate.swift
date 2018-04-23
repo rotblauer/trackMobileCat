@@ -37,9 +37,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
-    locationManager.startUpdatingLocation()
+    
     locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
+    locationManager.distanceFilter = kCLDistanceFilterNone
+//    locationManager.maximumRegionMonitoringDistance = 1
+    locationManager.pausesLocationUpdatesAutomatically = false
+    locationManager.disallowDeferredLocationUpdates()
+    
+    locationManager.startUpdatingLocation()
+    locationManager.startMonitoringSignificantLocationChanges()
+//    locationManager.activityType = CLActivityType.other
 //    locationManager.pausesLocationUpdatesAutomatically = true
 //    locationManager.allowDeferredLocationUpdates(untilTraveled: 20, timeout: 120)
 
@@ -78,7 +86,17 @@ extension AppDelegate: CLLocationManagerDelegate {
     } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
       locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
-    // print("locacc", locationManager.desiredAccuracy)
+    if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+      locationManager.activityType = CLActivityType.automotiveNavigation
+      // > ~30mph (carish)
+    } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+      locationManager.activityType = CLActivityType.automotiveNavigation
+      // > ~15mph (bike)
+    } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
+      locationManager.activityType = CLActivityType.fitness
+    } else if (locationManager.activityType != CLActivityType.fitness) {
+      locationManager.activityType = CLActivityType.fitness
+    }
     
     let data = numberAndLastOfCoreDataTrackpoints()
     if data.count > 1000 && (!getRequireWifi() || reachability.isReachableViaWiFi) {
