@@ -108,6 +108,7 @@ class GeotificationsViewController: UIViewController {
     var ps : String = ""
     if data.count > 0 && data.lastPoint !== nil {
       let p = data.lastPoint
+      let _uuid = (p?.uuid)!
       let acc = String(format: "%.2f", (p?.accuracy)!)
       let lat = String(format: "%.9f", (p?.lat)!)
       let lon = String(format: "%.9f", (p?.long)!)
@@ -116,7 +117,7 @@ class GeotificationsViewController: UIViewController {
       let speed = String(format: "%.9f", (p?.speed)!)
       let t = p?.time
       let notes = String((p?.notes)!)
-      ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)\n NOTES: \(notes)"
+      ps = "UUID: \(_uuid)\nACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(t)\n NOTES: \(notes)"
     } else {
       ps = "No points yet."
     }

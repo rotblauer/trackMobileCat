@@ -48,7 +48,8 @@ func getCurrentTripTime() -> TimeInterval {
 // send a TrackPoint model -> plain json dict
 func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
-  dict.setValue(trackpoint.name, forKey: "name"); //set all your values..
+  dict.setValue(trackpoint.uuid, forKey: "uuid");  //set all your values..
+  dict.setValue(trackpoint.name, forKey: "name");
   dict.setValue(trackpoint.lat, forKey: "lat");
   dict.setValue(trackpoint.long, forKey: "long");
   dict.setValue(trackpoint.accuracy, forKey: "accuracy");
@@ -141,7 +142,8 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   let moc = DataController().managedObjectContext
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
   
-  point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
+  point.setValue(uuid, forKey: "uuid");  //set all your values..
+  point.setValue(UIDevice.current.name, forKey: "name");
   let lat = manager.location!.coordinate.latitude;
   let lng = manager.location!.coordinate.longitude;
   point.setValue(lat, forKey: "lat");
@@ -177,6 +179,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
   for p in locations {
     let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
     
+    point.setValue(uuid, forKey: "uuid");  //set all your values..
     point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
     let lat = p.coordinate.latitude;
     let lng = p.coordinate.longitude;

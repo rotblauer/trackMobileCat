@@ -11,9 +11,10 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="speed" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Entity" positionX="-54" positionY="54" width="128" height="45"/>
-        <element name="TrackPoint" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="TrackPoint" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>
 </model>

@@ -25,6 +25,8 @@ import CoreLocation
 import CoreData
 import ReachabilitySwift
 
+var uuid:String = "unset"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
@@ -56,6 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //TODO sliders and such for distance filter, or convert to once per minute type thing
     
     // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
+    UIDevice.current.isBatteryMonitoringEnabled = true
+    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
     UIApplication.shared.cancelAllLocalNotifications()
     return true
   }
@@ -67,9 +71,7 @@ var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
 var lastAttemptPushEvery:int_fast64_t = 0;
 
 extension AppDelegate: CLLocationManagerDelegate {
-  
-  
-  
+
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     
@@ -88,37 +90,49 @@ extension AppDelegate: CLLocationManagerDelegate {
       // > ~120mph (planeish)
       if (locations[0].speed > 50 && locationManager.desiredAccuracy != kCLLocationAccuracyThreeKilometers) {
         locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager.activityType = CLActivityType.automotiveNavigation
         // > ~30mph (carish)
       } else if (locations[0].speed > 15 && locationManager.desiredAccuracy != kCLLocationAccuracyHundredMeters) {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.activityType = CLActivityType.automotiveNavigation
         // > ~15mph (bike)
       } else if (locations[0].speed > 7 && locationManager.desiredAccuracy != kCLLocationAccuracyNearestTenMeters) {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.activityType = CLActivityType.fitness
       } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = CLActivityType.fitness
       }
       
-      if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
-        locationManager.activityType = CLActivityType.automotiveNavigation
-        // > ~30mph (carish)
-      } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
-        locationManager.activityType = CLActivityType.automotiveNavigation
-        // > ~15mph (bike)
-      } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
-        locationManager.activityType = CLActivityType.fitness
-      } else if (locationManager.activityType != CLActivityType.fitness) {
-        locationManager.activityType = CLActivityType.fitness
+//      
+//      if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+//        
+//        // > ~30mph (carish)
+//      } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+//        
+//        // > ~15mph (bike)
+//      } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
+//        
+//      } else if (locationManager.activityType != CLActivityType.fitness) {
+//        
+//      }
+      
+      if UIDevice.current.batteryState == UIDeviceBatteryState.unplugged
+        && locationManager.pausesLocationUpdatesAutomatically == false {
+        locationManager.pausesLocationUpdatesAutomatically = true
+        locationManager.stopMonitoringSignificantLocationChanges()
+      } else {
+          locationManager.startMonitoringSignificantLocationChanges()
+          locationManager.pausesLocationUpdatesAutomatically = false
       }
+      
     } else {
-      lastAttemptUpdateAccuracySettings = lastAttemptUpdateAccuracySettings + locations.count;
+      lastAttemptUpdateAccuracySettings += locations.count;
     }
 
-    
-    // every 100
-    
+    // every 100||n
     if (data.count < 1000) { return; }
-    
-    lastAttemptPushEvery = lastAttemptPushEvery + locations.count;
+    lastAttemptPushEvery += locations.count;
     if (lastAttemptPushEvery < mayAttemptPushEvery) {
       return;
     }
