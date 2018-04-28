@@ -29,8 +29,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string> always for cats</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>CatTracks requires location information to track your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>always for cats</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Siri for trips</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

@@ -24,6 +24,7 @@ import UIKit
 import CoreLocation
 import CoreData
 import ReachabilitySwift
+import Intents
 
 var uuid:String = "unset"
 
@@ -37,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    requestSiriAuthorisation()
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
     
@@ -65,6 +67,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 
+
+func requestSiriAuthorisation(){
+  if #available(iOS 10.0, *) {
+    INPreferences.requestSiriAuthorization { status in
+      if status == .authorized {
+        print("Hey, Siri!")
+      } else {
+        print("Nay, Siri!")
+      }
+    }
+  } else {
+    print("NOOO, Siri!")
+
+  }
+}
 let updateAccuracySettingsEvery:int_fast64_t = 10;
 let mayAttemptPushEvery:int_fast64_t = 100;
 var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
