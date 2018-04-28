@@ -12,7 +12,6 @@
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4FC1D8472094E874002C5593 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1D8462094E874002C5593 /* IntentHandler.swift */; };
 		4FC1D84B2094E874002C5593 /* TripNoteExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4FC1D8442094E874002C5593 /* TripNoteExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4FC1D8512094E8B8002C5593 /* TripNoteHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1D8502094E8B8002C5593 /* TripNoteHandler.swift */; };
 		D195F6F73FE2543E46BD75B1 /* Pods_Geotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8DB7C6E862A73FE9500FC40 /* Pods_Geotify.framework */; };
 		D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6521A739B7A00228A1F /* AppDelegate.swift */; };
 		D90CB6581A739B7A00228A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D90CB6561A739B7A00228A1F /* Main.storyboard */; };
@@ -56,7 +55,6 @@
 		4FC1D8442094E874002C5593 /* TripNoteExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TripNoteExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC1D8462094E874002C5593 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		4FC1D8482094E874002C5593 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FC1D8502094E8B8002C5593 /* TripNoteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripNoteHandler.swift; sourceTree = "<group>"; };
 		4FC1D8522094ECDD002C5593 /* Geotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Geotify.entitlements; sourceTree = "<group>"; };
 		5F215AD4B3C9F2F5BC2E2266 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
 		943F4FA6AC3D20C2C231C61E /* Pods-Geotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 			children = (
 				4FC1D8462094E874002C5593 /* IntentHandler.swift */,
 				4FC1D8482094E874002C5593 /* Info.plist */,
-				4FC1D8502094E8B8002C5593 /* TripNoteHandler.swift */,
 			);
 			path = TripNoteExtension;
 			sourceTree = "<group>";
@@ -108,8 +105,8 @@
 		D90CB6441A739B7A00228A1F = {
 			isa = PBXGroup;
 			children = (
-				D90CB64F1A739B7A00228A1F /* Geotify */,
 				4FC1D8452094E874002C5593 /* TripNoteExtension */,
+				D90CB64F1A739B7A00228A1F /* Geotify */,
 				D9AEA6FE1A793D570020A0D4 /* Frameworks */,
 				D90CB64E1A739B7A00228A1F /* Products */,
 				D967A729B1693B6F06C872CD /* Pods */,
@@ -332,7 +329,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FC1D8472094E874002C5593 /* IntentHandler.swift in Sources */,
-				4FC1D8512094E8B8002C5593 /* TripNoteHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
