@@ -18,9 +18,9 @@ import CoreData
 var currentTripStart:NSDate = NSDate();
 var currentTripDistance:Double = 0;
 var currentTripDistanceFromStart:Double = 0;
-var currentTripNotes = "";
 var firstPoint:CLLocation? = nil;
 var lastPoint:CLLocation? = nil;
+var currentTripNotes = ""
 
 var requireWifiForPush:Bool = true;
 
@@ -32,11 +32,33 @@ func setRequireWifi(requireWifi: Bool) {
 }
 
 func setCurrentTripNotes(s: String) {
-  currentTripNotes = s;
+  setStoredTripNotes(s: s)
+//  currentTripNotes = s;
   savePointToCoreData(manager: CLLocationManager())
 }
+
+func setStoredTripNotes(s: String) {
+  let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
+  defaults?.set(s, forKey: "tripNoteKey")
+
+}
+func getStoredTripNotes() -> String {
+//  Reading from NSUserDefaults is extremely fast. It will cache values to avoid reading from the disk, and takes about 0.5 microseconds to do
+  let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
+  
+  if(defaults==nil){
+    return("")
+  }else{
+    if(defaults?.string(forKey: "tripNoteKey")==nil){
+    return("")
+  }else{
+      return(defaults!.string(forKey: "tripNoteKey"))!
+  }
+  }
+}
+
 func getCurrentTripNotes() -> String {
-  return currentTripNotes;
+    return  getStoredTripNotes() ;
 }
 func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
   return (currentTripDistance, currentTripDistanceFromStart);
@@ -108,7 +130,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 }
 
 func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
-  if (currentTripNotes != "") {
+  if (getCurrentTripNotes() != "") {
     if (lastPoint == nil) {
       currentTripStart = NSDate();
       lastPoint = CLLocation(latitude: lat, longitude: lng);

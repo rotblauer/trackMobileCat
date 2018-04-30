@@ -32,27 +32,56 @@ class IntentHandler: INExtension {
     public func handle(intent: INCreateNoteIntent, completion: @escaping (INCreateNoteIntentResponse) -> Swift.Void) {
 //      let context = DatabaseHelper.shared.persistentContainer.viewContext
 //      let newNote = Note(context: context)
-    print(intent.title?.spokenPhrase)
-       print(intent.content?.description)
+//    print(intent.title?.spokenPhrase)
+//       print(intent.content?.description)
       
       // Save the context.
 //      do {
 //        try context.save()
         print("trying to fhandle")
 //      Geotify().
+// setStoredTripNotes(s: "BAH")
+//      let update="changing trip from "+getStoredTripNotes()+" to "+intent.content!.description
+//      print(update)
+//      var update="changing current trip from "+getStoredTripNotes()+" to "+(intent.content?.description)!
+      let note=INNote(title: INSpeakableString.init(spokenPhrase:"HI"), contents:  [intent.content!], groupName: nil, createdDateComponents: nil, modifiedDateComponents: nil, identifier: nil)
       
-//       setCurrentTripNotes 
+//      note.contents.
+//       setCurrentTripNotes
 //     cat.setCurrentTripNotes(s: intent.content!)
-      
         let response = INCreateNoteIntentResponse(code: INCreateNoteIntentResponseCode.success, userActivity: nil)
-        response.createdNote = INNote(title: INSpeakableString.init(spokenPhrase: "HI"), contents:  [intent.content!], groupName: nil, createdDateComponents: nil, modifiedDateComponents: nil, identifier: nil)
+        response.createdNote = note
+     
 //        response.createdNote
+      print("storing")
+
         print("finishing")
         completion(response)
 //      } catch {
 //
 //        completion(INCreateNoteIntentResponse(code: INCreateNoteIntentResponseCode.failure, userActivity: nil))
 //      }
+    }
+    
+    func setStoredTripNotes(s: String) {
+      let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
+      defaults?.set(s, forKey: "tripNoteKey")
+      
+    }
+    func getStoredTripNotes() -> String {
+      //  Reading from NSUserDefaults is extremely fast. It will cache values to avoid reading from the disk, and takes about 0.5 microseconds to do
+       print("getting previous")
+      let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
+     
+      if(defaults==nil){
+        return("blank")
+      }else{
+        if(defaults?.string(forKey: "tripNoteKey")==nil){
+          return("blank")
+        }else{
+          return(defaults!.string(forKey: "tripNoteKey"))!
+        }
+      }
     }
     
     public func confirm(intent: INCreateNoteIntent, completion: @escaping (INCreateNoteIntentResponse) -> Swift.Void) {
