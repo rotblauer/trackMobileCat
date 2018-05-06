@@ -23,6 +23,7 @@ var currentTripNotes = Note()
 
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
+private let elly=CMAltimeter();// We have an actual altimeter!
 
 var requireWifiForPush:Bool = true;
 
@@ -91,6 +92,18 @@ private func startCountingSteps() {
     }
   }
 }
+
+
+func startMonitoringElevation(){
+  elly.startRelativeAltitudeUpdates(to: OperationQueue.main, withHandler: { (altitudeData:CMAltitudeData?, error:Error?) in
+    currentTripNotes.relativeAltitude = altitudeData!.relativeAltitude.doubleValue    // Relative altitude in meters
+    if( currentTripNotes.relativeAltitude>0.5){
+    currentTripNotes.cumulativeAltitudeChange+=abs(currentTripNotes.relativeAltitude)
+    }
+    currentTripNotes.pressure = altitudeData!.pressure.doubleValue            // Pressure in kilopascals
+  })
+}
+// TODO toggle for each for battery what not
  func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
@@ -99,15 +112,20 @@ private func startCountingSteps() {
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
+  
+  if CMAltimeter.isRelativeAltitudeAvailable(){
+    startMonitoringElevation()
+  }
 }
 
 func setCurrentTripNotes(s: String) {
    currentTripNotes = Note()
    currentTripNotes.customNote=s
+  startUpdatingActivity()//reset ped etc
   //TODO store actual currentTripNotes
   let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
   defaults?.set(s, forKey: "tripNoteKey")
-   savePointToCoreData(manager: CLLocationManager())
+  savePointToCoreData(manager: CLLocationManager())
 }
 
 func getStoredTripNotes() -> String {

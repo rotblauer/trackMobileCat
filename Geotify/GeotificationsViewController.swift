@@ -116,8 +116,14 @@ class GeotificationsViewController: UIViewController {
       let course = String(format: "%.3f", (p?.course)!)
       let speed = String(format: "%.9f", (p?.speed)!)
       let t = p?.time
+      let distance = String(format: "%.4f", (currentTripNotes.distance))
+      let currentTripDistance = String(format: "%.4f", (currentTripNotes.currentTripDistance))
+      let relativeAltitude = String(format: "%.4f", (currentTripNotes.relativeAltitude))
+      let pressure = String(format: "%.4f", (currentTripNotes.pressure))
+      let cumulativeAltitudeChange = String(format: "%.4f", (currentTripNotes.cumulativeAltitudeChange))
+
 //      UUID: \(_uuid)\n
-      ps = "ACC: \(acc)\nLAT: \(lat)\t LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(String(describing: t))\n Activity: \(currentTripNotes.activity)\t Trip: \(currentTripNotes.customNote)\n FooDistance: \(currentTripNotes.distance)\t Steps: \(currentTripNotes.numberOfSteps)\n Distance: \(currentTripNotes.currentTripDistance)"
+      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\n FooDistance: \(distance)\tDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tCAltitude: \(cumulativeAltitudeChange)"
     } else {
       ps = "No points yet."
     }

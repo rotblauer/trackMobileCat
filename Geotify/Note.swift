@@ -18,7 +18,7 @@ enum Activity: String {
 }
 
 class Note{
-var activity:Activity = Activity.Unknown;// Maybe the only coolest thing,
+var activity:Activity = Activity.Unknown;// Maybe one of the coolest thing,
 var numberOfSteps:NSNumber = 0;// only when stepping, pedometer
 var averageActivePace:NSNumber = 0;// only when stepping, pedometer
 var currentPace:NSNumber = 0;// only when stepping, pedometer
@@ -30,7 +30,10 @@ var currentCadence:NSNumber = 0;// only when stepping, pedometer
   var currentTripStart:Date = Date();//RB
   var currentTripDistance:Double = 0; // real distance RB
   var currentTripDistanceFromStart:Double = 0;// real distance RB
-  
+  var relativeAltitude:Double = 0;//From the altimeter, an actual altimeter!
+  var cumulativeAltitudeChange:Double = 0;//total alt change RB, always growing due to inaccurate
+  var pressure:Double = 0;//From the altimeter,we get pressure!
+
 }
 
 func objectifyNote(n: Note) -> NSMutableDictionary? {
@@ -46,6 +49,9 @@ func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.currentTripStart.iso8601, forKey: "currentTripStart");
   dict.setValue(n.currentTripDistance, forKey: "currentTripDistance");
   dict.setValue(n.currentTripDistanceFromStart, forKey: "currentTripDistanceFromStart");
+  dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
+  dict.setValue(n.cumulativeAltitudeChange, forKey: "cumulativeAltitudeChange");
+  dict.setValue(n.pressure, forKey: "pressure");
 
   return dict
 }
