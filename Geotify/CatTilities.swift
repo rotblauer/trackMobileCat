@@ -13,6 +13,7 @@ import Foundation
 import CoreLocation
 import UIKit
 import CoreData
+import CoreMotion
 
 // mem only
 var currentTripStart:NSDate = NSDate();
@@ -21,6 +22,8 @@ var currentTripDistanceFromStart:Double = 0;
 var firstPoint:CLLocation? = nil;
 var lastPoint:CLLocation? = nil;
 var currentTripNotes = ""
+private let activityManager = CMMotionActivityManager()
+private let pedometer = CMPedometer()
 
 var requireWifiForPush:Bool = true;
 
@@ -29,6 +32,53 @@ func getRequireWifi() -> Bool {
 }
 func setRequireWifi(requireWifi: Bool) {
   requireWifiForPush = requireWifi;
+}
+
+private func startTrackingActivityType() {
+  activityManager.startActivityUpdates(to: OperationQueue.main) {
+   (activity: CMMotionActivity?) in
+    
+    guard let activity = activity else { return }
+    DispatchQueue.main.async {
+      if activity.walking {
+        setCurrentTripNotes(s: "Walking")
+      } else if activity.stationary {
+        setCurrentTripNotes( s:"Stationary")
+      } else if activity.running {
+        setCurrentTripNotes(s:"Running")
+      } else if activity.automotive {
+        setCurrentTripNotes(s:"Automotive")
+      }else if activity.cycling {
+        setCurrentTripNotes(s:"Bike")
+      }else{
+        setCurrentTripNotes(s:"Unknown")
+      }
+    }
+  }
+}
+
+private func startCountingSteps() {
+  pedometer.startUpdates(from: Date()) {
+   pedometerData, error in
+    guard let pedometerData = pedometerData, error == nil else { return }
+
+    DispatchQueue.main.async {
+      
+//    var current=getStoredTripNotes()
+
+      
+    print(pedometerData.numberOfSteps.stringValue)
+    }
+  }
+}
+ func startUpdatingActivity() {
+  if CMMotionActivityManager.isActivityAvailable() {
+    startTrackingActivityType()
+  }
+  
+  if CMPedometer.isStepCountingAvailable() {
+    startCountingSteps()
+  }
 }
 
 func setCurrentTripNotes(s: String) {
