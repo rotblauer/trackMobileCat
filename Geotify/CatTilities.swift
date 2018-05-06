@@ -16,9 +16,7 @@ import CoreData
 import CoreMotion
 
 // mem only
-var currentTripStart:NSDate = NSDate();
-var currentTripDistance:Double = 0;
-var currentTripDistanceFromStart:Double = 0;
+
 var firstPoint:CLLocation? = nil;
 var lastPoint:CLLocation? = nil;
 var currentTripNotes = Note()
@@ -132,10 +130,10 @@ func getCurrentTripNotes() -> String {
  return getStringNote(n:currentTripNotes) ;
 }
 func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
-  return (currentTripDistance, currentTripDistanceFromStart);
+  return (currentTripNotes.currentTripDistance, currentTripNotes.currentTripDistanceFromStart);
 }
 func getCurrentTripTime() -> TimeInterval {
-  return currentTripStart.timeIntervalSinceNow;
+  return currentTripNotes.currentTripStart.timeIntervalSinceNow;
 }
 
 // send a TrackPoint model -> plain json dict
@@ -203,24 +201,24 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
   if (getCurrentTripNotes() != "") {
     if (lastPoint == nil) {
-      currentTripStart = NSDate();
+      currentTripNotes.currentTripStart = Date();
       lastPoint = CLLocation(latitude: lat, longitude: lng);
       firstPoint = lastPoint;
     } else {
       let curPoint = CLLocation(latitude: lat, longitude: lng);
       // increment
-      currentTripDistance = currentTripDistance + (lastPoint?.distance(from: curPoint))!;
+      currentTripNotes.currentTripDistance = currentTripNotes.currentTripDistance + (lastPoint?.distance(from: curPoint))!;
       // overall
-      currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
+      currentTripNotes.currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
       
       lastPoint = curPoint; // update
     }
   } else {
-    if (currentTripDistance != 0 || lastPoint != nil) {
+    if (currentTripNotes.currentTripDistance != 0 || lastPoint != nil) {
       lastPoint = nil;
-      currentTripDistance = 0;
-      currentTripDistanceFromStart = 0;
-      currentTripStart = NSDate();
+      currentTripNotes.currentTripDistance = 0;
+      currentTripNotes.currentTripDistanceFromStart = 0;
+      currentTripNotes.currentTripStart = Date();
     }
   }
   

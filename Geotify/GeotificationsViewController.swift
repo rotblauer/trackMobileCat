@@ -117,7 +117,7 @@ class GeotificationsViewController: UIViewController {
       let speed = String(format: "%.9f", (p?.speed)!)
       let t = p?.time
 //      UUID: \(_uuid)\n
-      ps = "ACC: \(acc)\nLAT: \(lat)\n LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(String(describing: t))\n Activity: \(currentTripNotes.activity)\t Trip: \(currentTripNotes.customNote)\n Distance: \(currentTripNotes.distance)\t Steps: \(currentTripNotes.numberOfSteps)"
+      ps = "ACC: \(acc)\nLAT: \(lat)\t LON: \(lon)\n ALT: \(alt)\n COURSE: \(course)\n SPEED: \(speed)\n TIME: \(String(describing: t))\n Activity: \(currentTripNotes.activity)\t Trip: \(currentTripNotes.customNote)\n FooDistance: \(currentTripNotes.distance)\t Steps: \(currentTripNotes.numberOfSteps)\n Distance: \(currentTripNotes.currentTripDistance)"
     } else {
       ps = "No points yet."
     }
