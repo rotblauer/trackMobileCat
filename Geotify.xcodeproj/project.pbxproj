@@ -11,6 +11,7 @@
 		087627601E3002F400343882 /* Criel sur Mer.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0876275F1E3002F400343882 /* Criel sur Mer.gpx */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4F9609C8209F45F800B861DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9609C7209F45F800B861DE /* HealthKit.framework */; };
+		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
 		4FC1D84B2094E874002C5593 /* TripNoteExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4FC1D8442094E874002C5593 /* TripNoteExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D195F6F73FE2543E46BD75B1 /* Pods_Geotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8DB7C6E862A73FE9500FC40 /* Pods_Geotify.framework */; };
 		D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6521A739B7A00228A1F /* AppDelegate.swift */; };
@@ -53,6 +54,7 @@
 		0876275F1E3002F400343882 /* Criel sur Mer.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Criel sur Mer.gpx"; sourceTree = "<group>"; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
 		4F9609C7209F45F800B861DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		4F9609C9209F58FF00B861DE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		4FC1D8442094E874002C5593 /* TripNoteExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TripNoteExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC1D8522094ECDD002C5593 /* Geotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Geotify.entitlements; sourceTree = "<group>"; };
 		5F215AD4B3C9F2F5BC2E2266 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				4FC1D8522094ECDD002C5593 /* Geotify.entitlements */,
 				4F558EA41E2C262A002C3743 /* CatTilities.swift */,
+				4F9609C9209F58FF00B861DE /* Note.swift */,
 				083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
 				D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */,
@@ -337,6 +340,7 @@
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
 				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
+				4F9609CA209F58FF00B861DE /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

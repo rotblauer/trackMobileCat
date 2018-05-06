@@ -21,7 +21,8 @@ var currentTripDistance:Double = 0;
 var currentTripDistanceFromStart:Double = 0;
 var firstPoint:CLLocation? = nil;
 var lastPoint:CLLocation? = nil;
-var currentTripNotes = ""
+var currentTripNotes = Note()
+
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 
@@ -41,21 +42,22 @@ private func startTrackingActivityType() {
     guard let activity = activity else { return }
     DispatchQueue.main.async {
       if activity.walking {
-        setCurrentTripNotes(s: "Walking")
+        currentTripNotes.activity=Activity.Walking
       } else if activity.stationary {
-        setCurrentTripNotes( s:"Stationary")
+        currentTripNotes.activity=Activity.Stationary
       } else if activity.running {
-        setCurrentTripNotes(s:"Running")
+        currentTripNotes.activity=Activity.Running
       } else if activity.automotive {
-        setCurrentTripNotes(s:"Automotive")
+       currentTripNotes.activity=Activity.Automotive
       }else if activity.cycling {
-        setCurrentTripNotes(s:"Bike")
+      currentTripNotes.activity=Activity.Bike
       }else{
-        setCurrentTripNotes(s:"Unknown")
+       currentTripNotes.activity=Activity.Unknown
       }
     }
   }
 }
+
 
 private func startCountingSteps() {
   pedometer.startUpdates(from: Date()) {
@@ -66,8 +68,28 @@ private func startCountingSteps() {
       
 //    var current=getStoredTripNotes()
 
+      if #available(iOS 10.0, *) {
+        if(pedometerData.averageActivePace != nil){
+        currentTripNotes.averageActivePace=pedometerData.averageActivePace!
+        }
+      } else {
+       currentTripNotes.averageActivePace=(-1.0)
+      }
+      if(pedometerData.currentCadence != nil){
+      currentTripNotes.currentCadence=pedometerData.currentCadence!
+      }
+      currentTripNotes.numberOfSteps=pedometerData.numberOfSteps
+      if(pedometerData.currentPace != nil){
+      currentTripNotes.currentPace=pedometerData.currentPace!
+      }
+      currentTripNotes.distance=pedometerData.distance!
+      if(pedometerData.floorsAscended != nil){
+        currentTripNotes.floorsAscended=pedometerData.floorsAscended!
+      }
       
-    print(pedometerData.numberOfSteps.stringValue)
+      if(pedometerData.floorsDescended != nil){
+        currentTripNotes.floorsDescended=pedometerData.floorsDescended!
+      }
     }
   }
 }
@@ -82,20 +104,18 @@ private func startCountingSteps() {
 }
 
 func setCurrentTripNotes(s: String) {
-  setStoredTripNotes(s: s)
-//  currentTripNotes = s;
-  savePointToCoreData(manager: CLLocationManager())
-}
-
-func setStoredTripNotes(s: String) {
+   currentTripNotes = Note()
+   currentTripNotes.customNote=s
+  //TODO store actual currentTripNotes
   let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
   defaults?.set(s, forKey: "tripNoteKey")
-
+   savePointToCoreData(manager: CLLocationManager())
 }
+
 func getStoredTripNotes() -> String {
 //  Reading from NSUserDefaults is extremely fast. It will cache values to avoid reading from the disk, and takes about 0.5 microseconds to do
   let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
-  
+
   if(defaults==nil){
     return("")
   }else{
@@ -108,7 +128,8 @@ func getStoredTripNotes() -> String {
 }
 
 func getCurrentTripNotes() -> String {
-    return  getStoredTripNotes() ;
+ currentTripNotes.customNote=getStoredTripNotes();
+ return getStringNote(n:currentTripNotes) ;
 }
 func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
   return (currentTripDistance, currentTripDistanceFromStart);
