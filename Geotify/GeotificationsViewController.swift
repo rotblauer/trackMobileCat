@@ -33,7 +33,7 @@ class GeotificationsViewController: UIViewController {
 
     @IBAction func setFieldPremade(_ sender: UIButton) {
         setCurrentTripNotes(s: sender.currentTitle!)
-        setNoteField.text = getCurrentTripNotes();
+        setNoteField.text = getStoredCustomTripNotes();
         updatePointDisplay();
     }
     @IBOutlet weak var setNoteField: UITextField!
@@ -44,11 +44,11 @@ class GeotificationsViewController: UIViewController {
     }
     func doStopTrip() {
         setCurrentTripNotes(s: "");
-        setNoteField.text = getCurrentTripNotes();
+        setNoteField.text = getStoredCustomTripNotes();
         updatePointDisplay();
     }
     @IBAction func stopTrip(_ sender: Any) {
-        if (getCurrentTripNotes() != "") {
+        if (getStoredCustomTripNotes() != "") {
             // create the alert
             let alert = UIAlertController(title: "UIAlertController", message: "Be sure you want to finish this trip.", preferredStyle: UIAlertControllerStyle.alert)
             
@@ -129,7 +129,7 @@ class GeotificationsViewController: UIViewController {
     }
     updateLastPoint(stringer: ps)
     
-    if (getCurrentTripNotes() != "") {
+    if (getStoredCustomTripNotes() != "") {
         tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
         
       let d = getCurrentTripDistance()

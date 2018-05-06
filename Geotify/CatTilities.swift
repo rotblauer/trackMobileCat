@@ -17,8 +17,8 @@ import CoreMotion
 
 // mem only
 
-var firstPoint:CLLocation? = nil;
-var lastPoint:CLLocation? = nil;
+private var firstPoint:CLLocation? = nil;
+private var lastPoint:CLLocation? = nil;
 var currentTripNotes = Note()
 
 private let activityManager = CMMotionActivityManager()
@@ -94,7 +94,7 @@ private func startCountingSteps() {
 }
 
 
-func startMonitoringElevation(){
+private func startMonitoringElevation(){
   elly.startRelativeAltitudeUpdates(to: OperationQueue.main, withHandler: { (altitudeData:CMAltitudeData?, error:Error?) in
     currentTripNotes.relativeAltitude = altitudeData!.relativeAltitude.doubleValue    // Relative altitude in meters
     if( currentTripNotes.relativeAltitude>0.5){
@@ -119,6 +119,7 @@ func startMonitoringElevation(){
 }
 
 func setCurrentTripNotes(s: String) {
+  savePointToCoreData(manager: CLLocationManager())
    currentTripNotes = Note()
    currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
@@ -128,7 +129,7 @@ func setCurrentTripNotes(s: String) {
   savePointToCoreData(manager: CLLocationManager())
 }
 
-func getStoredTripNotes() -> String {
+func getStoredCustomTripNotes() -> String {
 //  Reading from NSUserDefaults is extremely fast. It will cache values to avoid reading from the disk, and takes about 0.5 microseconds to do
   let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
 
@@ -143,19 +144,19 @@ func getStoredTripNotes() -> String {
   }
 }
 
-func getCurrentTripNotes() -> String {
- currentTripNotes.customNote=getStoredTripNotes();
+private func getCurrentTripNoteString() -> String {
+ currentTripNotes.customNote=getStoredCustomTripNotes();
  return getStringNote(n:currentTripNotes) ;
 }
-func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
+ func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
   return (currentTripNotes.currentTripDistance, currentTripNotes.currentTripDistanceFromStart);
 }
-func getCurrentTripTime() -> TimeInterval {
+ func getCurrentTripTime() -> TimeInterval {
   return currentTripNotes.currentTripStart.timeIntervalSinceNow;
 }
 
 // send a TrackPoint model -> plain json dict
-func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
+private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
   dict.setValue(trackpoint.uuid, forKey: "uuid");  //set all your values..
   dict.setValue(trackpoint.name, forKey: "name");
@@ -172,7 +173,7 @@ func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
 
 
 // {trackpoint json} -> [{trackpoints json}]
-func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
+private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
   
   let points: NSMutableArray = []
   
@@ -217,7 +218,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 }
 
 func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
-  if (getCurrentTripNotes() != "") {
+  if (currentTripNotes.customNote != "") {
     if (lastPoint == nil) {
       currentTripNotes.currentTripStart = Date();
       lastPoint = CLLocation(latitude: lat, longitude: lng);
@@ -262,7 +263,7 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   point.setValue(manager.location!.speed, forKey: "speed");
   point.setValue(manager.location!.course, forKey: "course");
   point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
-  point.setValue(getCurrentTripNotes(), forKey: "notes");
+  point.setValue(getCurrentTripNoteString(), forKey: "notes");
   
   //saver
   do {
@@ -299,7 +300,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
     point.setValue(p.speed, forKey: "speed");
     point.setValue(p.course, forKey: "course");
     point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
-    point.setValue(getCurrentTripNotes(), forKey: "notes");
+    point.setValue(getCurrentTripNoteString(), forKey: "notes");
     
     //saver
     do {

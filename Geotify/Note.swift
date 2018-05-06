@@ -33,10 +33,11 @@ var currentCadence:NSNumber = 0;// only when stepping, pedometer
   var relativeAltitude:Double = 0;//From the altimeter, an actual altimeter!
   var cumulativeAltitudeChange:Double = 0;//total alt change RB, always growing due to inaccurate
   var pressure:Double = 0;//From the altimeter,we get pressure!
+//  var valid:Bool=false;
 
 }
 
-func objectifyNote(n: Note) -> NSMutableDictionary? {
+private func objectifyNote(n: Note) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
   dict.setValue(n.activity.rawValue, forKey: "activity");  //set all your values..
   dict.setValue(n.numberOfSteps, forKey: "numberOfSteps");
@@ -52,7 +53,7 @@ func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
   dict.setValue(n.cumulativeAltitudeChange, forKey: "cumulativeAltitudeChange");
   dict.setValue(n.pressure, forKey: "pressure");
-
+//  dict.setValue(n.valid, forKey: "valid");
   return dict
 }
 
