@@ -45,6 +45,7 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.distance, forKey: "distance");
   dict.setValue(n.customNote, forKey: "customNote");
   dict.setValue(n.floorsAscended, forKey: "floorsAscended");
+  dict.setValue(n.floorsDescended, forKey: "floorsAscended");
   dict.setValue(n.currentTripStart.iso8601, forKey: "currentTripStart");
   dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
   dict.setValue(n.pressure, forKey: "pressure");
