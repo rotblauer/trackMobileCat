@@ -97,9 +97,6 @@ private func startCountingSteps() {
 private func startMonitoringElevation(){
   elly.startRelativeAltitudeUpdates(to: OperationQueue.main, withHandler: { (altitudeData:CMAltitudeData?, error:Error?) in
     currentTripNotes.relativeAltitude = altitudeData!.relativeAltitude.doubleValue    // Relative altitude in meters
-    if( currentTripNotes.relativeAltitude>1.5){
-    currentTripNotes.cumulativeAltitudeChange+=abs(currentTripNotes.relativeAltitude)
-    }
     currentTripNotes.pressure = altitudeData!.pressure.doubleValue            // Pressure in kilopascals
   })
 }
