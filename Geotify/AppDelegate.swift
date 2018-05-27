@@ -45,11 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.distanceFilter = kCLDistanceFilterNone
 //    locationManager.maximumRegionMonitoringDistance = 1
     locationManager.pausesLocationUpdatesAutomatically = false
-    locationManager.disallowDeferredLocationUpdates()
+//    locationManager.disallowDeferredLocationUpdates()
     
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
-//    locationManager.activityType = CLActivityType.other
+    locationManager.activityType = CLActivityType.fitness
 //    locationManager.pausesLocationUpdatesAutomatically = true
 //    locationManager.allowDeferredLocationUpdates(untilTraveled: 20, timeout: 120)
 
@@ -117,14 +117,14 @@ extension AppDelegate: CLLocationManagerDelegate {
 //        
 //      }
       
-      if UIDevice.current.batteryState == UIDeviceBatteryState.unplugged
-        && locationManager.pausesLocationUpdatesAutomatically == false {
-        locationManager.pausesLocationUpdatesAutomatically = true
-        locationManager.stopMonitoringSignificantLocationChanges()
-      } else {
-          locationManager.startMonitoringSignificantLocationChanges()
-          locationManager.pausesLocationUpdatesAutomatically = false
-      }
+//      if UIDevice.current.batteryState == UIDeviceBatteryState.unplugged
+//        && locationManager.pausesLocationUpdatesAutomatically == false {
+//        locationManager.pausesLocationUpdatesAutomatically = true
+//        locationManager.stopMonitoringSignificantLocationChanges()
+//      } else {
+//          locationManager.startMonitoringSignificantLocationChanges()
+//          locationManager.pausesLocationUpdatesAutomatically = false
+//      }
       
     } else {
       lastAttemptUpdateAccuracySettings += locations.count;
