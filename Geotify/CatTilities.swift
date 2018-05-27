@@ -287,7 +287,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
     let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
     
     point.setValue(uuid, forKey: "uuid");  //set all your values..
-    point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
+    point.setValue(UIDevice.current.name, forKey: "name");
     let lat = p.coordinate.latitude;
     let lng = p.coordinate.longitude;
     point.setValue(lat, forKey: "lat");
