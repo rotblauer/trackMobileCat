@@ -12,7 +12,6 @@
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4F9609C8209F45F800B861DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9609C7209F45F800B861DE /* HealthKit.framework */; };
 		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
-		4FC1D84B2094E874002C5593 /* TripNoteExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4FC1D8442094E874002C5593 /* TripNoteExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D195F6F73FE2543E46BD75B1 /* Pods_Geotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8DB7C6E862A73FE9500FC40 /* Pods_Geotify.framework */; };
 		D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6521A739B7A00228A1F /* AppDelegate.swift */; };
 		D90CB6581A739B7A00228A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D90CB6561A739B7A00228A1F /* Main.storyboard */; };
@@ -25,16 +24,6 @@
 		D9C1AF6C1A77CD6C00A06B2F /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		4FC1D8492094E874002C5593 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D90CB6451A739B7A00228A1F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4FC1D8432094E874002C5593;
-			remoteInfo = TripNoteExtension;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		4FC1D84F2094E874002C5593 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -42,7 +31,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				4FC1D84B2094E874002C5593 /* TripNoteExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,7 +43,6 @@
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
 		4F9609C7209F45F800B861DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F9609C9209F58FF00B861DE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-		4FC1D8442094E874002C5593 /* TripNoteExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TripNoteExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC1D8522094ECDD002C5593 /* Geotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Geotify.entitlements; sourceTree = "<group>"; };
 		5F215AD4B3C9F2F5BC2E2266 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
 		943F4FA6AC3D20C2C231C61E /* Pods-Geotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.release.xcconfig"; sourceTree = "<group>"; };
@@ -74,13 +61,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4FC1D8412094E874002C5593 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D90CB64A1A739B7A00228A1F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -111,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				D90CB64D1A739B7A00228A1F /* Geotify.app */,
-				4FC1D8442094E874002C5593 /* TripNoteExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,23 +146,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4FC1D8432094E874002C5593 /* TripNoteExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4FC1D84E2094E874002C5593 /* Build configuration list for PBXNativeTarget "TripNoteExtension" */;
-			buildPhases = (
-				4FC1D8402094E874002C5593 /* Sources */,
-				4FC1D8412094E874002C5593 /* Frameworks */,
-				4FC1D8422094E874002C5593 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TripNoteExtension;
-			productName = TripNoteExtension;
-			productReference = 4FC1D8442094E874002C5593 /* TripNoteExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		D90CB64C1A739B7A00228A1F /* Geotify */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D90CB66C1A739B7A00228A1F /* Build configuration list for PBXNativeTarget "Geotify" */;
@@ -198,7 +160,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4FC1D84A2094E874002C5593 /* PBXTargetDependency */,
 			);
 			name = Geotify;
 			productName = Geotify;
@@ -216,11 +177,6 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Ken Toh";
 				TargetAttributes = {
-					4FC1D8432094E874002C5593 = {
-						CreatedOnToolsVersion = 9.3;
-						DevelopmentTeam = 3T8C45E2VR;
-						ProvisioningStyle = Automatic;
-					};
 					D90CB64C1A739B7A00228A1F = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 3T8C45E2VR;
@@ -257,19 +213,11 @@
 			projectRoot = "";
 			targets = (
 				D90CB64C1A739B7A00228A1F /* Geotify */,
-				4FC1D8432094E874002C5593 /* TripNoteExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4FC1D8422094E874002C5593 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D90CB64B1A739B7A00228A1F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -324,13 +272,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4FC1D8402094E874002C5593 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D90CB6491A739B7A00228A1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,14 +286,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4FC1D84A2094E874002C5593 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4FC1D8432094E874002C5593 /* TripNoteExtension */;
-			targetProxy = 4FC1D8492094E874002C5593 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D90CB6561A739B7A00228A1F /* Main.storyboard */ = {
@@ -374,77 +307,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		4FC1D84C2094E874002C5593 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3T8C45E2VR;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = TripNoteExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rotblauer.catTrackMobil2.TripNoteExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		4FC1D84D2094E874002C5593 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3T8C45E2VR;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = TripNoteExtension/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rotblauer.catTrackMobil2.TripNoteExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		D90CB66A1A739B7A00228A1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -571,15 +433,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4FC1D84E2094E874002C5593 /* Build configuration list for PBXNativeTarget "TripNoteExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4FC1D84C2094E874002C5593 /* Debug */,
-				4FC1D84D2094E874002C5593 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D90CB6481A739B7A00228A1F /* Build configuration list for PBXProject "Geotify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
