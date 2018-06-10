@@ -87,52 +87,53 @@ extension AppDelegate: CLLocationManagerDelegate {
 //    savePointToCoreData(manager: manager)
     savePointsToCoreData(locations: locations)
     let data = numberAndLastOfCoreDataTrackpoints()
-    
-    if (lastAttemptUpdateAccuracySettings > updateAccuracySettingsEvery) {
-      lastAttemptUpdateAccuracySettings = 0;
-      // every 10
-      // > ~120mph (planeish)
-      if (locations[0].speed > 50 && locationManager.desiredAccuracy != kCLLocationAccuracyThreeKilometers) {
-        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-        locationManager.activityType = CLActivityType.automotiveNavigation
-        // > ~30mph (carish)
-      } else if (locations[0].speed > 15 && locationManager.desiredAccuracy != kCLLocationAccuracyHundredMeters) {
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        locationManager.activityType = CLActivityType.automotiveNavigation
-        // > ~15mph (bike)
-      } else if (locations[0].speed > 7 && locationManager.desiredAccuracy != kCLLocationAccuracyNearestTenMeters) {
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        locationManager.activityType = CLActivityType.fitness
-      } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = CLActivityType.fitness
-      }
-      
-//      
-//      if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
-//        
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.activityType = CLActivityType.fitness
+//    if (lastAttemptUpdateAccuracySettings > updateAccuracySettingsEvery) {
+//      lastAttemptUpdateAccuracySettings = 0;
+//      // every 10
+//      // > ~120mph (planeish)
+//      if (locations[0].speed > 50 && locationManager.desiredAccuracy != kCLLocationAccuracyThreeKilometers) {
+//        locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+//        locationManager.activityType = CLActivityType.automotiveNavigation
 //        // > ~30mph (carish)
-//      } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
-//        
+//      } else if (locations[0].speed > 15 && locationManager.desiredAccuracy != kCLLocationAccuracyHundredMeters) {
+//        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+//        locationManager.activityType = CLActivityType.automotiveNavigation
 //        // > ~15mph (bike)
-//      } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
-//        
-//      } else if (locationManager.activityType != CLActivityType.fitness) {
-//        
+//      } else if (locations[0].speed > 7 && locationManager.desiredAccuracy != kCLLocationAccuracyNearestTenMeters) {
+//        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+//        locationManager.activityType = CLActivityType.fitness
+//      } else if (locationManager.desiredAccuracy != kCLLocationAccuracyBest) {
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.activityType = CLActivityType.fitness
 //      }
-      
-//      if UIDevice.current.batteryState == UIDeviceBatteryState.unplugged
-//        && locationManager.pausesLocationUpdatesAutomatically == false {
-//        locationManager.pausesLocationUpdatesAutomatically = true
-//        locationManager.stopMonitoringSignificantLocationChanges()
-//      } else {
-//          locationManager.startMonitoringSignificantLocationChanges()
-//          locationManager.pausesLocationUpdatesAutomatically = false
-//      }
-      
-    } else {
-      lastAttemptUpdateAccuracySettings += locations.count;
-    }
+//
+////
+////      if (locations[0].speed > 50 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+////
+////        // > ~30mph (carish)
+////      } else if (locations[0].speed > 15 && locationManager.activityType != CLActivityType.automotiveNavigation) {
+////
+////        // > ~15mph (bike)
+////      } else if (locations[0].speed > 7 && locationManager.activityType != CLActivityType.fitness) {
+////
+////      } else if (locationManager.activityType != CLActivityType.fitness) {
+////
+////      }
+//
+////      if UIDevice.current.batteryState == UIDeviceBatteryState.unplugged
+////        && locationManager.pausesLocationUpdatesAutomatically == false {
+////        locationManager.pausesLocationUpdatesAutomatically = true
+////        locationManager.stopMonitoringSignificantLocationChanges()
+////      } else {
+////          locationManager.startMonitoringSignificantLocationChanges()
+////          locationManager.pausesLocationUpdatesAutomatically = false
+////      }
+//
+//    } else {
+//      lastAttemptUpdateAccuracySettings += locations.count;
+//    }
 
     // every 100||n
     if (data.count < 1000) { return; }
