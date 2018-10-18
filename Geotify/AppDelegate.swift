@@ -23,7 +23,7 @@
 import UIKit
 import CoreLocation
 import CoreData
-import ReachabilitySwift
+// import ReachabilitySwift
 
 var uuid:String = "unset"
 
@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let locationManager = CLLocationManager()
   //declare this property where it won't go out of scope relative to your listener
-  let reachability = Reachability()!
+  // let reachability = Reachability()!
   
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
@@ -138,7 +138,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     lastAttemptPushEvery = 0;
     
-    if (!getRequireWifi() || reachability.isReachableViaWiFi) {
+    if (true) {
       print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
     } else {
