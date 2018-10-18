@@ -29,23 +29,23 @@ var uuid:String = "unset"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
+
   var window: UIWindow?
   let locationManager = CLLocationManager()
   //declare this property where it won't go out of scope relative to your listener
-  
-  
+
+
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
-    
+
     locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
     locationManager.distanceFilter = kCLDistanceFilterNone
 //    locationManager.maximumRegionMonitoringDistance = 1
     locationManager.pausesLocationUpdatesAutomatically = false
 //    locationManager.disallowDeferredLocationUpdates()
-    
+
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
@@ -53,14 +53,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    locationManager.allowDeferredLocationUpdates(untilTraveled: 20, timeout: 120)
 
     //    locationManager.activityType = CLActivityTypeFitness
-    
+
     //TODO sliders and such for distance filter, or convert to once per minute type thing
-    
+
     // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
     UIApplication.shared.cancelAllLocalNotifications()
-    
+
     startUpdatingActivity()
     return true
   }
@@ -76,7 +76,7 @@ extension AppDelegate: CLLocationManagerDelegate {
 
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    
+
     if (amDeleting) {
       print("Location changed but delete in progress. Returning.")
       return
@@ -140,7 +140,7 @@ extension AppDelegate: CLLocationManagerDelegate {
       return;
     }
     lastAttemptPushEvery = 0;
-      
+
     if (true) {
       print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
@@ -151,14 +151,14 @@ extension AppDelegate: CLLocationManagerDelegate {
 //  func locationManager(manager: CLLocationManager, didFinishDeferredUpdatesWithError error: NSError!) {
 //    // Stop deferring updates
 //    manager.deferringUpdates = false
-//    
+//
 //    // Adjust for the next goal
 //  }
 }
 
 class DataController: NSObject {
   var managedObjectContext: NSManagedObjectContext
-  
+
   override init() {
     // This resource is the same name as your xcdatamodeld contained in your project.
     guard let modelURL = Bundle.main.url(forResource: "TrackPoint", withExtension:"momd") else {
@@ -171,7 +171,7 @@ class DataController: NSObject {
     let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
     self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     self.managedObjectContext.persistentStoreCoordinator = psc
-    
+
     let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     let docURL = urls[urls.endIndex-1]
     /* The directory the application uses to store the Core Data store file.
@@ -183,9 +183,6 @@ class DataController: NSObject {
     } catch {
       fatalError("Error migrating store: \(error)")
     }
-    
+
   }
 }
-
-
-

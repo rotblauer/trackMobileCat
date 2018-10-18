@@ -7,7 +7,7 @@
 
 //
 //  CatTilities.swift
-//  
+//
 
 import Foundation
 import CoreLocation
@@ -37,7 +37,7 @@ func setRequireWifi(requireWifi: Bool) {
 private func startTrackingActivityType() {
   activityManager.startActivityUpdates(to: OperationQueue.main) {
    (activity: CMMotionActivity?) in
-    
+
     guard let activity = activity else { return }
     DispatchQueue.main.async {
       if activity.walking {
@@ -64,7 +64,7 @@ private func startCountingSteps() {
     guard let pedometerData = pedometerData, error == nil else { return }
 
     DispatchQueue.main.async {
-      
+
 //    var current=getStoredTripNotes()
 
       if #available(iOS 10.0, *) {
@@ -85,7 +85,7 @@ private func startCountingSteps() {
       if(pedometerData.floorsAscended != nil){
         currentTripNotes.floorsAscended=pedometerData.floorsAscended!
       }
-      
+
       if(pedometerData.floorsDescended != nil){
         currentTripNotes.floorsDescended=pedometerData.floorsDescended!
       }
@@ -105,11 +105,11 @@ private func startMonitoringElevation(){
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
   }
-  
+
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
-  
+
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
   }
@@ -171,14 +171,14 @@ private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary?
 
 // {trackpoint json} -> [{trackpoints json}]
 private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
-  
+
   let points: NSMutableArray = []
-  
+
   for point in trackpoints {
     let jo = objectifyTrackpoint(trackpoint: point)
     points.add(jo as AnyObject)
   }
-  
+
   return points
 }
 
@@ -204,7 +204,7 @@ func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: Tr
 func fetchPointsFromCoreData() -> [TrackPoint]? {
   let moc = DataController().managedObjectContext
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  
+
   do {
     let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
     return fetchedPoints
@@ -226,7 +226,7 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripDistance = currentTripNotes.currentTripDistance + (lastPoint?.distance(from: curPoint))!;
       // overall
       currentTripNotes.currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
-      
+
       lastPoint = curPoint; // update
     }
   } else {
@@ -237,7 +237,7 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripStart = Date();
     }
   }
-  
+
 }
 
 // save a single Trackpoint from location
@@ -248,7 +248,7 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   }
   let moc = DataController().managedObjectContext
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
-  
+
   point.setValue(uuid, forKey: "uuid");  //set all your values..
   point.setValue(UIDevice.current.name, forKey: "name");
   let lat = manager.location!.coordinate.latitude;
@@ -261,7 +261,7 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   point.setValue(manager.location!.course, forKey: "course");
   point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
   point.setValue(getCurrentTripNoteString(), forKey: "notes");
-  
+
   //saver
   do {
     try moc.save()
@@ -285,7 +285,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
 //  print("saving n points", locations.count)
   for p in locations {
     let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
-    
+
     point.setValue(uuid, forKey: "uuid");  //set all your values..
     point.setValue(UIDevice.current.name, forKey: "name");
     let lat = p.coordinate.latitude;
@@ -298,7 +298,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
     point.setValue(p.course, forKey: "course");
     point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
     point.setValue(getCurrentTripNoteString(), forKey: "notes");
-    
+
     //saver
     do {
       try moc.save()
@@ -308,7 +308,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
     manageTripVals(lat: lat, lng: lng)
 
   }
-  
+
   return true
 }
 
@@ -320,13 +320,13 @@ func clearTrackPointsCD() {
   print("Even deleting")
   amDeleting = true
   let moc = DataController().managedObjectContext
-  
+
   // Create Fetch Request
   let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  
+
   // Create Batch Delete Request
   let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-  
+
   do {
     try moc.execute(batchDeleteRequest)
     try moc.save()
@@ -350,10 +350,10 @@ func pushLocs() {
     print("No points to push, returning.")
     return
   }
-  
+
   amPushing = true
   let json = buildJsonPosterFromTrackpoints(trackpoints: points)
-  
+
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
 
   request.httpMethod = "POST"
@@ -362,7 +362,7 @@ func pushLocs() {
   request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
   // had to open up the security cleareance to get it to clear customs
   //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
-  
+
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
     amPushing = false // ja
@@ -389,7 +389,7 @@ func pushLocs() {
 //          print("ret1");
 //          return;
 //        }
-//        
+//
 //        guard let errors = json?["errors"] as? [[String: Any]] else { print("ret 2", json.debugDescription); return; }
 //        if errors.count > 0 {
 //          print(errors)
@@ -404,6 +404,6 @@ func pushLocs() {
 //      }
     }
 //  GeotificationsViewController.updatePointDisplay()
-    
+
   }).resume()
 }
