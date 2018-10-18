@@ -29,7 +29,7 @@ struct PreferencesKeys {
 }
 
 class GeotificationsViewController: UIViewController {
-    
+
 
     @IBAction func setFieldPremade(_ sender: UIButton) {
         setCurrentTripNotes(s: sender.currentTitle!)
@@ -51,7 +51,7 @@ class GeotificationsViewController: UIViewController {
         if (getCurrentTripNotes() != "") {
             // create the alert
             let alert = UIAlertController(title: "UIAlertController", message: "Be sure you want to finish this trip.", preferredStyle: UIAlertControllerStyle.alert)
-            
+
             // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Do Stop", style: UIAlertActionStyle.default, handler: { action in
                 self.doStopTrip();
@@ -59,7 +59,7 @@ class GeotificationsViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { action in
                 self.updatePointDisplay();
             }))
-            
+
             // show the alert
             self.present(alert, animated: true, completion: nil)
         } else {
@@ -71,9 +71,9 @@ class GeotificationsViewController: UIViewController {
     @IBOutlet weak var lastPointLabel: UILabel!
     @IBOutlet weak var tripTimeSince: UILabel!
     @IBOutlet weak var tripDistLabel: UILabel!
-  
+
     var locationManager = CLLocationManager()
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     // 1
@@ -81,27 +81,27 @@ class GeotificationsViewController: UIViewController {
     // 2
     locationManager.requestAlwaysAuthorization()
   }
-    
+
   func updatePointsCount(stringer : String) {
     pointsCountLable.text = stringer
   }
-  
+
   func updateLastPoint(stringer : String) {
     lastPointLabel.text = stringer
   }
     // https://stackoverflow.com/questions/28872450/conversion-from-nstimeinterval-to-hour-minutes-seconds-milliseconds-in-swift#28872601
     func stringFromTimeInterval(interval: TimeInterval) -> NSString {
-        
+
         let ti = NSInteger(-interval) // neg cuz backwards
-        
+
         let seconds = ti % 60
         let minutes = (ti / 60) % 60
         let hours = (ti / 3600)
-        
+
         return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
     }
 
-  
+
   func updatePointDisplay() {
     let data = numberAndLastOfCoreDataTrackpoints()
     updatePointsCount(stringer: "\(data.count)")
@@ -122,20 +122,20 @@ class GeotificationsViewController: UIViewController {
       ps = "No points yet."
     }
     updateLastPoint(stringer: ps)
-    
+
     if (getCurrentTripNotes() != "") {
         tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
-        
+
       let d = getCurrentTripDistance()
       let curdist = d.traveled;
       let curdistFromStart = d.fromStart;
         let meters = String(format: "%.2fme", curdist)
         let miles = String(format: "%.2fmi", curdist/1609)
-      
+
       let metersFStart = String(format: "%.2fme", curdistFromStart)
       let milesFStart = String(format: "%.2fmi", curdistFromStart/1609)
         tripDistLabel.text = "o:\(meters), \(miles)\nfs:\(metersFStart), \(milesFStart)"
-        
+
     } else {
         tripTimeSince.text = "";
         tripDistLabel.text = "";
@@ -143,7 +143,7 @@ class GeotificationsViewController: UIViewController {
   }
 
     @IBAction func swiper(_ sender: UISwipeGestureRecognizer) {
-    
+
         updatePointDisplay()
     }
 
@@ -154,7 +154,7 @@ class GeotificationsViewController: UIViewController {
     @IBAction func zoomToCurrentLocationButton(_ sender: UIButton) {
         updatePointDisplay()
     }
-  
+
   @IBAction func pushPoints(_ sender: Any) {
     pushLocs()
   }
@@ -169,11 +169,11 @@ class GeotificationsViewController: UIViewController {
 extension GeotificationsViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 //    mapView.showsUserLocation = status == .authorizedAlways
-    
+
   }
 //  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //    print("updated pts vc", locations.count)
 ////    updatePointDisplay()
-//    
+//
 //  }
 }
