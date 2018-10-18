@@ -27,22 +27,22 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
+
   var window: UIWindow?
   let locationManager = CLLocationManager()
   //declare this property where it won't go out of scope relative to your listener
   // let reachability = Reachability()!
-  
-  
+
+
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
     locationManager.startUpdatingLocation()
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
-    
+
     //TODO sliders and such for distance filter, or convert to once per minute type thing
-    
+
     // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
     UIApplication.shared.cancelAllLocalNotifications()
     return true
@@ -50,17 +50,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
-  
+
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    
+
     if (amDeleting) {
       print("Location changed but delete in progress. Returning.")
       return
     }
     // TODO: use me to update UI
     savePointToCoreData(manager: manager)
-    
+
 
     let data = numberAndLastOfCoreDataTrackpoints()
     if data.count > 1000 {
@@ -74,7 +74,7 @@ extension AppDelegate: CLLocationManagerDelegate {
 
 class DataController: NSObject {
   var managedObjectContext: NSManagedObjectContext
-  
+
   override init() {
     // This resource is the same name as your xcdatamodeld contained in your project.
     guard let modelURL = Bundle.main.url(forResource: "TrackPoint", withExtension:"momd") else {
@@ -87,7 +87,7 @@ class DataController: NSObject {
     let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
     self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     self.managedObjectContext.persistentStoreCoordinator = psc
-    
+
     let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     let docURL = urls[urls.endIndex-1]
     /* The directory the application uses to store the Core Data store file.
@@ -99,9 +99,6 @@ class DataController: NSObject {
     } catch {
       fatalError("Error migrating store: \(error)")
     }
-    
+
   }
 }
-
-
-

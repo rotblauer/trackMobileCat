@@ -7,7 +7,7 @@
 
 //
 //  CatTilities.swift
-//  
+//
 
 import Foundation
 import CoreLocation
@@ -31,14 +31,14 @@ func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
 
 // {trackpoint json} -> [{trackpoints json}]
 func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
-  
+
   let points: NSMutableArray = []
-  
+
   for point in trackpoints {
     let jo = objectifyTrackpoint(trackpoint: point)
     points.add(jo as AnyObject)
   }
-  
+
   return points
 }
 
@@ -64,7 +64,7 @@ func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: Tr
 func fetchPointsFromCoreData() -> [TrackPoint]? {
   let moc = DataController().managedObjectContext
   let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  
+
   do {
     let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
     return fetchedPoints
@@ -78,7 +78,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   let moc = DataController().managedObjectContext
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
-  
+
   point.setValue(UIDevice.current.name, forKey: "name"); //set all your values..
   point.setValue(manager.location!.coordinate.latitude, forKey: "lat");
   point.setValue(manager.location!.coordinate.longitude, forKey: "long");
@@ -87,7 +87,7 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   point.setValue(manager.location!.speed, forKey: "speed");
   point.setValue(manager.location!.course, forKey: "course");
   point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
-  
+
   //saver
   do {
     try moc.save()
@@ -105,13 +105,13 @@ func clearTrackPointsCD() {
   print("Even deleting")
   amDeleting = true
   let moc = DataController().managedObjectContext
-  
+
   // Create Fetch Request
   let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  
+
   // Create Batch Delete Request
   let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-  
+
   do {
     try moc.execute(batchDeleteRequest)
     try moc.save()
@@ -132,10 +132,10 @@ func pushLocs() {
     print("No points to push, returning.")
     return
   }
-  
+
   amPushing = true
   let json = buildJsonPosterFromTrackpoints(trackpoints: points)
-  
+
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
 
   request.httpMethod = "POST"
@@ -144,7 +144,7 @@ func pushLocs() {
   request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
   // had to open up the security cleareance to get it to clear customs
   //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
-  
+
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
     amPushing = false // ja
@@ -157,7 +157,7 @@ func pushLocs() {
 
       do {
         guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else { return }
-        
+
         guard let errors = json?["errors"] as? [[String: Any]] else { return }
         if errors.count > 0 {
           print(errors)
@@ -172,5 +172,5 @@ func pushLocs() {
       }
     }
   }).resume()
-  
+
 }
