@@ -23,7 +23,7 @@
 import UIKit
 import CoreLocation
 import CoreData
-import ReachabilitySwift
+// import ReachabilitySwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let locationManager = CLLocationManager()
   //declare this property where it won't go out of scope relative to your listener
-  let reachability = Reachability()!
+  // let reachability = Reachability()!
   
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
@@ -63,7 +63,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     
 
     let data = numberAndLastOfCoreDataTrackpoints()
-    if data.count > 1000 && reachability.isReachableViaWiFi {
+    if data.count > 1000 {
       print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
     } else {
