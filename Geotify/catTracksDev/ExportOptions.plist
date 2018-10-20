@@ -6,6 +6,15 @@
 	<true/>
 	<key>destination</key>
 	<string>export</string>
+	<key>manifest</key>
+	<dict>
+		<key>appURL</key>
+		<string>https://github.com/rotblauer/trackMobileCat/blob/master/Geotify/catTracksDev/Geotify.ipa</string>
+		<key>displayImageURL</key>
+		<string>https://github.com/rotblauer/trackMobileCat/blob/master/Geotify/catTracksDev/Icon-App-60x60%402x.png</string>
+		<key>fullSizeImageURL</key>
+		<string>https://github.com/rotblauer/trackMobileCat/blob/master/Geotify/catTracksDev/Icon-App-60x60%402x.png</string>
+	</dict>
 	<key>method</key>
 	<string>development</string>
 	<key>signingStyle</key>
