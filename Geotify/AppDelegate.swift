@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   //declare this property where it won't go out of scope relative to your listener
 
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
 
@@ -135,7 +135,7 @@ extension AppDelegate: CLLocationManagerDelegate {
 
     // every 100||n
     if (data.count < 1000) { return; }
-    lastAttemptPushEvery += locations.count;
+    lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
     if (lastAttemptPushEvery < mayAttemptPushEvery) {
       return;
     }
