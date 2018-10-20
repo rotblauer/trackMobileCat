@@ -7,112 +7,63 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B8DCEEB7BDE4705457679C60630BA18 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2AF9EC704AAD470CAC8FE0D05A5430B /* SystemConfiguration.framework */; };
-		1E2891C38C16404A2E81C66F8DFDAA83 /* Pods-Geotify-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 79460FB5879A17B6B06485D7EB02A6C4 /* Pods-Geotify-dummy.m */; };
-		7352B18EE2E095363C306BA90F9C1ACE /* Pods-Geotify-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D9533F95F006A82680253AA380960B2A /* Pods-Geotify-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8334979984EE505593F070969B05E261 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69D4187F1B8F1EEEA7A0121DE67F2B7 /* Reachability.swift */; };
-		8C37D5985AD7CE434BD2AF9EDA9937DA /* ReachabilitySwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5142C47B1A75048C2649F609D38AC9 /* ReachabilitySwift-dummy.m */; };
-		C2431AF3190921A997D8C10C91F53D23 /* ReachabilitySwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B2239DA93AF8EADE2936E304FDC200C /* ReachabilitySwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C26F0F5DCB85C73F136C26FFC3F0F82D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97D7E984AA2ED06FC886024282B47207 /* Foundation.framework */; };
-		C36C1ABCD632672D634C6D354251B3E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97D7E984AA2ED06FC886024282B47207 /* Foundation.framework */; };
+		234D2A44BB597BCE0C97D11568E533A4 /* Pods-Geotify-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 79460FB5879A17B6B06485D7EB02A6C4 /* Pods-Geotify-dummy.m */; };
+		89E616DC0A5E4235F315D8FE542AD37D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		CEC5604A3504604E1D20FE7DC40E8B78 /* Pods-Geotify-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D9533F95F006A82680253AA380960B2A /* Pods-Geotify-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		2235A8850147D7E34DE055843100C2E1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 584995E258BDE33C2DB657A2602A36C8;
-			remoteInfo = ReachabilitySwift;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01C432C8EC1E2460386B4BDA469DC331 /* Pods-Geotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Geotify.release.xcconfig"; sourceTree = "<group>"; };
 		10B4A66D287BE3976A54B93BC8A30D66 /* Pods-Geotify.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Geotify.modulemap"; sourceTree = "<group>"; };
-		2AD4032D4401279B6C90E7EBDA36FDBE /* ReachabilitySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ReachabilitySwift.framework; path = ReachabilitySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		28BE91EC89C0BE9007713471816F5322 /* Pods_Geotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Geotify.framework; path = "Pods-Geotify.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3379246AF704DBCF87E7413FBD061782 /* Pods-Geotify-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Geotify-acknowledgements.plist"; sourceTree = "<group>"; };
 		48C21E9ABBCE177DD9E20A79E7D17EB8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4B2239DA93AF8EADE2936E304FDC200C /* ReachabilitySwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReachabilitySwift-umbrella.h"; sourceTree = "<group>"; };
-		4C9E676D029FB0CFEEC40271B94A6F46 /* ReachabilitySwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ReachabilitySwift.modulemap; sourceTree = "<group>"; };
 		4D11650DF84DEC480A644499F841CB71 /* Pods-Geotify-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Geotify-frameworks.sh"; sourceTree = "<group>"; };
 		4E91752F0520BF877357C9DBAEA06B05 /* Pods-Geotify-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Geotify-resources.sh"; sourceTree = "<group>"; };
+		5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		79460FB5879A17B6B06485D7EB02A6C4 /* Pods-Geotify-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Geotify-dummy.m"; sourceTree = "<group>"; };
-		8EA4050B7CE46C2396ED7A6BCA7AB58F /* Pods_Geotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Geotify.framework; path = "Pods-Geotify.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9544718ABDE9F901834852562775B416 /* ReachabilitySwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReachabilitySwift-prefix.pch"; sourceTree = "<group>"; };
-		97D7E984AA2ED06FC886024282B47207 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		9D5142C47B1A75048C2649F609D38AC9 /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
-		B69D4187F1B8F1EEEA7A0121DE67F2B7 /* Reachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Reachability/Reachability.swift; sourceTree = "<group>"; };
 		D36F995A16F31017AF3CD40B6CCF2FC0 /* Pods-Geotify-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Geotify-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D9533F95F006A82680253AA380960B2A /* Pods-Geotify-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Geotify-umbrella.h"; sourceTree = "<group>"; };
-		E449573CD91B398E75AFB1B251407902 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F2AF9EC704AAD470CAC8FE0D05A5430B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		FE75950336BBE71B7D1A85DAB0AA2E11 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
-		FF55BB923ABF3D6BDEE95F44FF621D90 /* ReachabilitySwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReachabilitySwift.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1D1F74E61EE099ECC58F188A24057543 /* Frameworks */ = {
+		AEE8273A05E98828AE4D1AFB2628D7DF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C36C1ABCD632672D634C6D354251B3E1 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6B4FE504A11CB9F197007498C620A4F9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C26F0F5DCB85C73F136C26FFC3F0F82D /* Foundation.framework in Frameworks */,
-				1B8DCEEB7BDE4705457679C60630BA18 /* SystemConfiguration.framework in Frameworks */,
+				89E616DC0A5E4235F315D8FE542AD37D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		12C1D76DD49A0592C3A7FA7C69B07C81 /* Products */ = {
+		5E0D919E635D23B70123790B8308F8EF /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				8EA4050B7CE46C2396ED7A6BCA7AB58F /* Pods_Geotify.framework */,
-				2AD4032D4401279B6C90E7EBDA36FDBE /* ReachabilitySwift.framework */,
+				5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */,
 			);
-			name = Products;
+			name = iOS;
 			sourceTree = "<group>";
 		};
-		433CD3331B6C3787F473C941B61FC68F /* Frameworks */ = {
+		6E93A80523ACED6F8DE3D940C2715DC0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E7E283C74B7E79D37D9BAAFF277942F5 /* iOS */,
+				28BE91EC89C0BE9007713471816F5322 /* Pods_Geotify.framework */,
 			);
-			name = Frameworks;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				9BCD5CBAACE7E3EBED55F693896BB924 /* Pods */,
-				12C1D76DD49A0592C3A7FA7C69B07C81 /* Products */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				6E93A80523ACED6F8DE3D940C2715DC0 /* Products */,
 				FBB2E4EEA3A7B40C4B280CFE99C65277 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		8186E3018AE78851C3DC3B346BD28400 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				E449573CD91B398E75AFB1B251407902 /* Info.plist */,
-				4C9E676D029FB0CFEEC40271B94A6F46 /* ReachabilitySwift.modulemap */,
-				FF55BB923ABF3D6BDEE95F44FF621D90 /* ReachabilitySwift.xcconfig */,
-				9D5142C47B1A75048C2649F609D38AC9 /* ReachabilitySwift-dummy.m */,
-				9544718ABDE9F901834852562775B416 /* ReachabilitySwift-prefix.pch */,
-				4B2239DA93AF8EADE2936E304FDC200C /* ReachabilitySwift-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/ReachabilitySwift";
 			sourceTree = "<group>";
 		};
 		94686CF152F3D8FF7FF696434819B811 /* Pods-Geotify */ = {
@@ -133,31 +84,12 @@
 			path = "Target Support Files/Pods-Geotify";
 			sourceTree = "<group>";
 		};
-		9BCD5CBAACE7E3EBED55F693896BB924 /* Pods */ = {
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F47FCCB16BA3F38D5553162F93FAF492 /* ReachabilitySwift */,
+				5E0D919E635D23B70123790B8308F8EF /* iOS */,
 			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		E7E283C74B7E79D37D9BAAFF277942F5 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				97D7E984AA2ED06FC886024282B47207 /* Foundation.framework */,
-				F2AF9EC704AAD470CAC8FE0D05A5430B /* SystemConfiguration.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		F47FCCB16BA3F38D5553162F93FAF492 /* ReachabilitySwift */ = {
-			isa = PBXGroup;
-			children = (
-				B69D4187F1B8F1EEEA7A0121DE67F2B7 /* Reachability.swift */,
-				8186E3018AE78851C3DC3B346BD28400 /* Support Files */,
-			);
-			name = ReachabilitySwift;
-			path = ReachabilitySwift;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		FBB2E4EEA3A7B40C4B280CFE99C65277 /* Targets Support Files */ = {
@@ -171,58 +103,32 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		0291BCBED838599EAF9CE7BAD4B2F985 /* Headers */ = {
+		39613A5CB7966ECC1837BED9DDA3F734 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2431AF3190921A997D8C10C91F53D23 /* ReachabilitySwift-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1B5CECD08B42B805D3805DB5C9DBCFEE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7352B18EE2E095363C306BA90F9C1ACE /* Pods-Geotify-umbrella.h in Headers */,
+				CEC5604A3504604E1D20FE7DC40E8B78 /* Pods-Geotify-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		29DB9B7B72BE5BAE812BFBDF8FF1DC65 /* Pods-Geotify */ = {
+		06E836D05A5F13799ECB39396AE501A2 /* Pods-Geotify */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2E2078B416C144FE7C0BBE4EF460113E /* Build configuration list for PBXNativeTarget "Pods-Geotify" */;
+			buildConfigurationList = 937ED8CB3B0FB9E48D632DD97E16CAF2 /* Build configuration list for PBXNativeTarget "Pods-Geotify" */;
 			buildPhases = (
-				DD8296B7B9FFA7096527E001CDEB51C0 /* Sources */,
-				1D1F74E61EE099ECC58F188A24057543 /* Frameworks */,
-				1B5CECD08B42B805D3805DB5C9DBCFEE /* Headers */,
+				8F31FD9DE6A2C7E6AA243BDFFFE9F343 /* Sources */,
+				AEE8273A05E98828AE4D1AFB2628D7DF /* Frameworks */,
+				39613A5CB7966ECC1837BED9DDA3F734 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F7F62685CE88293FC207AD32CAE4F173 /* PBXTargetDependency */,
 			);
 			name = "Pods-Geotify";
 			productName = "Pods-Geotify";
-			productReference = 8EA4050B7CE46C2396ED7A6BCA7AB58F /* Pods_Geotify.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		584995E258BDE33C2DB657A2602A36C8 /* ReachabilitySwift */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0C1C9C9DB44C18E3C5351AAAFDAAD6F3 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */;
-			buildPhases = (
-				E1CADA3DD683284A61251268D36C2C0D /* Sources */,
-				6B4FE504A11CB9F197007498C620A4F9 /* Frameworks */,
-				0291BCBED838599EAF9CE7BAD4B2F985 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ReachabilitySwift;
-			productName = ReachabilitySwift;
-			productReference = 2AD4032D4401279B6C90E7EBDA36FDBE /* ReachabilitySwift.framework */;
+			productReference = 28BE91EC89C0BE9007713471816F5322 /* Pods_Geotify.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -242,50 +148,32 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 12C1D76DD49A0592C3A7FA7C69B07C81 /* Products */;
+			productRefGroup = 6E93A80523ACED6F8DE3D940C2715DC0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				29DB9B7B72BE5BAE812BFBDF8FF1DC65 /* Pods-Geotify */,
-				584995E258BDE33C2DB657A2602A36C8 /* ReachabilitySwift */,
+				06E836D05A5F13799ECB39396AE501A2 /* Pods-Geotify */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		DD8296B7B9FFA7096527E001CDEB51C0 /* Sources */ = {
+		8F31FD9DE6A2C7E6AA243BDFFFE9F343 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E2891C38C16404A2E81C66F8DFDAA83 /* Pods-Geotify-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E1CADA3DD683284A61251268D36C2C0D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8334979984EE505593F070969B05E261 /* Reachability.swift in Sources */,
-				8C37D5985AD7CE434BD2AF9EDA9937DA /* ReachabilitySwift-dummy.m in Sources */,
+				234D2A44BB597BCE0C97D11568E533A4 /* Pods-Geotify-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		F7F62685CE88293FC207AD32CAE4F173 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ReachabilitySwift;
-			target = 584995E258BDE33C2DB657A2602A36C8 /* ReachabilitySwift */;
-			targetProxy = 2235A8850147D7E34DE055843100C2E1 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		10E7F2AC1B570AF97BEA80DB48C5B868 /* Debug */ = {
+		59C276A53483D2ED86C14608F6782335 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF55BB923ABF3D6BDEE95F44FF621D90 /* ReachabilitySwift.xcconfig */;
+			baseConfigurationReference = 01C432C8EC1E2460386B4BDA469DC331 /* Pods-Geotify.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -295,26 +183,27 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ReachabilitySwift/ReachabilitySwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ReachabilitySwift/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Geotify/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
-				PRODUCT_MODULE_NAME = ReachabilitySwift;
-				PRODUCT_NAME = ReachabilitySwift;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Geotify/Pods-Geotify.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		372C9A768DD825ED9CDD17821074993F /* Debug */ = {
+		7F723FFDA49B54F53140E3170DE39203 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE75950336BBE71B7D1A85DAB0AA2E11 /* Pods-Geotify.debug.xcconfig */;
 			buildSettings = {
@@ -341,8 +230,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -412,74 +299,6 @@
 			};
 			name = Debug;
 		};
-		96C49A1F9F5617F16188DE590EF46D69 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FF55BB923ABF3D6BDEE95F44FF621D90 /* ReachabilitySwift.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ReachabilitySwift/ReachabilitySwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ReachabilitySwift/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/ReachabilitySwift/ReachabilitySwift.modulemap";
-				PRODUCT_MODULE_NAME = ReachabilitySwift;
-				PRODUCT_NAME = ReachabilitySwift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		B2E6A133696FBB66BB6E9C0E19339927 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01C432C8EC1E2460386B4BDA469DC331 /* Pods-Geotify.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-Geotify/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Geotify/Pods-Geotify.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		B42B54097A876E8A982CBF5DAA91B1AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -541,15 +360,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0C1C9C9DB44C18E3C5351AAAFDAAD6F3 /* Build configuration list for PBXNativeTarget "ReachabilitySwift" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				10E7F2AC1B570AF97BEA80DB48C5B868 /* Debug */,
-				96C49A1F9F5617F16188DE590EF46D69 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -559,11 +369,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E2078B416C144FE7C0BBE4EF460113E /* Build configuration list for PBXNativeTarget "Pods-Geotify" */ = {
+		937ED8CB3B0FB9E48D632DD97E16CAF2 /* Build configuration list for PBXNativeTarget "Pods-Geotify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				372C9A768DD825ED9CDD17821074993F /* Debug */,
-				B2E6A133696FBB66BB6E9C0E19339927 /* Release */,
+				7F723FFDA49B54F53140E3170DE39203 /* Debug */,
+				59C276A53483D2ED86C14608F6782335 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
