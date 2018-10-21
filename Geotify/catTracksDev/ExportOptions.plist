@@ -9,11 +9,11 @@
 	<key>manifest</key>
 	<dict>
 		<key>appURL</key>
-		<string>https://github.com/rotblauer/trackMobileCat/blob/master/Geotify/catTracksDev/Geotify.ipa</string>
+		<string>https://www.dropbox.com/s/81fwcjm7y6j7rw5/Geotify.ipa?dl=1</string>
 		<key>displayImageURL</key>
-		<string>https://github.com/rotblauer/trackMobileCat/blob/master/Geotify/catTracksDev/Icon-App-60x60%402x.png</string>
+		<string>https://www.dropbox.com/s/iptzlt87ivw717c/Icon-App-60x60%403x.png?dl=1</string>
 		<key>fullSizeImageURL</key>
-		<string>https://github.com/rotblauer/trackMobileCat/blob/master/Geotify/catTracksDev/Icon-App-60x60%402x.png</string>
+		<string>https://www.dropbox.com/s/iptzlt87ivw717c/Icon-App-60x60%403x.png?dl=1</string>
 	</dict>
 	<key>method</key>
 	<string>development</string>
