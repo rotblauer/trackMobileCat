@@ -116,13 +116,12 @@ class GeotificationsViewController: UIViewController {
       let course = String(format: "%.3f", (p?.course)!)
       let speed = String(format: "%.9f", (p?.speed)!)
       let t = p?.time
-      let distance = String(format: "%.4f", (currentTripNotes.distance))
       let currentTripDistance = String(format: "%.4f", (currentTripNotes.currentTripDistance))
       let relativeAltitude = String(format: "%.4f", (currentTripNotes.relativeAltitude))
       let pressure = String(format: "%.4f", (currentTripNotes.pressure))
 
 //      UUID: \(_uuid)\n
-      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\n FooDistance: \(distance)\tDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\t"
+      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\t"
     } else {
       ps = "No points yet."
     }
@@ -173,12 +172,5 @@ class GeotificationsViewController: UIViewController {
 // MARK: - Location Manager Delegate
 extension GeotificationsViewController: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//    mapView.showsUserLocation = status == .authorizedAlways
-
   }
-//  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//    print("updated pts vc", locations.count)
-////    updatePointDisplay()
-//
-//  }
 }
