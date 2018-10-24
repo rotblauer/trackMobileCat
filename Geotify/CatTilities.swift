@@ -20,7 +20,7 @@ import CoreMotion
 private var firstPoint:CLLocation? = nil;
 private var lastPoint:CLLocation? = nil;
 var currentTripNotes = Note()
-
+private var customTripNote = ""
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 private let elly=CMAltimeter();// We have an actual altimeter!
@@ -121,24 +121,12 @@ func setCurrentTripNotes(s: String) {
    currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
   //TODO store actual currentTripNotes
-  let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
-  defaults?.set(s, forKey: "tripNoteKey")
+  customTripNote = s
   savePointToCoreData(manager: CLLocationManager())
 }
 
 func getStoredCustomTripNotes() -> String {
-//  Reading from NSUserDefaults is extremely fast. It will cache values to avoid reading from the disk, and takes about 0.5 microseconds to do
-  let defaults = UserDefaults(suiteName: "group.com.rotblauer.catTrackMobil2")
-
-  if(defaults==nil){
-    return("")
-  }else{
-    if(defaults?.string(forKey: "tripNoteKey")==nil){
-    return("")
-  }else{
-      return(defaults!.string(forKey: "tripNoteKey"))!
-  }
-  }
+return customTripNote
 }
 
 private func getCurrentTripNoteString() -> String {
