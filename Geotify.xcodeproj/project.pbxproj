@@ -183,7 +183,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.AccessWiFi = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -191,7 +191,13 @@
 							com.apple.BackgroundModes = {
 								enabled = 0;
 							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
 							com.apple.HealthKit = {
+								enabled = 1;
+							};
+							com.apple.NearFieldCommunicationTagReading = {
 								enabled = 1;
 							};
 							com.apple.Siri = {
