@@ -7,7 +7,6 @@
 		<dict>
 			<key>architectures</key>
 			<array>
-				<string>armv7</string>
 				<string>arm64</string>
 			</array>
 			<key>certificate</key>
@@ -23,13 +22,24 @@
 			<dict>
 				<key>application-identifier</key>
 				<string>3T8C45E2VR.com.rotblauer.catTrackMobil2</string>
+				<key>com.apple.developer.default-data-protection</key>
+				<string>NSFileProtectionComplete</string>
 				<key>com.apple.developer.healthkit</key>
 				<true/>
+				<key>com.apple.developer.healthkit.access</key>
+				<array/>
+				<key>com.apple.developer.networking.wifi-info</key>
+				<true/>
+				<key>com.apple.developer.nfc.readersession.formats</key>
+				<array>
+					<string>NDEF</string>
+				</array>
 				<key>com.apple.developer.team-identifier</key>
 				<string>3T8C45E2VR</string>
 				<key>com.apple.security.application-groups</key>
 				<array>
 					<string>group.com.rotblauer.catTrackMobil2</string>
+					<string>group.com.rotblauer.catTracks</string>
 				</array>
 				<key>get-task-allow</key>
 				<true/>
@@ -39,7 +49,7 @@
 			<key>profile</key>
 			<dict>
 				<key>UUID</key>
-				<string>9c717632-7d2b-4c17-853c-ecf16ebbe6fa</string>
+				<string>65049611-e843-4252-85d1-34631c0637d4</string>
 				<key>name</key>
 				<string>iOS Team Provisioning Profile: com.rotblauer.catTrackMobil2</string>
 			</dict>
