@@ -56,6 +56,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.shared.cancelAllLocalNotifications()
 
     startUpdatingActivity()
+    
+    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    let documentsDirectory = paths[0]
+    let fileName = "\(Date()).log"
+    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
+    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
+
     return true
   }
 }
@@ -90,12 +97,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
     lastAttemptPushEvery = 0;
 
-    if (true) {
-      print("Have wifi and will push \(data.count) points.")
       pushLocs() // to the cloud
-    } else {
-      print("Have not got wifi or only a few points. Have \(data.count) points stockpiled.")
-    }
   }
 }
 
