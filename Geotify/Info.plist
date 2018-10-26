@@ -35,14 +35,16 @@
 	<string>CatTracks requires location information to track your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>always for cats</string>
-	<key>NSSiriUsageDescription</key>
-	<string>Siri for trips</string>
 	<key>NSMotionUsageDescription</key>
 	<string>For auto labels</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Siri for trips</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
