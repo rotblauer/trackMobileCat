@@ -10,8 +10,8 @@
 		083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */; };
 		087627601E3002F400343882 /* Criel sur Mer.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0876275F1E3002F400343882 /* Criel sur Mer.gpx */; };
 		28E7306F75651452C8705A86 /* Pods_Geotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00EEBA13D3DC9C25B73415F /* Pods_Geotify.framework */; };
+		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
-		4F9609C8209F45F800B861DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F9609C7209F45F800B861DE /* HealthKit.framework */; };
 		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
 		D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6521A739B7A00228A1F /* AppDelegate.swift */; };
 		D90CB6581A739B7A00228A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D90CB6561A739B7A00228A1F /* Main.storyboard */; };
@@ -41,8 +41,8 @@
 		083760051E2F938900035CAD /* TrackPoint.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrackPoint.xcdatamodel; sourceTree = "<group>"; };
 		0876275F1E3002F400343882 /* Criel sur Mer.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Criel sur Mer.gpx"; sourceTree = "<group>"; };
 		440C0F9478B92A69A041D344 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
+		4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
-		4F9609C7209F45F800B861DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F9609C9209F58FF00B861DE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		4FC1D8522094ECDD002C5593 /* Geotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Geotify.entitlements; sourceTree = "<group>"; };
 		BEFAEE3955B49A89124AC81E /* Pods-Geotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.release.xcconfig"; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D90CB6751A73A16700228A1F /* MapKit.framework in Frameworks */,
-				4F9609C8209F45F800B861DE /* HealthKit.framework in Frameworks */,
+				4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */,
 				D90CB6731A739D4300228A1F /* CoreLocation.framework in Frameworks */,
 				28E7306F75651452C8705A86 /* Pods_Geotify.framework in Frameworks */,
 			);
@@ -135,7 +135,7 @@
 		D9AEA6FE1A793D570020A0D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4F9609C7209F45F800B861DE /* HealthKit.framework */,
+				4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */,
 				D90CB6741A73A16700228A1F /* MapKit.framework */,
 				D90CB6721A739D4300228A1F /* CoreLocation.framework */,
 				C00EEBA13D3DC9C25B73415F /* Pods_Geotify.framework */,
