@@ -53,15 +53,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
-    UIApplication.shared.cancelAllLocalNotifications()
-
+//    UIApplication.shared.cancelAllLocalNotifications()
+//    UserNotifications
     startUpdatingActivity()
     
-    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-    let documentsDirectory = paths[0]
-    let fileName = "\(Date()).log"
-    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
-    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
+//    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+//    let documentsDirectory = paths[0]
+//    let fileName = "\(Date()).log"
+//    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
+//    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
 
     return true
   }
