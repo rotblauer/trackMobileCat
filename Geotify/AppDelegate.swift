@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let locationManager = CLLocationManager()
   //declare this property where it won't go out of scope relative to your listener
-
+//https://www.raywenderlich.com/5247-core-location-tutorial-for-ios-tracking-visited-locations
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
-
     //TODO sliders and such for distance filter, or convert to once per minute type thing
 
     // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
@@ -57,12 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    UserNotifications
     startUpdatingActivity()
     
-//    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-//    let documentsDirectory = paths[0]
-//    let fileName = "\(Date()).log"
-//    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
-//    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
-
+    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    let documentsDirectory = paths[0]
+    let fileName = "\(Date()).log"
+    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
+    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
+    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stdout)
     return true
   }
 }
@@ -96,7 +95,6 @@ extension AppDelegate: CLLocationManagerDelegate {
       return;
     }
     lastAttemptPushEvery = 0;
-
       pushLocs() // to the cloud
   }
 }
