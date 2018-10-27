@@ -118,7 +118,7 @@ class GeotificationsViewController: UIViewController {
       let pressure = String(format: "%.4f", (currentTripNotes.pressure))
 
 //      UUID: \(_uuid)\n
-      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: V.UnHealthRecords"
+      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: V.carve"
     } else {
       ps = "No points yet."
     }
