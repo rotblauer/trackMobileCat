@@ -115,6 +115,15 @@ private func startMonitoringElevation(){
   }
 }
 
+func addVisit(visit:CLVisit,place:String){
+  let v = Visit.init(fromVisit: visit, placeAt: place)
+  savePointToCoreData(manager: CLLocationManager())
+  currentTripNotes.currentVisit=v
+  savePointToCoreData(manager: CLLocationManager())
+  currentTripNotes.currentVisit=nil
+}
+
+
 func setCurrentTripNotes(s: String) {
   savePointToCoreData(manager: CLLocationManager())
    currentTripNotes = Note()

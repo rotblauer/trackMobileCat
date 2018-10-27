@@ -24,6 +24,8 @@ import UIKit
 import CoreLocation
 import CoreData
 import Intents
+import UserNotifications
+
 
 var uuid:String = "unset"
 
@@ -32,36 +34,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   let locationManager = CLLocationManager()
+  let center = UNUserNotificationCenter.current()
+  static let geoCoder = CLGeocoder()
+  
   //declare this property where it won't go out of scope relative to your listener
 //https://www.raywenderlich.com/5247-core-location-tutorial-for-ios-tracking-visited-locations
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    locationManager.delegate = self
-    locationManager.requestAlwaysAuthorization()
-
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
-    locationManager.allowsBackgroundLocationUpdates = true
-    locationManager.distanceFilter = kCLDistanceFilterNone
-    locationManager.pausesLocationUpdatesAutomatically = false
-
-    locationManager.startUpdatingLocation()
-    locationManager.startMonitoringSignificantLocationChanges()
-    locationManager.activityType = CLActivityType.fitness
-    //TODO sliders and such for distance filter, or convert to once per minute type thing
-
-    // application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
-    UIDevice.current.isBatteryMonitoringEnabled = true
-    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
-//    UIApplication.shared.cancelAllLocalNotifications()
-//    UserNotifications
-    startUpdatingActivity()
-    
+  fileprivate func startLog() {
     var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
     let fileName = "\(Date()).log"
     let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
     freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
     freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stdout)
+  }
+  
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    locationManager.delegate = self
+    locationManager.requestAlwaysAuthorization()
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
+    locationManager.allowsBackgroundLocationUpdates = true
+    locationManager.pausesLocationUpdatesAutomatically = false
+    locationManager.distanceFilter = kCLDistanceFilterNone
+    locationManager.startMonitoringVisits()
+    locationManager.startUpdatingLocation()
+    locationManager.startMonitoringSignificantLocationChanges()
+    locationManager.activityType = CLActivityType.fitness
+
+    UIDevice.current.isBatteryMonitoringEnabled = true
+    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
+//    UIApplication.shared.cancelAllLocalNotifications()
+//    UserNotifications
+    startUpdatingActivity()
+    
+    startLog()
     return true
   }
 }
@@ -74,6 +80,39 @@ var lastAttemptPushEvery:int_fast64_t = 0;
 
 extension AppDelegate: CLLocationManagerDelegate {
 
+  
+  func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
+    // create CLLocation from the coordinates of CLVisit
+    let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
+    
+    // Get location description
+    
+    AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
+      
+      if let place = placemarks?.first {
+        let description = "\(place)"
+        self.newVisitReceived(visit, description: description)
+      }
+      
+    }
+  }
+  
+  func newVisitReceived(_ visit: CLVisit, description: String) {
+    addVisit(visit: visit, place: description)
+    
+    let content = UNMutableNotificationContent()
+    content.title = "New Visit 📌"
+    content.body = description
+    content.sound = UNNotificationSound.default
+    
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+    let request = UNNotificationRequest(identifier: "Cat visit", content: content, trigger: trigger)
+    
+    center.add(request, withCompletionHandler: nil)
+  }
+  
+  
+  
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
@@ -88,7 +127,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
     locationManager.activityType = CLActivityType.fitness
 
-    // every 100||n
     if (data.count < 1000) { return; }
     lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
     if (lastAttemptPushEvery < mayAttemptPushEvery) {
