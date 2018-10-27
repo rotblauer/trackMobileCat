@@ -32,8 +32,10 @@ private func objectifyVisit(v: Visit?) -> NSMutableDictionary? {
   if let it = v?.place {
     dict.setValue(it, forKey: "place");
   }
-  if dict.count == 0 {
-    dict.setValue("NA", forKey: "place");
+  if dict.count > 0 {
+    dict.setValue("TRUE", forKey: "validVisit");
+  }else{
+    dict.setValue("FALSE", forKey: "validVisit");
   }
   return dict
 }

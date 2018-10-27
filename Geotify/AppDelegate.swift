@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
+    
     locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
     locationManager.pausesLocationUpdatesAutomatically = false
@@ -61,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
 
+    center.requestAuthorization(options: [.alert, .sound]) { granted, error in
+    }
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
 //    UIApplication.shared.cancelAllLocalNotifications()
@@ -93,7 +96,6 @@ extension AppDelegate: CLLocationManagerDelegate {
         let description = "\(place)"
         self.newVisitReceived(visit, description: description)
       }
-      
     }
   }
   
@@ -111,8 +113,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     center.add(request, withCompletionHandler: nil)
   }
   
-  
-  
+
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
@@ -166,4 +167,7 @@ class DataController: NSObject {
     }
 
   }
+  
+  
+  
 }
