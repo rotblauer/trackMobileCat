@@ -31,8 +31,6 @@
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string> always for cats</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>CatTracks requires location information to track your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>always for cats</string>
 	<key>NSMotionUsageDescription</key>
