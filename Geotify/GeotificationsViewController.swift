@@ -76,10 +76,7 @@ class GeotificationsViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // 1
-    locationManager.delegate = self
-    // 2
-    locationManager.requestAlwaysAuthorization()
+ 
   }
 
   func updatePointsCount(stringer : String) {
