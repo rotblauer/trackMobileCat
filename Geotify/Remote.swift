@@ -40,23 +40,14 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
   return points
 }
 
-
-// send POST request with array of json pointies
-private var amPushing = false
-func getAmPushing() -> Bool {
-  return amPushing
-}
 func pushLocs() {
-  if (amPushing) { return } //catch de dupes
-  
   // Catch no or unavailable points.
-  let points = fetchPointsFromCoreData()!
+  let current = getCurrentFetch()
+  let points = fetchPointsFromCoreData(toFetch:current)!
   if points.count == 0 {
     print("No points to push, returning.")
     return
   }
-  
-  amPushing = true
   let json = buildJsonPosterFromTrackpoints(trackpoints: points)
   
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
@@ -70,46 +61,13 @@ func pushLocs() {
   
   // needs this, kinda maybe?
   URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-    amPushing = false // ja
     if error != nil {
       print(error ?? "NONE")
-      if (postponedPoints.count > 0) {
-        if (savePointsToCoreData(locations: postponedPoints)) {
-          postponedPoints.removeAll();
-        }
-      }
       return //giveup. we'll getemnextime
     } else {
       print("Boldy deleting.")
-      clearTrackPointsCD()
-      if (postponedPoints.count > 0) {
-        if (savePointsToCoreData(locations: postponedPoints)) {
-          postponedPoints.removeAll();
-        }
-      }
-      //      // this hits 'ret 2' with json == nil
-      //      do {
-      //        print("doing do")
-      //        guard let json = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] else {
-      //          print("ret1");
-      //          return;
-      //        }
-      //
-      //        guard let errors = json?["errors"] as? [[String: Any]] else { print("ret 2", json.debugDescription); return; }
-      //        if errors.count > 0 {
-      //          print(errors)
-      //          return
-      //        } else {
-      //          // was success
-      //          // delete local corestore points
-      //          //ornot
-      //          print("Successfully posted points. Will delete the stockpile now.")
-      //          clearTrackPointsCD()
-      //        }
-      //      }
+      clearTrackPointsCD(toDelete: current)
     }
-    //  GeotificationsViewController.updatePointDisplay()
-    
   }).resume()
 }
 

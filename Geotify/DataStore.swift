@@ -11,26 +11,10 @@ import CoreLocation
 import CoreData
 import UIKit
 
-// get all trackpoints from data store
-func fetchPointsFromCoreData() -> [TrackPoint]? {
-  let moc = DataController().managedObjectContext
-  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  
-  do {
-    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
-    return fetchedPoints
-  } catch {
-    print("Failed to fetch employees: \(error)")
-    return []
-  }
-}
+
 
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
-  if (getAmPushing()) {
-    postponedPoints.append(manager.location!)
-    return nil;
-  }
   let moc = DataController().managedObjectContext
   let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
   
@@ -58,14 +42,8 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   return point
 }
 
-var postponedPoints:[CLLocation] = [];
-
 // save multiple Trackpoints
 func savePointsToCoreData(locations: [CLLocation]) -> Bool {
-  if (getAmPushing()) {
-    postponedPoints.append(contentsOf: locations);
-    return true;
-  }
   let moc = DataController().managedObjectContext
   //  print("saving n points", locations.count)
   for p in locations {
@@ -97,20 +75,27 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
   return true
 }
 
-var amDeleting : BooleanLiteralType = false
-func getAmDeleting() -> BooleanLiteralType {
-  return amDeleting
+func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
+  return NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 }
-func clearTrackPointsCD() {
-  print("Even deleting")
-  amDeleting = true
+
+// get all trackpoints from data store
+func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [TrackPoint]? {
   let moc = DataController().managedObjectContext
-  
-  // Create Fetch Request
-  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  
-  // Create Batch Delete Request
-  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+  do {
+    let fetchedPoints = try moc.fetch(toFetch) as! [TrackPoint]
+    return fetchedPoints
+  } catch {
+    print("Failed to fetch employees: \(error)")
+    return []
+  }
+}
+
+func clearTrackPointsCD(toDelete: NSFetchRequest<NSFetchRequestResult>) {
+
+  let moc = DataController().managedObjectContext
+
+  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: toDelete)
   
   do {
     try moc.execute(batchDeleteRequest)
@@ -118,7 +103,6 @@ func clearTrackPointsCD() {
   } catch {
     // Error Handling
   }
-  amDeleting = false
 }
 
 func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {

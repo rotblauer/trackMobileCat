@@ -107,13 +107,6 @@ extension AppDelegate: CLLocationManagerDelegate {
 
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-    if (amDeleting) {
-      print("Location changed but delete in progress. Returning.")
-      return
-    }
-    // TODO: use me to update UI
-//    savePointToCoreData(manager: manager)
     savePointsToCoreData(locations: locations)
     let data = numberAndLastOfCoreDataTrackpoints()
     locationManager.desiredAccuracy = kCLLocationAccuracyBest
