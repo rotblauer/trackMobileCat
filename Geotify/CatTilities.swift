@@ -197,19 +197,7 @@ func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: Tr
   return (i, lastP)
 }
 
-// get all trackpoints from data store
-func fetchPointsFromCoreData() -> [TrackPoint]? {
-  let moc = DataController().managedObjectContext
-  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 
-  do {
-    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
-    return fetchedPoints
-  } catch {
-    print("Failed to fetch employees: \(error)")
-    return []
-  }
-}
 
 func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
   if (currentTripNotes.customNote != "") {
@@ -237,6 +225,19 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
 
 }
 
+// get all trackpoints from data store
+func fetchPointsFromCoreData() -> [TrackPoint]? {
+  let moc = DataController().managedObjectContext
+  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  
+  do {
+    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
+    return fetchedPoints
+  } catch {
+    print("Failed to fetch employees: \(error)")
+    return []
+  }
+}
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   if (amPushing) {
