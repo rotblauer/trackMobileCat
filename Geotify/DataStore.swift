@@ -120,3 +120,21 @@ func clearTrackPointsCD() {
   }
   amDeleting = false
 }
+
+func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {
+  var i : int_fast64_t = 0
+  var lastP : TrackPoint? = nil
+  let moc = DataController().managedObjectContext
+  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+  pointsFetch.includesPropertyValues = false
+  do {
+    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
+    i = Int64(fetchedPoints.count)
+    if i > 0 {
+      lastP = fetchedPoints.last // thinkin tis last not first nor middle child
+    }
+  } catch {
+    print("Failed to fetch employees \(error)")
+  }
+  return (i, lastP)
+}

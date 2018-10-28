@@ -1,0 +1,75 @@
+2018-10-24 19:14:53.044929-0500 Geotify[1474:594155] TIC TCP Conn Failed [4:0x280691680]: 1:60 Err(60)
+2018-10-24 19:14:53.047160-0500 Geotify[1474:594155] Task <B3149A26-1C6A-4526-AC41-A25258045CC3>.<4> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:14:53.047571-0500 Geotify[1474:590900] Task <B3149A26-1C6A-4526-AC41-A25258045CC3>.<4> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283dda4c0 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1199 points.
+2018-10-24 19:16:33.020830-0500 Geotify[1474:590900] TIC TCP Conn Failed [5:0x2806915c0]: 1:60 Err(60)
+2018-10-24 19:16:33.025061-0500 Geotify[1474:590900] Task <F7F40581-300A-4CFC-A558-6AD8ED0AC973>.<5> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:16:33.026802-0500 Geotify[1474:594155] Task <F7F40581-300A-4CFC-A558-6AD8ED0AC973>.<5> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d08b40 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1299 points.
+2018-10-24 19:18:13.028196-0500 Geotify[1474:595275] TIC TCP Conn Failed [6:0x2806918c0]: 1:60 Err(60)
+2018-10-24 19:18:13.029571-0500 Geotify[1474:595275] Task <2E2CAB00-3A02-468F-A618-3D7A7C1ACA56>.<6> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:18:13.029973-0500 Geotify[1474:597245] Task <2E2CAB00-3A02-468F-A618-3D7A7C1ACA56>.<6> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d1c060 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1399 points.
+2018-10-24 19:19:53.018049-0500 Geotify[1474:597486] TIC TCP Conn Failed [7:0x280691500]: 1:60 Err(60)
+2018-10-24 19:19:53.020527-0500 Geotify[1474:597486] Task <96122166-21EE-4DFA-9FF3-01CFCDA53FA7>.<7> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:19:53.021150-0500 Geotify[1474:597088] Task <96122166-21EE-4DFA-9FF3-01CFCDA53FA7>.<7> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d18570 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1499 points.
+2018-10-24 19:21:33.033072-0500 Geotify[1474:597705] TIC TCP Conn Failed [8:0x280691440]: 1:60 Err(60)
+2018-10-24 19:21:33.036048-0500 Geotify[1474:597705] Task <1BB6560A-D245-45C1-AB70-4D7C4EE7ACA5>.<8> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:21:33.036580-0500 Geotify[1474:597486] Task <1BB6560A-D245-45C1-AB70-4D7C4EE7ACA5>.<8> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d076f0 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1599 points.
+2018-10-24 19:23:13.055233-0500 Geotify[1474:597486] TIC TCP Conn Failed [9:0x280695800]: 1:60 Err(60)
+2018-10-24 19:23:13.056977-0500 Geotify[1474:597486] Task <2B0ABAC8-9FB3-47F6-A02F-86CE0C875D1E>.<9> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:23:13.057420-0500 Geotify[1474:597867] Task <2B0ABAC8-9FB3-47F6-A02F-86CE0C875D1E>.<9> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d00150 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1699 points.
+2018-10-24 19:24:53.005953-0500 Geotify[1474:597963] TIC TCP Conn Failed [10:0x280691680]: 1:60 Err(60)
+2018-10-24 19:24:53.010181-0500 Geotify[1474:597963] Task <E0EFE71E-3133-4096-BA1C-D813AB30AA48>.<10> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:24:53.011458-0500 Geotify[1474:597867] Task <E0EFE71E-3133-4096-BA1C-D813AB30AA48>.<10> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d100f0 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1799 points.
+2018-10-24 19:26:33.026101-0500 Geotify[1474:598455] TIC TCP Conn Failed [11:0x280690fc0]: 1:60 Err(60)
+2018-10-24 19:26:33.027930-0500 Geotify[1474:598455] Task <FD3B82EA-4EAD-46F0-B6F5-5B5A19D9868C>.<11> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 19:26:33.028538-0500 Geotify[1474:598454] Task <FD3B82EA-4EAD-46F0-B6F5-5B5A19D9868C>.<11> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d10060 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1899 points.
+Boldy deleting.
+Even deleting
+Have wifi and will push 1098 points.
+Boldy deleting.
+Even deleting
+Have wifi and will push 1099 points.
+2018-10-24 20:04:53.170616-0500 Geotify[1474:600032] TIC TCP Conn Failed [14:0x280698300]: 1:60 Err(60)
+2018-10-24 20:04:53.172327-0500 Geotify[1474:600032] Task <6C09A91E-A2D9-4709-AE06-E61E741A5B40>.<14> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 20:04:53.173188-0500 Geotify[1474:603317] Task <6C09A91E-A2D9-4709-AE06-E61E741A5B40>.<14> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d006c0 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1199 points.
+2018-10-24 20:06:33.127125-0500 Geotify[1474:600116] TIC TCP Conn Failed [15:0x2806806c0]: 1:60 Err(60)
+2018-10-24 20:06:33.128934-0500 Geotify[1474:600116] Task <59B63BC9-DB98-43E7-ACCD-3CA92DBB83A2>.<15> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 20:06:33.129753-0500 Geotify[1474:601576] Task <59B63BC9-DB98-43E7-ACCD-3CA92DBB83A2>.<15> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d1c090 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1299 points.
+2018-10-24 20:08:13.185493-0500 Geotify[1474:600032] TIC TCP Conn Failed [16:0x280691200]: 1:60 Err(60)
+2018-10-24 20:08:13.186663-0500 Geotify[1474:600032] Task <D7026E3D-0366-41AB-AEE8-BD0C97BDAD5C>.<16> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 20:08:13.187233-0500 Geotify[1474:603317] Task <D7026E3D-0366-41AB-AEE8-BD0C97BDAD5C>.<16> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d1c060 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1399 points.
+2018-10-24 20:09:53.180200-0500 Geotify[1474:603317] TIC TCP Conn Failed [17:0x280695f80]: 1:60 Err(60)
+2018-10-24 20:09:53.181618-0500 Geotify[1474:603317] Task <A17E3854-5C11-4C08-B724-A3AA46511DF2>.<17> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 20:09:53.182021-0500 Geotify[1474:600116] Task <A17E3854-5C11-4C08-B724-A3AA46511DF2>.<17> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283dc7060 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1499 points.
+2018-10-24 20:11:33.171770-0500 Geotify[1474:600032] TIC TCP Conn Failed [18:0x280690fc0]: 1:60 Err(60)
+2018-10-24 20:11:33.173768-0500 Geotify[1474:600032] Task <B9F919A5-37F3-42E5-8DE0-7B096142201F>.<18> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 20:11:33.174565-0500 Geotify[1474:603317] Task <B9F919A5-37F3-42E5-8DE0-7B096142201F>.<18> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283d16370 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
+Have wifi and will push 1599 points.
+2018-10-24 20:13:13.169478-0500 Geotify[1474:600116] TIC TCP Conn Failed [19:0x280691200]: 1:60 Err(60)
+2018-10-24 20:13:13.171012-0500 Geotify[1474:600116] Task <050B5594-DAD0-4FE3-B8D0-9E34038102A4>.<19> HTTP load failed (error code: -1001 [1:60])
+2018-10-24 20:13:13.171811-0500 Geotify[1474:601576] Task <050B5594-DAD0-4FE3-B8D0-9E34038102A4>.<19> finished with error - code: -1001
+Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={NSUnderlyingError=0x283dc1e60 {Error Domain=kCFErrorDomainCFNetwork Code=-1001 "(null)" UserInfo={_kCFStreamErrorCodeKey=60, _kCFStreamErrorDomainKey=1}}, NSErrorFailingURLStringKey=http://track.areteh.co:3001/populate/, NSErrorFailingURLKey=http://track.areteh.co:3001/populate/, _kCFStreamErrorDomainKey=1, _kCFStreamErrorCodeKey=60, NSLocalizedDescription=The request timed out.}
