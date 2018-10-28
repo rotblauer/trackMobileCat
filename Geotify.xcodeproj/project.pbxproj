@@ -13,6 +13,7 @@
 		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
+		4FB90F8D21850BC100ADEF7A /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB90F8C21850BC100ADEF7A /* Visit.swift */; };
 		D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6521A739B7A00228A1F /* AppDelegate.swift */; };
 		D90CB6581A739B7A00228A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D90CB6561A739B7A00228A1F /* Main.storyboard */; };
 		D90CB65A1A739B7A00228A1F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D90CB6591A739B7A00228A1F /* Images.xcassets */; };
@@ -44,6 +45,7 @@
 		4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
 		4F9609C9209F58FF00B861DE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		4FB90F8C21850BC100ADEF7A /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		4FC1D8522094ECDD002C5593 /* Geotify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Geotify.entitlements; sourceTree = "<group>"; };
 		BEFAEE3955B49A89124AC81E /* Pods-Geotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.release.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.release.xcconfig"; sourceTree = "<group>"; };
 		C00EEBA13D3DC9C25B73415F /* Pods_Geotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Geotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +112,7 @@
 				4FC1D8522094ECDD002C5593 /* Geotify.entitlements */,
 				4F558EA41E2C262A002C3743 /* CatTilities.swift */,
 				4F9609C9209F58FF00B861DE /* Note.swift */,
+				4FB90F8C21850BC100ADEF7A /* Visit.swift */,
 				083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
 				D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */,
@@ -272,6 +275,7 @@
 				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
 				4F9609CA209F58FF00B861DE /* Note.swift in Sources */,
+				4FB90F8D21850BC100ADEF7A /* Visit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,6 +32,8 @@ var currentCadence:NSNumber = 0;// only when stepping, pedometer
   var currentTripDistanceFromStart:Double = 0;// real distance RB
   var relativeAltitude:Double = 0;//From the altimeter, an actual altimeter!
   var pressure:Double = 0;//From the altimeter,we get pressure!
+  var currentVisit:Visit? = nil;
+
 
 }
 
@@ -49,6 +51,8 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.currentTripStart.iso8601, forKey: "currentTripStart");
   dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
   dict.setValue(n.pressure, forKey: "pressure");
+  dict.setValue(getStringVisit(v:n.currentVisit), forKey: "visit");
+
   return dict
 }
 
