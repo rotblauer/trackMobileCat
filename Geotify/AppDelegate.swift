@@ -40,15 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   //declare this property where it won't go out of scope relative to your listener
 //https://www.raywenderlich.com/5247-core-location-tutorial-for-ios-tracking-visited-locations
 
-  fileprivate func startLog() {
-    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-    let documentsDirectory = paths[0]
-    let fileName = "\(Date()).log"
-    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
-    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
-    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stdout)
-  }
-  
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()

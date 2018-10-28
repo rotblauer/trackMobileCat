@@ -42,3 +42,14 @@ extension String {
     return Date.iso8601Formatter.date(from: self)
   }
 }
+
+
+func startLog() {
+  var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+  let documentsDirectory = paths[0]
+  let fileName = "\(Date()).log"
+  let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
+  freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
+  freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stdout)
+}
+
