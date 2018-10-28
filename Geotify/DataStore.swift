@@ -30,7 +30,6 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
   point.setValue(manager.location!.course, forKey: "course");
   point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
   point.setValue(getCurrentTripNoteString(), forKey: "notes");
-  
   //saver
   do {
     try moc.save()
@@ -38,7 +37,6 @@ func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
     fatalError("Failure to save context: \(error)")
   }
   manageTripVals(lat: lat, lng: lng)
-  
   return point
 }
 
@@ -69,13 +67,12 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
       fatalError("Failure to save context: \(error)")
     }
     manageTripVals(lat: lat, lng: lng)
-    
   }
   
   return true
 }
 
-func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
+private func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
   return NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 }
 
@@ -91,7 +88,7 @@ func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [
   }
 }
 
-func clearTrackPointsCD(toDelete: NSFetchRequest<NSFetchRequestResult>) {
+private func clearTrackPointsCD(toDelete: NSFetchRequest<NSFetchRequestResult>) {
 
   let moc = DataController().managedObjectContext
 
