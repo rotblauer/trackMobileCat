@@ -1,5 +1,5 @@
 //
-//  DataStore.swift
+//  DataStore.swift get, store, delete cats
 //  Geotify
 //
 //  Created by Kitty on 10/28/18.
@@ -27,7 +27,7 @@ func fetchPointsFromCoreData() -> [TrackPoint]? {
 
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
-  if (amPushing) {
+  if (getAmPushing()) {
     postponedPoints.append(manager.location!)
     return nil;
   }
@@ -62,7 +62,7 @@ var postponedPoints:[CLLocation] = [];
 
 // save multiple Trackpoints
 func savePointsToCoreData(locations: [CLLocation]) -> Bool {
-  if (amPushing) {
+  if (getAmPushing()) {
     postponedPoints.append(contentsOf: locations);
     return true;
   }
