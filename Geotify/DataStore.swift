@@ -14,36 +14,17 @@ import UIKit
 
 
 // save a single Trackpoint from location
-func savePointToCoreData(manager: CLLocationManager) -> TrackPoint? {
-  let moc = DataController().managedObjectContext
-  let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
+func savePointToCoreData(manager: CLLocationManager)  {
+  var locs:[CLLocation]=[]
   
-  point.setValue(uuid, forKey: "uuid");  //set all your values..
-  point.setValue(UIDevice.current.name, forKey: "name");
-  let lat = manager.location!.coordinate.latitude;
-  let lng = manager.location!.coordinate.longitude;
-  point.setValue(lat, forKey: "lat");
-  point.setValue(lng, forKey: "long");
-  point.setValue(manager.location!.horizontalAccuracy, forKey: "accuracy");
-  point.setValue(manager.location!.altitude, forKey: "altitude");
-  point.setValue(manager.location!.speed, forKey: "speed");
-  point.setValue(manager.location!.course, forKey: "course");
-  point.setValue(Date().iso8601, forKey: "time"); //leave ios for now
-  point.setValue(getCurrentTripNoteString(), forKey: "notes");
-  //saver
-  do {
-    try moc.save()
-  } catch {
-    fatalError("Failure to save context: \(error)")
-  }
-  manageTripVals(lat: lat, lng: lng)
-  return point
+  locs.append(CLLocation(latitude: manager.location!.coordinate.latitude, longitude: manager.location!.coordinate.longitude))
+  savePointsToCoreData(locations: locs)
 }
 
 // save multiple Trackpoints
 func savePointsToCoreData(locations: [CLLocation]) -> Bool {
 //  let moc = DataController().managedObjectContext
-  
+  print("attempt save")
   DataController().persistentContainer.performBackgroundTask { (context) in
     // Iterates the array
     locations.forEach { p in
@@ -63,16 +44,17 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
       point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
       point.setValue(getCurrentTripNoteString(), forKey: "notes");
       manageTripVals(lat: lat, lng: lng)
-      print("saving")
-
+      
     }
-    
+    print("saving")
     do {
       // Saves the entries created in the `forEach`
       try context.save()
     } catch {
       fatalError("Failure to save context: \(error)")
     }
+    
+   
     
   }
 //  //  print("saving n points", locations.count)
@@ -109,7 +91,7 @@ func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
 
 // get all trackpoints from data store
 func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [TrackPoint]? {
-  let privateManagedObjectContext = DataController().persistentContainer.newBackgroundContext()
+  let privateManagedObjectContext = DataController().persistentContainer.viewContext
 //  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 //  let moc = DataController().managedObjectContext
   print("fetching data")
@@ -124,44 +106,44 @@ func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [
 
 func clearTrackPointsCD(toDelete: [TrackPoint]) {
 //https://cocoacasts.com/more-fetching-and-deleting-managed-objects-with-core-data
-  let moc = DataController().managedObjectContext
+//  let moc = DataController().managedObjectContext
 //  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 //  let f etchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-//
-  var delIDs: [NSManagedObjectID] = []
-  for p in toDelete {
-    print(p.objectID)
-    delIDs.append(p.objectID)
-    
-  }
-//  NSbat
-//  let batchDeleteRequest = NSBatchDeleteRequest(objectIDs: delIDs)
-
-//  var delIDs=[NSManagedObjectID]
-//  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-//  do {
-//        try moc.execute(batchDeleteRequest)
-//        try moc.save()
-//      } catch {
-//        // Error Handling
-//        print("ERROR")
-//      }
 ////
-//  print("HI")
-  for p in toDelete {
-    delIDs.append(p.objectID)
-//  if let anyItem = p as? NSManagedObject {
-    moc.delete(p as NSManagedObject)
-    do {
-   try moc.save()
-    print("delete")
-   } catch {
-    print("delete np")
+//  var delIDs: [NSManagedObjectID] = []
+//  for p in toDelete {
+//    print(p.objectID)
+//    delIDs.append(p.objectID)
+//
+//  }
+////  NSbat
+////  let batchDeleteRequest = NSBatchDeleteRequest(objectIDs: delIDs)
+//
+////  var delIDs=[NSManagedObjectID]
+////  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+////  do {
+////        try moc.execute(batchDeleteRequest)
+////        try moc.save()
+////      } catch {
+////        // Error Handling
+////        print("ERROR")
+////      }
+//////
+////  print("HI")
+//  for p in toDelete {
+//    delIDs.append(p.objectID)
+////  if let anyItem = p as? NSManagedObject {
+//    moc.delete(p as NSManagedObject)
+//    do {
+//   try moc.save()
+//    print("delete")
+//   } catch {
+//    print("delete np")
+//
+//            // Error Handling
+//          }
 
-            // Error Handling
-          }
-
-  }
+//  }
 //  moc.processPendingChanges()
 
 //  }
