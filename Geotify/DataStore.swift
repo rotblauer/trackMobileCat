@@ -72,13 +72,14 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
   return true
 }
 
-private func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
+func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
   return NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 }
 
 // get all trackpoints from data store
 func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [TrackPoint]? {
   let moc = DataController().managedObjectContext
+  print("fetching data")
   do {
     let fetchedPoints = try moc.fetch(toFetch) as! [TrackPoint]
     return fetchedPoints
@@ -88,34 +89,46 @@ func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [
   }
 }
 
-private func clearTrackPointsCD(toDelete: NSFetchRequest<NSFetchRequestResult>) {
-
+func clearTrackPointsCD(toDelete: [TrackPoint]) {
+//https://cocoacasts.com/more-fetching-and-deleting-managed-objects-with-core-data
   let moc = DataController().managedObjectContext
+//  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+//  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
+//
+//  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//
+  print("HI")
+  for p in toDelete {
+//  if let anyItem = p as? NSManagedObject {
+    moc.delete(p as NSManagedObject)
+    do {
+   try moc.save()
+    print("delete")
+   } catch {
+    print("delete np")
 
-  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: toDelete)
-  
-  do {
-    try moc.execute(batchDeleteRequest)
-    try moc.save()
-  } catch {
-    // Error Handling
+            // Error Handling
+          }
+
   }
+
+//  }
+//    do {
+//    try moc.execute(batchDeleteRequest)
+//    try moc.save()
+//  } catch {
+//    // Error Handling
+//  }
 }
 
 func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {
   var i : int_fast64_t = 0
   var lastP : TrackPoint? = nil
-  let moc = DataController().managedObjectContext
-  let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-  pointsFetch.includesPropertyValues = false
-  do {
-    let fetchedPoints = try moc.fetch(pointsFetch) as! [TrackPoint]
+  if let fetchedPoints = fetchPointsFromCoreData(toFetch: getCurrentFetch()){
     i = Int64(fetchedPoints.count)
     if i > 0 {
       lastP = fetchedPoints.last // thinkin tis last not first nor middle child
     }
-  } catch {
-    print("Failed to fetch employees \(error)")
   }
   return (i, lastP)
 }

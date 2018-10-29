@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
+    print("location activated")
 
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
@@ -60,8 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    UIApplication.shared.cancelAllLocalNotifications()
 //    UserNotifications
     startUpdatingActivity()
-    
-    startLog()
+    print("started activity")
+
+//    startLog()
+    print("started log")
     return true
   }
 }

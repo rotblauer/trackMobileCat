@@ -8,7 +8,7 @@
 
 
 import Foundation
-
+import CoreData 
 
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
@@ -41,13 +41,16 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
 }
 
 func pushLocs() {
+  print("preparing push")
+
   // Catch no or unavailable points.
-  let current = getCurrentFetch()
-  let points = fetchPointsFromCoreData(toFetch:current)!
+  let points = fetchPointsFromCoreData(toFetch:getCurrentFetch())!
   if points.count == 0 {
     print("No points to push, returning.")
     return
   }
+  print(points.count)
+
   let json = buildJsonPosterFromTrackpoints(trackpoints: points)
   
   var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
@@ -66,7 +69,7 @@ func pushLocs() {
       return //giveup. we'll getemnextime
     } else {
       print("Boldy deleting.")
-      clearTrackPointsCD(toDelete: current)
+      clearTrackPointsCD(toDelete: points)
     }
   }).resume()
 }
