@@ -16,7 +16,6 @@ import UIKit
 // save a single Trackpoint from location
 func savePointToCoreData(manager: CLLocationManager)  {
   var locs:[CLLocation]=[]
-  
   locs.append(CLLocation(latitude: manager.location!.coordinate.latitude, longitude: manager.location!.coordinate.longitude))
   savePointsToCoreData(locations: locs)
 }
@@ -53,35 +52,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
     } catch {
       fatalError("Failure to save context: \(error)")
     }
-    
-   
-    
   }
-//  //  print("saving n points", locations.count)
-//  for p in locations {
-//    let point = NSEntityDescription.insertNewObject(forEntityName: "TrackPoint", into: moc) as! TrackPoint
-//
-//    point.setValue(uuid, forKey: "uuid");  //set all your values..
-//    point.setValue(UIDevice.current.name, forKey: "name");
-//    let lat = p.coordinate.latitude;
-//    let lng = p.coordinate.longitude;
-//    point.setValue(lat, forKey: "lat");
-//    point.setValue(lng, forKey: "long");
-//    point.setValue(p.horizontalAccuracy, forKey: "accuracy");
-//    point.setValue(p.altitude, forKey: "altitude");
-//    point.setValue(p.speed, forKey: "speed");
-//    point.setValue(p.course, forKey: "course");
-//    point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
-//    point.setValue(getCurrentTripNoteString(), forKey: "notes");
-////    print(point.objectID)
-//    //saver
-//    do {
-//      try moc.save()
-//    } catch {
-//      fatalError("Failure to save context: \(error)")
-//    }
-//  }
-  
   return true
 }
 
@@ -92,8 +63,6 @@ func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
 // get all trackpoints from data store
 func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [TrackPoint]? {
   let privateManagedObjectContext = DataController().persistentContainer.viewContext
-//  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-//  let moc = DataController().managedObjectContext
   print("fetching data")
   do {
     let fetchedPoints = try privateManagedObjectContext.fetch(getCurrentFetch()) as! [TrackPoint]
