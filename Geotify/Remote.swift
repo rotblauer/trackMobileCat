@@ -26,7 +26,6 @@ private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary?
   return dict
 }
 
-
 // {trackpoint json} -> [{trackpoints json}]
 private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
   

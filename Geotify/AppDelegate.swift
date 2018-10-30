@@ -114,9 +114,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     print("got update")
     savePointsToCoreData(locations: locations)
     let data = numberAndLastOfCoreDataTrackpoints()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    locationManager.activityType = CLActivityType.fitness
-
+    
     if (data.count < 1000) { return; }
     lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
     if (lastAttemptPushEvery < mayAttemptPushEvery) {
