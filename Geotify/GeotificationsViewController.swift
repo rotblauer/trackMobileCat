@@ -27,6 +27,7 @@ import CoreLocation
 struct PreferencesKeys {
   static let savedItems = "savedItems"
 }
+var P = 0;
 
 class GeotificationsViewController: UIViewController {
 
@@ -101,7 +102,7 @@ class GeotificationsViewController: UIViewController {
 
   func updatePointDisplay() {
     let data = numberAndLastOfCoreDataTrackpoints()
-    updatePointsCount(stringer: "\(data.count)")
+    updatePointsCount(stringer: "P:\(P)Q:\(data.count)")
     var ps : String = ""
     if data.count > 0 && data.lastPoint !== nil {
       let p = data.lastPoint

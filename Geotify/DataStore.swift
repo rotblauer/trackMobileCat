@@ -75,17 +75,19 @@ func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>,curre
 func clearTrackPointsCD(toDelete: [TrackPoint],currentContext:NSManagedObjectContext) {
   for p in toDelete {
     delete(trackPoint: p, context:currentContext)
+    P=P+1
+
+  }
+  do {
+    try currentContext.save()
+  } catch {
+    print(error)
   }
 }
 
 func delete(trackPoint : TrackPoint,context:NSManagedObjectContext){
   print("attempting delete")
     context.delete(trackPoint)
-  do {
-    try context.save()
-  } catch {
-    print(error)
-  }
 }
 
 func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {

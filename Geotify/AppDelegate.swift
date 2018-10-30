@@ -69,8 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 let updateAccuracySettingsEvery:int_fast64_t = 10;
-let mayAttemptPushEvery:int_fast64_t = 100;
-let pushAtCount=1000;
+let mayAttemptPushEvery:int_fast64_t = 20;
+let pushAtCount=100;
 var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
 var lastAttemptPushEvery:int_fast64_t = 0;
 
@@ -110,16 +110,18 @@ extension AppDelegate: CLLocationManagerDelegate {
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     print("got update")
-    savePointsToCoreData(locations: locations)
-    let data = numberAndLastOfCoreDataTrackpoints()
-    
-    if (data.count < pushAtCount) { return; }
-    lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
-    if (lastAttemptPushEvery < mayAttemptPushEvery) {
-      return;
+    if savePointsToCoreData(locations: locations){
+    pushLocs() // to the cloud
     }
-    lastAttemptPushEvery = 0;
-      pushLocs() // to the cloud
+//
+//    let data = numberAndLastOfCoreDataTrackpoints()
+//
+//    if (data.count < pushAtCount) { return; }
+//    lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
+//    if (lastAttemptPushEvery < mayAttemptPushEvery) {
+//      return;
+//    }
+//    lastAttemptPushEvery = 0;
   }
   
 }
