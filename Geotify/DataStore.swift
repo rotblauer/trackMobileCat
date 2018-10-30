@@ -27,7 +27,7 @@ func savePointsToCoreData(locations: [CLLocation]) -> Bool {
   DataController().persistentContainer.performBackgroundTask { (context) in
     // Iterates the array
     locations.forEach { p in
-      // Creates a new entry inside the context `context` and assign the array element `name` to the dog's name
+      // Creates a new entry inside the context `context` and assign the array element `name` to the cat's name
       let point = TrackPoint(context: context)
       
       point.setValue(uuid, forKey: "uuid");  //set all your values..
