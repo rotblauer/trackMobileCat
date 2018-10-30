@@ -42,35 +42,32 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
 
 func pushLocs() {
   print("preparing push")
-
-  // Catch no or unavailable points.
-  let points = fetchPointsFromCoreData(toFetch:getCurrentFetch())!
-  if points.count == 0 {
-    print("No points to push, returning.")
-    return
-  }
-  print(points.count)
-
-  let json = buildJsonPosterFromTrackpoints(trackpoints: points)
   
-  var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
-  
-  request.httpMethod = "POST"
-  request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-  request.addValue("application/json", forHTTPHeaderField: "Accept")
-  request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
-  // had to open up the security cleareance to get it to clear customs
-  //http://highaltitudehacks.com/2016/06/23/ios-application-security-part-46-app-transport-security/
-  
-  // needs this, kinda maybe?
-  URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-    if error != nil {
-      print(error ?? "NONE")
-      return //giveup. we'll getemnextime
-    } else {
-      print("Boldy deleting.")
-      clearTrackPointsCD(toDelete: points)
+  let viewContext = DataController().persistentContainer.viewContext
+  if let points = fetchPointsFromCoreData(toFetch: getCurrentFetch(), currentContext: viewContext){
+    if points.count == 0 {
+      print("No points to push, returning.")
+      return
     }
-  }).resume()
+    print(points.count)
+    let json = buildJsonPosterFromTrackpoints(trackpoints: points)
+    
+    var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
+    
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.addValue("application/json", forHTTPHeaderField: "Accept")
+    request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
+
+    URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
+      if error != nil {
+        print(error ?? "NONE")
+        return //giveup. we'll getemnextime
+      } else {
+        print("Boldy deleting.")
+        clearTrackPointsCD(toDelete: points,currentContext: viewContext)
+      }
+    }).resume()
+  }
 }
 

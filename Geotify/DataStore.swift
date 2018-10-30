@@ -61,73 +61,37 @@ func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
 }
 
 // get all trackpoints from data store
-func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>) -> [TrackPoint]? {
-  let privateManagedObjectContext = DataController().persistentContainer.viewContext
+func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>,currentContext:NSManagedObjectContext) -> [TrackPoint]? {
   print("fetching data")
   do {
-    let fetchedPoints = try privateManagedObjectContext.fetch(getCurrentFetch()) as! [TrackPoint]
+    let fetchedPoints = try currentContext.fetch(getCurrentFetch()) as! [TrackPoint]
     return fetchedPoints
   } catch {
-    print("Failed to fetch employees: \(error)")
+    print("Failed to fetch points: \(error)")
     return []
   }
 }
 
-func clearTrackPointsCD(toDelete: [TrackPoint]) {
-//https://cocoacasts.com/more-fetching-and-deleting-managed-objects-with-core-data
-//  let moc = DataController().managedObjectContext
-//  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-//  let f etchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
-////
-//  var delIDs: [NSManagedObjectID] = []
-//  for p in toDelete {
-//    print(p.objectID)
-//    delIDs.append(p.objectID)
-//
-//  }
-////  NSbat
-////  let batchDeleteRequest = NSBatchDeleteRequest(objectIDs: delIDs)
-//
-////  var delIDs=[NSManagedObjectID]
-////  let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-////  do {
-////        try moc.execute(batchDeleteRequest)
-////        try moc.save()
-////      } catch {
-////        // Error Handling
-////        print("ERROR")
-////      }
-//////
-////  print("HI")
-//  for p in toDelete {
-//    delIDs.append(p.objectID)
-////  if let anyItem = p as? NSManagedObject {
-//    moc.delete(p as NSManagedObject)
-//    do {
-//   try moc.save()
-//    print("delete")
-//   } catch {
-//    print("delete np")
-//
-//            // Error Handling
-//          }
+func clearTrackPointsCD(toDelete: [TrackPoint],currentContext:NSManagedObjectContext) {
+  for p in toDelete {
+    delete(trackPoint: p, context:currentContext)
+  }
+}
 
-//  }
-//  moc.processPendingChanges()
-
-//  }
-//    do {
-//    try moc.execute(batchDeleteRequest)
-//    try moc.save()
-//  } catch {
-//    // Error Handling
-//  }
+func delete(trackPoint : TrackPoint,context:NSManagedObjectContext){
+  print("attempting delete")
+    context.delete(trackPoint)
+  do {
+    try context.save()
+  } catch {
+    print(error)
+  }
 }
 
 func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {
   var i : int_fast64_t = 0
   var lastP : TrackPoint? = nil
-  if let fetchedPoints = fetchPointsFromCoreData(toFetch: getCurrentFetch()){
+  if let fetchedPoints = fetchPointsFromCoreData(toFetch: getCurrentFetch(),currentContext: DataController().persistentContainer.viewContext){
     i = Int64(fetchedPoints.count)
     if i > 0 {
       lastP = fetchedPoints.last // thinkin tis last not first nor middle child
