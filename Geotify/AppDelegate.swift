@@ -37,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let center = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
   
-  //declare this property where it won't go out of scope relative to your listener
-//https://www.raywenderlich.com/5247-core-location-tutorial-for-ios-tracking-visited-locations
-
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
@@ -73,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 let updateAccuracySettingsEvery:int_fast64_t = 10;
 let mayAttemptPushEvery:int_fast64_t = 100;
+let pushAtCount=1000;
 var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
 var lastAttemptPushEvery:int_fast64_t = 0;
 
@@ -115,7 +113,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     savePointsToCoreData(locations: locations)
     let data = numberAndLastOfCoreDataTrackpoints()
     
-    if (data.count < 1000) { return; }
+    if (data.count < pushAtCount) { return; }
     lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
     if (lastAttemptPushEvery < mayAttemptPushEvery) {
       return;
