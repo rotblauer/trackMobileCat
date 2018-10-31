@@ -11,6 +11,7 @@ import CoreLocation
 import CoreData
 import UIKit
 
+//https://www.raywenderlich.com/7569-getting-started-with-core-data-tutorial
 
 
 // save a single Trackpoint from location
@@ -63,6 +64,7 @@ func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
 // get all trackpoints from data store
 func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>,currentContext:NSManagedObjectContext) -> [TrackPoint]? {
   print("fetching data")
+//  currentContext.
   do {
     let fetchedPoints = try currentContext.fetch(getCurrentFetch()) as! [TrackPoint]
     return fetchedPoints
