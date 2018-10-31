@@ -25,7 +25,7 @@ func savePointToCoreData(manager: CLLocationManager)  {
 func savePointsToCoreData(locations: [CLLocation]) -> Bool {
 //  let moc = DataController().managedObjectContext
   print("attempt save")
-  DataController().persistentContainer.performBackgroundTask { (context) in
+  persistentContainer.performBackgroundTask { (context) in
     // Iterates the array
     locations.forEach { p in
       // Creates a new entry inside the context `context` and assign the array element `name` to the cat's name
@@ -95,7 +95,7 @@ func delete(trackPoint : TrackPoint,context:NSManagedObjectContext){
 func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {
   var i : int_fast64_t = 0
   var lastP : TrackPoint? = nil
-  if let fetchedPoints = fetchPointsFromCoreData(toFetch: getCurrentFetch(),currentContext: DataController().persistentContainer.viewContext){
+  if let fetchedPoints = fetchPointsFromCoreData(toFetch: getCurrentFetch(),currentContext: persistentContainer.viewContext){
     i = Int64(fetchedPoints.count)
     if i > 0 {
       lastP = fetchedPoints.last // thinkin tis last not first nor middle child

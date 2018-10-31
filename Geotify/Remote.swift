@@ -42,7 +42,7 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
 func pushLocs() {
   print("preparing push")
   
-  let viewContext = DataController().persistentContainer.viewContext
+  let viewContext = persistentContainer.viewContext
   if let points = fetchPointsFromCoreData(toFetch: getCurrentFetch(), currentContext: viewContext){
     if points.count == 0 {
       print("No points to push, returning.")
