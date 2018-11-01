@@ -108,11 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-let updateAccuracySettingsEvery:int_fast64_t = 10;
-let mayAttemptPushEvery:int_fast64_t = 20;
-let pushAtCount=3;
-var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
-var lastAttemptPushEvery:int_fast64_t = 0;
 
 extension AppDelegate: CLLocationManagerDelegate {
 

@@ -79,9 +79,14 @@ class GeotificationsViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
- 
+    print("HI,loaded")
+    Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
+      // this is the code that the timer runs every second
+      (_:Timer)->Void in //  the Timer object is passed in, but we ignore it
+      self.updatePointDisplay(); // increment the score
+    }
   }
-
+  
   func updatePointsCount(stringer : String) {
     pointsCountLable.text = stringer
   }
@@ -121,10 +126,11 @@ class GeotificationsViewController: UIViewController {
       let pressure = String(format: "%.4f", (currentTripNotes.pressure))
 
 //      UUID: \(_uuid)\n
-      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: V.visit"
-    } else {
-      ps = "No points yet."
+      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: V.P.Q"
     }
+//    else {
+//      ps = "No points yet."
+//    }
     updateLastPoint(stringer: ps)
 
     if (getStoredCustomTripNotes() != "") {
@@ -140,9 +146,10 @@ class GeotificationsViewController: UIViewController {
       let milesFStart = String(format: "%.2fmi", curdistFromStart/1609)
         tripDistLabel.text = "o:\(meters), \(miles)\nfs:\(metersFStart), \(milesFStart)"
 
-    } else {
-        tripTimeSince.text = "";
-        tripDistLabel.text = "";
+    }
+    else {
+      tripTimeSince.text = "";
+      tripDistLabel.text = "";
     }
   }
 
@@ -161,6 +168,7 @@ class GeotificationsViewController: UIViewController {
 
   @IBAction func pushPoints(_ sender: Any) {
     print("time to push")
+    updatePointDisplay()
     pushLocs(force:true)
   }
 

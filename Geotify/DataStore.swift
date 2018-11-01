@@ -11,6 +11,7 @@ import CoreLocation
 import CoreData
 import UIKit
 
+
 func save(manager: CLLocationManager){
   var locs:[CLLocation]=[]
   locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))

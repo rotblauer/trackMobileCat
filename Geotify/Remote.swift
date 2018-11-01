@@ -11,6 +11,12 @@ import Foundation
 import CoreData 
 import UIKit
 
+
+let mayAttemptPushEvery:int_fast64_t = 100;
+let pushAtCount=100;
+var lastAttemptPushEvery:int_fast64_t = 0;
+
+
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
