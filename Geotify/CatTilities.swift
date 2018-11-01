@@ -105,7 +105,7 @@ private func startMonitoringElevation(){
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
   }
-
+  
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
@@ -117,21 +117,26 @@ private func startMonitoringElevation(){
 
 func addVisit(visit:CLVisit,place:String){
   let v = Visit.init(fromVisit: visit, placeAt: place)
-  savePointToCoreData(manager: CLLocationManager())
+  save(manager: CLLocationManager())
   currentTripNotes.currentVisit=v
-  savePointToCoreData(manager: CLLocationManager())
+  save(manager: CLLocationManager())
   currentTripNotes.currentVisit=nil
 }
 
 
 func setCurrentTripNotes(s: String) {
-  savePointToCoreData(manager: CLLocationManager())
+  
+  save(manager: CLLocationManager())
+
+//  savePointToCoreData(manager: CLLocationManager())
    currentTripNotes = Note()
    currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
   //TODO store actual currentTripNotes
   customTripNote = s
-  savePointToCoreData(manager: CLLocationManager())
+  
+  save(manager: CLLocationManager())
+//  savePointToCoreData(manager: CLLocationManager())
 }
 
 func getStoredCustomTripNotes() -> String {
@@ -173,6 +178,5 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripStart = Date();
     }
   }
-
 }
 

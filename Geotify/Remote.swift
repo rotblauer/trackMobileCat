@@ -9,6 +9,7 @@
 
 import Foundation
 import CoreData 
+import UIKit
 
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
@@ -39,15 +40,31 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
   return points
 }
 
-func pushLocs() {
-  print("preparing push")
+func pushLocs(force:Bool) {
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    print("non-delegate")
+    return
+  }
   
-  let viewContext = persistentContainer.viewContext
-  if let points = fetchPointsFromCoreData(toFetch: getCurrentFetch(), currentContext: viewContext){
+
+  
+  let managedContext = appDelegate.persistentContainer.viewContext
+    if let points = fetchPointsFromCoreData(){
     if points.count == 0 {
       print("No points to push, returning.")
       return
     }
+//      let data = numberAndLastOfCoreDataTrackpoints()
+      //
+//      print("Points" )
+      if (!force && points.count < pushAtCount) { return; }
+      print("preparing push")
+//      lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: 1);
+//      if (lastAttemptPushEvery < mayAttemptPushEvery) {
+//        return;
+//      }
+//      lastAttemptPushEvery = 0;
+      
     print(points.count)
     let json = buildJsonPosterFromTrackpoints(trackpoints: points)
     
@@ -64,7 +81,7 @@ func pushLocs() {
         return //giveup. we'll getemnextime
       } else {
         print("Boldy deleting.")
-        clearTrackPointsCD(toDelete: points,currentContext: viewContext)
+        clearTrackPointsCD(toDelete: points,currentContext: managedContext)
       }
     }).resume()
   }

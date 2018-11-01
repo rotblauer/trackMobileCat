@@ -11,65 +11,58 @@ import CoreLocation
 import CoreData
 import UIKit
 
-//https://www.raywenderlich.com/7569-getting-started-with-core-data-tutorial
-
-
-// save a single Trackpoint from location
-func savePointToCoreData(manager: CLLocationManager)  {
+func save(manager: CLLocationManager){
   var locs:[CLLocation]=[]
-  locs.append(CLLocation(latitude: manager.location!.coordinate.latitude, longitude: manager.location!.coordinate.longitude))
-  savePointsToCoreData(locations: locs)
+  locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))
+  saveAll(locations: locs)
 }
 
-// save multiple Trackpoints
-func savePointsToCoreData(locations: [CLLocation]) -> Bool {
-//  let moc = DataController().managedObjectContext
-  print("attempt save")
-  persistentContainer.performBackgroundTask { (context) in
-    // Iterates the array
-    locations.forEach { p in
-      // Creates a new entry inside the context `context` and assign the array element `name` to the cat's name
-      let point = TrackPoint(context: context)
-      
-      point.setValue(uuid, forKey: "uuid");  //set all your values..
-      point.setValue(UIDevice.current.name, forKey: "name");
-      let lat = p.coordinate.latitude;
-      let lng = p.coordinate.longitude;
-      point.setValue(lat, forKey: "lat");
-      point.setValue(lng, forKey: "long");
-      point.setValue(p.horizontalAccuracy, forKey: "accuracy");
-      point.setValue(p.altitude, forKey: "altitude");
-      point.setValue(p.speed, forKey: "speed");
-      point.setValue(p.course, forKey: "course");
-      point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
-      point.setValue(getCurrentTripNoteString(), forKey: "notes");
-      manageTripVals(lat: lat, lng: lng)
-      
-    }
-    print("saving")
+func saveAll(locations: [CLLocation]) {
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    return
+  }
+  
+  let managedContext = appDelegate.persistentContainer.viewContext
+  let entity = NSEntityDescription.entity(forEntityName: "TrackPoint", in: managedContext)!
+  locations.forEach { p in
+    let point = NSManagedObject(entity: entity, insertInto: managedContext)
+    point.setValue(uuid, forKey: "uuid");  //set all your values..
+    point.setValue(UIDevice.current.name, forKey: "name");
+    let lat = p.coordinate.latitude;
+    let lng = p.coordinate.longitude;
+    point.setValue(lat, forKey: "lat");
+    point.setValue(lng, forKey: "long");
+    point.setValue(p.horizontalAccuracy, forKey: "accuracy");
+    point.setValue(p.altitude, forKey: "altitude");
+    point.setValue(p.speed, forKey: "speed");
+    point.setValue(p.course, forKey: "course");
+    point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
+    point.setValue(getCurrentTripNoteString(), forKey: "notes");
+    manageTripVals(lat: lat, lng: lng)
+    
     do {
-      // Saves the entries created in the `forEach`
-      try context.save()
-    } catch {
-      fatalError("Failure to save context: \(error)")
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Could not save. \(error), \(error.userInfo)")
     }
   }
-  return true
-}
-
-func getCurrentFetch() -> NSFetchRequest<NSFetchRequestResult>{
-  return NSFetchRequest<NSFetchRequestResult>(entityName: "TrackPoint")
 }
 
 // get all trackpoints from data store
-func fetchPointsFromCoreData(toFetch: NSFetchRequest<NSFetchRequestResult>,currentContext:NSManagedObjectContext) -> [TrackPoint]? {
+func fetchPointsFromCoreData() -> [TrackPoint]? {
   print("fetching data")
-//  currentContext.
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    return []
+  }
+  
+  let managedContext = appDelegate.persistentContainer.viewContext
+  let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "TrackPoint")
+  
   do {
-    let fetchedPoints = try currentContext.fetch(getCurrentFetch()) as! [TrackPoint]
+      let fetchedPoints = try managedContext.fetch(fetchRequest) as! [TrackPoint]
     return fetchedPoints
-  } catch {
-    print("Failed to fetch points: \(error)")
+  } catch let error as NSError {
+    print("Could not fetch. \(error), \(error.userInfo)")
     return []
   }
 }
@@ -78,7 +71,6 @@ func clearTrackPointsCD(toDelete: [TrackPoint],currentContext:NSManagedObjectCon
   for p in toDelete {
     delete(trackPoint: p, context:currentContext)
     P=P+1
-
   }
   do {
     try currentContext.save()
@@ -95,7 +87,7 @@ func delete(trackPoint : TrackPoint,context:NSManagedObjectContext){
 func numberAndLastOfCoreDataTrackpoints() -> (count: int_fast64_t, lastPoint: TrackPoint?) {
   var i : int_fast64_t = 0
   var lastP : TrackPoint? = nil
-  if let fetchedPoints = fetchPointsFromCoreData(toFetch: getCurrentFetch(),currentContext: persistentContainer.viewContext){
+  if let fetchedPoints = fetchPointsFromCoreData(){
     i = Int64(fetchedPoints.count)
     if i > 0 {
       lastP = fetchedPoints.last // thinkin tis last not first nor middle child

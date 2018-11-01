@@ -23,6 +23,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 struct PreferencesKeys {
   static let savedItems = "savedItems"
@@ -30,6 +31,7 @@ struct PreferencesKeys {
 var P = 0;
 
 class GeotificationsViewController: UIViewController {
+//  var trackPoints: [NSManagedObject] = []
 
 
     @IBAction func setFieldPremade(_ sender: UIButton) {
@@ -159,7 +161,7 @@ class GeotificationsViewController: UIViewController {
 
   @IBAction func pushPoints(_ sender: Any) {
     print("time to push")
-    pushLocs()
+    pushLocs(force:true)
   }
 
   @IBAction func switchRequireWifi(_ sender: UISwitch) {
