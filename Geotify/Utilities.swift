@@ -42,9 +42,3 @@ extension String {
     return Date.iso8601Formatter.date(from: self)
   }
 }
-
-
-func startLog() {
-
-}
-

@@ -55,8 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
-//    UIApplication.shared.cancelAllLocalNotifications()
-//    UserNotifications
     startUpdatingActivity()
     print("started activity")
     var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -64,16 +62,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let fileName = "\(Date()).log"
     let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
     freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
-//    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stdout)
-//    startLog()
     print("started log")
     return true
   }
-  lazy var persistentContainer: NSPersistentContainer = {
-    // The persistent container for the application. This implementation
-    // creates and returns a container, having loaded the store for the
-    // application to it. This property is optional since there are legitimate
-    // error conditions that could cause the creation of the store to fail.
+  
+//  stores trackpoints
+  lazy var persistentContainer:   NSPersistentContainer = {
     let container = NSPersistentContainer(name: "TrackPoint")
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
       if let error = error as NSError? {
@@ -102,6 +96,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
   }
   
+  // Runs when a new visit is detected
   func newVisitReceived(_ visit: CLVisit, description: String) {
     addVisit(visit: visit, place: description)
     

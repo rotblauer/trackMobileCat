@@ -31,7 +31,6 @@ private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary?
   return dict
 }
 
-// {trackpoint json} -> [{trackpoints json}]
 private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
   
   let points: NSMutableArray = []
@@ -49,8 +48,6 @@ func pushLocs(force:Bool) {
     print("non-delegate")
     return
   }
-  
-
   
   let managedContext = appDelegate.persistentContainer.viewContext
     if let points = fetchPointsFromCoreData(context: managedContext){
@@ -74,7 +71,6 @@ func pushLocs(force:Bool) {
         print(error ?? "NONE")
         return //giveup. we'll getemnextime
       } else {
-        print("Boldy deleting.")
         clearTrackPointsCD(toDelete: points,currentContext: managedContext)
         Q=0
         do {

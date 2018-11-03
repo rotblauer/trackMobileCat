@@ -60,7 +60,6 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
 func getStringNote(n: Note) -> String{
   let json = try! JSONSerialization.data(withJSONObject: objectifyNote(n:n) as Any, options: [])
   return String(data: json, encoding: String.Encoding.utf8)!
-//  return("HDS")
 }
 
 

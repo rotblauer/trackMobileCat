@@ -81,13 +81,9 @@ class GeotificationsViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("HI,loaded")
-//    NotificationCenter.default.addObserver(self, selector: Selector("updatePointDisplay"), name:NSNotification.Name(rawValue: "TimeToUpdateTheUINotificaiton"), object: nil)
-
     Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
-      // this is the code that the timer runs every second
-      (_:Timer)->Void in //  the Timer object is passed in, but we ignore it
-      self.updatePointDisplay(); // increment the score
+      (_:Timer)->Void in
+      self.updatePointDisplay();
     }
   }
   
@@ -98,7 +94,6 @@ class GeotificationsViewController: UIViewController {
   func updateLastPoint(stringer : String) {
     lastPointLabel.text = stringer
   }
-    // https://stackoverflow.com/questions/28872450/conversion-from-nstimeinterval-to-hour-minutes-seconds-milliseconds-in-swift#28872601
     func stringFromTimeInterval(interval: TimeInterval) -> NSString {
 
         let ti = NSInteger(-interval) // neg cuz backwards

@@ -54,11 +54,11 @@ func saveAll(locations: [CLLocation]) {
 private func updateStats(p:TrackPoint){
   //      let _uuid = (p?.uuid)!
   let acc = String(format: "%.2f", (p.accuracy))
-  let lat = String(format: "%.9f", (p.lat))
-  let lon = String(format: "%.9f", (p.long))
-  let alt = String(format: "%.9f", (p.altitude))
+  let lat = String(format: "%.5f", (p.lat))
+  let lon = String(format: "%.5f", (p.long))
+  let alt = String(format: "%.5f", (p.altitude))
   let course = String(format: "%.3f", (p.course))
-  let speed = String(format: "%.9f", (p.speed))
+  let speed = String(format: "%.5f", (p.speed))
   let t = p.time
   let currentTripDistance = String(format: "%.4f", (currentTripNotes.currentTripDistance))
   let relativeAltitude = String(format: "%.4f", (currentTripNotes.relativeAltitude))
