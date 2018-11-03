@@ -30,7 +30,7 @@ struct PreferencesKeys {
 }
 var P = 0;
 var Q = 0;
-var currentStats="";
+var currentStats="Locking location";
 let version = "V.P.Q"
 class GeotificationsViewController: UIViewController {
 //  var trackPoints: [NSManagedObject] = []
