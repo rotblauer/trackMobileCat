@@ -43,7 +43,7 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
   return points
 }
 
-private func buildURL() -> URL{
+func buildURL() -> URL{
   var urlComponents = URLComponents()
   urlComponents.scheme = "http"
   urlComponents.host = "track.areteh.co"
@@ -52,19 +52,6 @@ private func buildURL() -> URL{
   guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
   
   return url
-}
-
-
-private func fetchDoesCallSucceed(session: URLSession,request: URLRequest,completionHandler: @escaping (Bool) -> Void) {
-  
-  print("fetching success")
-  let task = session.dataTask(with: request) {
-    (data, response, error) in
-    let success = (error == nil)
-    print("success = \(success)")
-    completionHandler(success)
-  }
-  task.resume()
 }
 
 
@@ -80,42 +67,32 @@ func pushLocs(force:Bool) {
       print("No points to push, returning.")
       return
     }
-    if (!force && points.count < pushAtCount) { return; }
+      if (!force && points.count < pushAtCount) { return; }
       print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points)
     
-    var request = URLRequest(url:buildURL())// will up date to cat scratcher main
+      var request = URLRequest(url:buildURL())// will up date to cat scratcher main
     
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
-      
-      
-    print("starting push")
 
-    let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-      DispatchQueue.main.async {
-        // present alert
-     
-      fetchDoesCallSucceed(session: session, request: request){
-        success in
-
-        if success {
+      
+    URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
+      if error != nil {
+        print(error ?? "NONE")
+        return //giveup. we'll getemnextime
+      } else {
         clearTrackPointsCD(toDelete: points,currentContext: managedContext)
+        Q=0
         do {
           try managedContext.save()
         } catch {
           print(error)
         }
-        Q=0
       }
-         }
-        
-      }
-     print("stoping task")
-      
-//     sleep(10)
+    }).resume()
   }
 }
 
