@@ -12,9 +12,7 @@ import CoreData
 import UIKit
 
 
-let mayAttemptPushEvery:int_fast64_t = 100;
 let pushAtCount=100;
-var lastAttemptPushEvery:int_fast64_t = 0;
 
 
 // send a TrackPoint model -> plain json dict
@@ -55,23 +53,13 @@ func pushLocs(force:Bool) {
 
   
   let managedContext = appDelegate.persistentContainer.viewContext
-    if let points = fetchPointsFromCoreData(){
+    if let points = fetchPointsFromCoreData(context: managedContext){
     if points.count == 0 {
       print("No points to push, returning.")
       return
     }
-//      let data = numberAndLastOfCoreDataTrackpoints()
-      //
-//      print("Points" )
       if (!force && points.count < pushAtCount) { return; }
-      print("preparing push")
-//      lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: 1);
-//      if (lastAttemptPushEvery < mayAttemptPushEvery) {
-//        return;
-//      }
-//      lastAttemptPushEvery = 0;
-      
-    print(points.count)
+      print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points)
     
     var request = URLRequest(url: URL(string: "http://track.areteh.co:3001/populate/")!)// will up date to cat scratcher main
@@ -88,6 +76,12 @@ func pushLocs(force:Bool) {
       } else {
         print("Boldy deleting.")
         clearTrackPointsCD(toDelete: points,currentContext: managedContext)
+        Q=0
+        do {
+          try managedContext.save()
+        } catch {
+          print(error)
+        }
       }
     }).resume()
   }

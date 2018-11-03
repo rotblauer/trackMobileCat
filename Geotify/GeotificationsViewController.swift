@@ -29,7 +29,9 @@ struct PreferencesKeys {
   static let savedItems = "savedItems"
 }
 var P = 0;
-
+var Q = 0;
+var currentStats="";
+let version = "V.P.Q"
 class GeotificationsViewController: UIViewController {
 //  var trackPoints: [NSManagedObject] = []
 
@@ -80,6 +82,8 @@ class GeotificationsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     print("HI,loaded")
+//    NotificationCenter.default.addObserver(self, selector: Selector("updatePointDisplay"), name:NSNotification.Name(rawValue: "TimeToUpdateTheUINotificaiton"), object: nil)
+
     Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
       // this is the code that the timer runs every second
       (_:Timer)->Void in //  the Timer object is passed in, but we ignore it
@@ -106,32 +110,11 @@ class GeotificationsViewController: UIViewController {
         return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
     }
 
+  
 
   func updatePointDisplay() {
-    let data = numberAndLastOfCoreDataTrackpoints()
-    updatePointsCount(stringer: "P:\(P)Q:\(data.count)")
-    var ps : String = ""
-    if data.count > 0 && data.lastPoint !== nil {
-      let p = data.lastPoint
-//      let _uuid = (p?.uuid)!
-      let acc = String(format: "%.2f", (p?.accuracy)!)
-      let lat = String(format: "%.9f", (p?.lat)!)
-      let lon = String(format: "%.9f", (p?.long)!)
-      let alt = String(format: "%.9f", (p?.altitude)!)
-      let course = String(format: "%.3f", (p?.course)!)
-      let speed = String(format: "%.9f", (p?.speed)!)
-      let t = p?.time
-      let currentTripDistance = String(format: "%.4f", (currentTripNotes.currentTripDistance))
-      let relativeAltitude = String(format: "%.4f", (currentTripNotes.relativeAltitude))
-      let pressure = String(format: "%.4f", (currentTripNotes.pressure))
-
-//      UUID: \(_uuid)\n
-      ps = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: V.P.Q"
-    }
-//    else {
-//      ps = "No points yet."
-//    }
-    updateLastPoint(stringer: ps)
+    updatePointsCount(stringer: "P:\(P)Q:\(Q)")
+    updateLastPoint(stringer: currentStats)
 
     if (getStoredCustomTripNotes() != "") {
         tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
