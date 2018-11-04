@@ -13,19 +13,7 @@ import UIKit
 
 
 let pushAtCount=100;
-//guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//}
 
-//let managedContext = getManagedContext()
-//
-//func getManagedContext() -> NSManagedObjectContext{
-//  let appDelegate = UIApplication.shared.delegate as? AppDelegate else do {
-//    print("non-delegate")
-//    return nil
-//  }
-//
-//  return (appDelegate?.persistentContainer.viewContext)!
-//}
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
@@ -81,6 +69,7 @@ func pushLocs(force:Bool) {
   
   let managedContext = appDelegate.persistentContainer.viewContext
   if let points = fetchPointsFromCoreData(context: managedContext){
+    Q=points.count
     if points.count == 0 {
       print("No points to push, returning.")
       return
