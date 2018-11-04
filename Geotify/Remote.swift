@@ -68,13 +68,13 @@ func pushLocs(force:Bool) {
   }
   
   let managedContext = appDelegate.persistentContainer.viewContext
-    if let points = fetchPointsFromCoreData(context: managedContext){
+  if let points = fetchPointsFromCoreData(context: managedContext){
     if points.count == 0 {
       print("No points to push, returning.")
       return
     }
-      if (!force && points.count % pushAtCount>0) { return; }
-      print("preparing push for num points:\(points.count)")
+    if (!force && points.count % pushAtCount>0) { return; }
+    print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points)
     
     var request = URLRequest(url:buildURL())// will up date to cat scratcher main
@@ -86,7 +86,7 @@ func pushLocs(force:Bool) {
     attemptingPush=true
     
     URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-     
+      
       if error != nil {
         print(error ?? "NONE")
         attemptingPush=false
@@ -102,8 +102,8 @@ func pushLocs(force:Bool) {
         print("updating push attempt")
         attemptingPush=false
       }
-      }).resume()
-      
+    }).resume()
+    
   }
   print("Moving on with push attempt \(attemptingPush)")
 }

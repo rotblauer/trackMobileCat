@@ -45,7 +45,7 @@ func saveAll(locations: [CLLocation]) {
     
     do {
       try managedContext.save()
-//      print("saved new points")
+      //      print("saved new points")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
@@ -74,7 +74,7 @@ func fetchPointsFromCoreData(context:NSManagedObjectContext) -> [TrackPoint]? {
   let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "TrackPoint")
   
   do {
-      let fetchedPoints = try context.fetch(fetchRequest) as! [TrackPoint]
+    let fetchedPoints = try context.fetch(fetchRequest) as! [TrackPoint]
     return fetchedPoints
   } catch let error as NSError {
     print("Could not fetch. \(error), \(error.userInfo)")
@@ -84,7 +84,7 @@ func fetchPointsFromCoreData(context:NSManagedObjectContext) -> [TrackPoint]? {
 
 func clearTrackPointsCD(toDelete: [TrackPoint],currentContext:NSManagedObjectContext) {
   print("attempting delete")
-
+  
   for p in toDelete {
     delete(trackPoint: p, context:currentContext)
     P=P+1
@@ -92,5 +92,5 @@ func clearTrackPointsCD(toDelete: [TrackPoint],currentContext:NSManagedObjectCon
 }
 
 func delete(trackPoint : TrackPoint,context:NSManagedObjectContext){
-    context.delete(trackPoint)
+  context.delete(trackPoint)
 }

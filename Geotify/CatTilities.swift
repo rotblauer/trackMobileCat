@@ -36,8 +36,8 @@ func setRequireWifi(requireWifi: Bool) {
 
 private func startTrackingActivityType() {
   activityManager.startActivityUpdates(to: OperationQueue.main) {
-   (activity: CMMotionActivity?) in
-
+    (activity: CMMotionActivity?) in
+    
     guard let activity = activity else { return }
     DispatchQueue.main.async {
       if activity.walking {
@@ -47,11 +47,11 @@ private func startTrackingActivityType() {
       } else if activity.running {
         currentTripNotes.activity=Activity.Running
       } else if activity.automotive {
-       currentTripNotes.activity=Activity.Automotive
+        currentTripNotes.activity=Activity.Automotive
       }else if activity.cycling {
-      currentTripNotes.activity=Activity.Bike
+        currentTripNotes.activity=Activity.Bike
       }else{
-       currentTripNotes.activity=Activity.Unknown
+        currentTripNotes.activity=Activity.Unknown
       }
     }
   }
@@ -60,32 +60,32 @@ private func startTrackingActivityType() {
 
 private func startCountingSteps() {
   pedometer.startUpdates(from: Date()) {
-   pedometerData, error in
+    pedometerData, error in
     guard let pedometerData = pedometerData, error == nil else { return }
-
+    
     DispatchQueue.main.async {
-
-//    var current=getStoredTripNotes()
-
+      
+      //    var current=getStoredTripNotes()
+      
       if #available(iOS 10.0, *) {
         if(pedometerData.averageActivePace != nil){
-        currentTripNotes.averageActivePace=pedometerData.averageActivePace!
+          currentTripNotes.averageActivePace=pedometerData.averageActivePace!
         }
       } else {
-       currentTripNotes.averageActivePace=(-1.0)
+        currentTripNotes.averageActivePace=(-1.0)
       }
       if(pedometerData.currentCadence != nil){
-      currentTripNotes.currentCadence=pedometerData.currentCadence!
+        currentTripNotes.currentCadence=pedometerData.currentCadence!
       }
       currentTripNotes.numberOfSteps=pedometerData.numberOfSteps
       if(pedometerData.currentPace != nil){
-      currentTripNotes.currentPace=pedometerData.currentPace!
+        currentTripNotes.currentPace=pedometerData.currentPace!
       }
       currentTripNotes.distance=pedometerData.distance!
       if(pedometerData.floorsAscended != nil){
         currentTripNotes.floorsAscended=pedometerData.floorsAscended!
       }
-
+      
       if(pedometerData.floorsDescended != nil){
         currentTripNotes.floorsDescended=pedometerData.floorsDescended!
       }
@@ -101,7 +101,7 @@ private func startMonitoringElevation(){
   })
 }
 // TODO toggle for each for battery what not
- func startUpdatingActivity() {
+func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
   }
@@ -109,7 +109,7 @@ private func startMonitoringElevation(){
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
-
+  
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
   }
@@ -127,30 +127,30 @@ func addVisit(visit:CLVisit,place:String){
 func setCurrentTripNotes(s: String) {
   
   save(manager: CLLocationManager())
-
-//  savePointToCoreData(manager: CLLocationManager())
-   currentTripNotes = Note()
-   currentTripNotes.customNote=s
+  
+  //  savePointToCoreData(manager: CLLocationManager())
+  currentTripNotes = Note()
+  currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
   //TODO store actual currentTripNotes
   customTripNote = s
   
   save(manager: CLLocationManager())
-//  savePointToCoreData(manager: CLLocationManager())
+  //  savePointToCoreData(manager: CLLocationManager())
 }
 
 func getStoredCustomTripNotes() -> String {
-return customTripNote
+  return customTripNote
 }
 
- func getCurrentTripNoteString() -> String {
- currentTripNotes.customNote=getStoredCustomTripNotes();
- return getStringNote(n:currentTripNotes) ;
+func getCurrentTripNoteString() -> String {
+  currentTripNotes.customNote=getStoredCustomTripNotes();
+  return getStringNote(n:currentTripNotes) ;
 }
- func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
+func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
   return (currentTripNotes.currentTripDistance, currentTripNotes.currentTripDistanceFromStart);
 }
- func getCurrentTripTime() -> TimeInterval {
+func getCurrentTripTime() -> TimeInterval {
   return currentTripNotes.currentTripStart.timeIntervalSinceNow;
 }
 
@@ -167,7 +167,7 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripDistance = currentTripNotes.currentTripDistance + (lastPoint?.distance(from: curPoint))!;
       // overall
       currentTripNotes.currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
-
+      
       lastPoint = curPoint; // update
     }
   } else {

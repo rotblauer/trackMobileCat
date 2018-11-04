@@ -31,7 +31,7 @@ var uuid:String = "unset"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
   var window: UIWindow?
   let locationManager = CLLocationManager()
   let center = UNUserNotificationCenter.current()
@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
     print("location activated")
-
+    
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
     UIDevice.current.isBatteryMonitoringEnabled = true
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
   
-//  stores trackpoints
+  //  stores trackpoints
   lazy var persistentContainer:   NSPersistentContainer = {
     let container = NSPersistentContainer(name: "TrackPoint")
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -74,13 +74,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Unresolved error \(error), \(error.userInfo)")
       }
     })
-   
+    
     return container
   }()
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
-
+  
   
   func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
     // create CLLocation from the coordinates of CLVisit
@@ -112,12 +112,12 @@ extension AppDelegate: CLLocationManagerDelegate {
     center.add(request, withCompletionHandler: nil)
   }
   
-
+  
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     saveAll(locations: locations)    
     pushLocs(force:false)
   }
 }
-  
+
 

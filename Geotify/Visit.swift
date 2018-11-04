@@ -15,9 +15,9 @@ struct Visit{
   var  place:String;
   
   init(fromVisit visit: CLVisit, placeAt:String) {
-  arrivalDate = visit.arrivalDate
-  departureDate = visit.departureDate
-  place = placeAt
+    arrivalDate = visit.arrivalDate
+    departureDate = visit.departureDate
+    place = placeAt
   }
 }
 

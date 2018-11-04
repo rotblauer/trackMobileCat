@@ -33,52 +33,52 @@ var Q = 0;
 var currentStats="Locking location";
 let version = "V.P.Q"
 class GeotificationsViewController: UIViewController {
-//  var trackPoints: [NSManagedObject] = []
-
-
-    @IBAction func setFieldPremade(_ sender: UIButton) {
-        setCurrentTripNotes(s: sender.currentTitle!)
-        setNoteField.text = getStoredCustomTripNotes();
-        updatePointDisplay();
+  //  var trackPoints: [NSManagedObject] = []
+  
+  
+  @IBAction func setFieldPremade(_ sender: UIButton) {
+    setCurrentTripNotes(s: sender.currentTitle!)
+    setNoteField.text = getStoredCustomTripNotes();
+    updatePointDisplay();
+  }
+  @IBOutlet weak var setNoteField: UITextField!
+  @IBAction func doneField(_ sender: Any) {
+    setCurrentTripNotes(s: (sender as! UITextField).text!)
+    (sender as! UITextField).resignFirstResponder()
+    updatePointDisplay();
+  }
+  func doStopTrip() {
+    setCurrentTripNotes(s: "");
+    setNoteField.text = getStoredCustomTripNotes();
+    updatePointDisplay();
+  }
+  @IBAction func stopTrip(_ sender: Any) {
+    if (getStoredCustomTripNotes() != "") {
+      // create the alert
+      let alert = UIAlertController(title: "UIAlertController", message: "Be sure you want to finish this trip.", preferredStyle: UIAlertController.Style.alert)
+      
+      // add the actions (buttons)
+      alert.addAction(UIAlertAction(title: "Do Stop", style: UIAlertAction.Style.default, handler: { action in
+        self.doStopTrip();
+      }))
+      alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { action in
+        self.updatePointDisplay();
+      }))
+      
+      // show the alert
+      self.present(alert, animated: true, completion: nil)
+    } else {
+      updatePointDisplay();
     }
-    @IBOutlet weak var setNoteField: UITextField!
-    @IBAction func doneField(_ sender: Any) {
-        setCurrentTripNotes(s: (sender as! UITextField).text!)
-        (sender as! UITextField).resignFirstResponder()
-        updatePointDisplay();
-    }
-    func doStopTrip() {
-        setCurrentTripNotes(s: "");
-        setNoteField.text = getStoredCustomTripNotes();
-        updatePointDisplay();
-    }
-    @IBAction func stopTrip(_ sender: Any) {
-        if (getStoredCustomTripNotes() != "") {
-            // create the alert
-            let alert = UIAlertController(title: "UIAlertController", message: "Be sure you want to finish this trip.", preferredStyle: UIAlertController.Style.alert)
-
-            // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Do Stop", style: UIAlertAction.Style.default, handler: { action in
-                self.doStopTrip();
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { action in
-                self.updatePointDisplay();
-            }))
-
-            // show the alert
-            self.present(alert, animated: true, completion: nil)
-        } else {
-            updatePointDisplay();
-        }
-    }
-    @IBOutlet weak var pointsCountLable: UILabel!
-    @IBOutlet weak var pushPointsButton: UIBarButtonItem!
-    @IBOutlet weak var lastPointLabel: UILabel!
-    @IBOutlet weak var tripTimeSince: UILabel!
-    @IBOutlet weak var tripDistLabel: UILabel!
-
-    var locationManager = CLLocationManager()
-
+  }
+  @IBOutlet weak var pointsCountLable: UILabel!
+  @IBOutlet weak var pushPointsButton: UIBarButtonItem!
+  @IBOutlet weak var lastPointLabel: UILabel!
+  @IBOutlet weak var tripTimeSince: UILabel!
+  @IBOutlet weak var tripDistLabel: UILabel!
+  
+  var locationManager = CLLocationManager()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
@@ -90,66 +90,66 @@ class GeotificationsViewController: UIViewController {
   func updatePointsCount(stringer : String) {
     pointsCountLable.text = stringer
   }
-
+  
   func updateLastPoint(stringer : String) {
     lastPointLabel.text = stringer
   }
-    func stringFromTimeInterval(interval: TimeInterval) -> NSString {
-
-        let ti = NSInteger(-interval) // neg cuz backwards
-
-        let seconds = ti % 60
-        let minutes = (ti / 60) % 60
-        let hours = (ti / 3600)
-
-        return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
-    }
-
+  func stringFromTimeInterval(interval: TimeInterval) -> NSString {
+    
+    let ti = NSInteger(-interval) // neg cuz backwards
+    
+    let seconds = ti % 60
+    let minutes = (ti / 60) % 60
+    let hours = (ti / 3600)
+    
+    return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
+  }
   
-
+  
+  
   func updatePointDisplay() {
     updatePointsCount(stringer: "P:\(P)Q:\(Q)")
     updateLastPoint(stringer: currentStats)
-
+    
     if (getStoredCustomTripNotes() != "") {
-        tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
-
+      tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
+      
       let d = getCurrentTripDistance()
       let curdist = d.traveled;
       let curdistFromStart = d.fromStart;
-        let meters = String(format: "%.2fme", curdist)
-        let miles = String(format: "%.2fmi", curdist/1609)
-
+      let meters = String(format: "%.2fme", curdist)
+      let miles = String(format: "%.2fmi", curdist/1609)
+      
       let metersFStart = String(format: "%.2fme", curdistFromStart)
       let milesFStart = String(format: "%.2fmi", curdistFromStart/1609)
-        tripDistLabel.text = "o:\(meters), \(miles)\nfs:\(metersFStart), \(milesFStart)"
-
+      tripDistLabel.text = "o:\(meters), \(miles)\nfs:\(metersFStart), \(milesFStart)"
+      
     }
     else {
       tripTimeSince.text = "";
       tripDistLabel.text = "";
     }
   }
-
-    @IBAction func swiper(_ sender: UISwipeGestureRecognizer) {
-
-        updatePointDisplay()
-    }
-
+  
+  @IBAction func swiper(_ sender: UISwipeGestureRecognizer) {
+    
+    updatePointDisplay()
+  }
+  
   // MARK: Other mapview functions
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
     updatePointDisplay()
   }
-    @IBAction func zoomToCurrentLocationButton(_ sender: UIButton) {
-        updatePointDisplay()
-    }
-
+  @IBAction func zoomToCurrentLocationButton(_ sender: UIButton) {
+    updatePointDisplay()
+  }
+  
   @IBAction func pushPoints(_ sender: Any) {
     print("time to push")
     updatePointDisplay()
     pushLocs(force:true)
   }
-
+  
   @IBAction func switchRequireWifi(_ sender: UISwitch) {
     setRequireWifi(requireWifi: !getRequireWifi())
     sender.setOn(!getRequireWifi(), animated: true) // truthy?
