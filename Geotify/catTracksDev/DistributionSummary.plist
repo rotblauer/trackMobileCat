@@ -12,36 +12,14 @@
 			<key>certificate</key>
 			<dict>
 				<key>SHA1</key>
-				<string>E1B7D960DFE63110DEDC71FCBAA374E075966406</string>
+				<string></string>
 				<key>dateExpires</key>
-				<string>4/27/19</string>
+				<string></string>
 				<key>type</key>
-				<string>iOS Development</string>
-			</dict>
-			<key>entitlements</key>
-			<dict>
-				<key>application-identifier</key>
-				<string>3T8C45E2VR.com.rotblauer.catTrackMobil2</string>
-				<key>com.apple.developer.healthkit</key>
-				<true/>
-				<key>com.apple.developer.healthkit.access</key>
-				<array>
-					<string>health-records</string>
-				</array>
-				<key>com.apple.developer.team-identifier</key>
-				<string>3T8C45E2VR</string>
-				<key>get-task-allow</key>
-				<true/>
+				<string>Unknown</string>
 			</dict>
 			<key>name</key>
 			<string>Geotify.app</string>
-			<key>profile</key>
-			<dict>
-				<key>UUID</key>
-				<string>65049611-e843-4252-85d1-34631c0637d4</string>
-				<key>name</key>
-				<string>iOS Team Provisioning Profile: com.rotblauer.catTrackMobil2</string>
-			</dict>
 			<key>team</key>
 			<dict>
 				<key>id</key>
