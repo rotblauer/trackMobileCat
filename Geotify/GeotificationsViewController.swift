@@ -81,6 +81,11 @@ class GeotificationsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+      print("non-delegate")
+      return
+    }
+    Q=fetchPointsFromCoreData(context: appDelegate.persistentContainer.viewContext)?.count ?? 0
     Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
       (_:Timer)->Void in
       self.updatePointDisplay();
