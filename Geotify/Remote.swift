@@ -73,7 +73,7 @@ func pushLocs(force:Bool) {
       print("No points to push, returning.")
       return
     }
-      if (!force && points.count < pushAtCount) { return; }
+      if (!force && points.count % pushAtCount>0) { return; }
       print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points)
     
@@ -89,6 +89,7 @@ func pushLocs(force:Bool) {
      
       if error != nil {
         print(error ?? "NONE")
+        attemptingPush=false
         return //giveup. we'll getemnextime
       } else {
         clearTrackPointsCD(toDelete: points,currentContext: managedContext)
@@ -99,7 +100,6 @@ func pushLocs(force:Bool) {
           print(error)
         }
         print("updating push attempt")
-        sleep(10)
         attemptingPush=false
       }
       }).resume()
