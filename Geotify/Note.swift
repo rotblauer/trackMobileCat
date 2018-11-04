@@ -18,11 +18,11 @@ enum Activity: String {
 }
 
 class Note{
-var activity:Activity = Activity.Unknown;// Maybe one of the coolest thing,
-var numberOfSteps:NSNumber = 0;// only when stepping, pedometer
-var averageActivePace:NSNumber = 0;// only when stepping, pedometer
-var currentPace:NSNumber = 0;// only when stepping, pedometer
-var currentCadence:NSNumber = 0;// only when stepping, pedometer
+  var activity:Activity = Activity.Unknown;// Maybe one of the coolest thing,
+  var numberOfSteps:NSNumber = 0;// only when stepping, pedometer
+  var averageActivePace:NSNumber = 0;// only when stepping, pedometer
+  var currentPace:NSNumber = 0;// only when stepping, pedometer
+  var currentCadence:NSNumber = 0;// only when stepping, pedometer
   var distance:NSNumber=0;//the pedometer distance, does not track other dists like bike :(
   var customNote:String="";//RB
   var floorsAscended:NSNumber=0;// only when stepping, pedometer
@@ -33,8 +33,8 @@ var currentCadence:NSNumber = 0;// only when stepping, pedometer
   var relativeAltitude:Double = 0;//From the altimeter, an actual altimeter!
   var pressure:Double = 0;//From the altimeter,we get pressure!
   var currentVisit:Visit? = nil;
-
-
+  
+  
 }
 
 private func objectifyNote(n: Note) -> NSMutableDictionary? {
@@ -52,7 +52,7 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
   dict.setValue(n.pressure, forKey: "pressure");
   dict.setValue(getStringVisit(v:n.currentVisit), forKey: "visit");
-
+  
   return dict
 }
 
@@ -60,7 +60,6 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
 func getStringNote(n: Note) -> String{
   let json = try! JSONSerialization.data(withJSONObject: objectifyNote(n:n) as Any, options: [])
   return String(data: json, encoding: String.Encoding.utf8)!
-//  return("HDS")
 }
 
 

@@ -31,23 +31,11 @@ var uuid:String = "unset"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
   var window: UIWindow?
   let locationManager = CLLocationManager()
   let center = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
-  
-  //declare this property where it won't go out of scope relative to your listener
-//https://www.raywenderlich.com/5247-core-location-tutorial-for-ios-tracking-visited-locations
-
-  fileprivate func startLog() {
-    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-    let documentsDirectory = paths[0]
-    let fileName = "\(Date()).log"
-    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
-    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
-    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stdout)
-  }
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     locationManager.delegate = self
@@ -61,28 +49,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
-
+    print("location activated")
+    
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
-//    UIApplication.shared.cancelAllLocalNotifications()
-//    UserNotifications
     startUpdatingActivity()
-    
-    startLog()
+    print("started activity")
+    var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    let documentsDirectory = paths[0]
+    let fileName = "\(Date()).log"
+    let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
+    freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
+    print("started log")
     return true
   }
+  
+  //  stores trackpoints
+  lazy var persistentContainer:   NSPersistentContainer = {
+    let container = NSPersistentContainer(name: "TrackPoint")
+    container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+      if let error = error as NSError? {
+        print("Unresolved error \(error), \(error.userInfo)")
+      }
+    })
+    
+    return container
+  }()
 }
 
-
-let updateAccuracySettingsEvery:int_fast64_t = 10;
-let mayAttemptPushEvery:int_fast64_t = 100;
-var lastAttemptUpdateAccuracySettings:int_fast64_t = 0;
-var lastAttemptPushEvery:int_fast64_t = 0;
-
 extension AppDelegate: CLLocationManagerDelegate {
-
+  
   
   func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
     // create CLLocation from the coordinates of CLVisit
@@ -99,6 +97,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
   }
   
+  // Runs when a new visit is detected
   func newVisitReceived(_ visit: CLVisit, description: String) {
     addVisit(visit: visit, place: description)
     
@@ -113,61 +112,12 @@ extension AppDelegate: CLLocationManagerDelegate {
     center.add(request, withCompletionHandler: nil)
   }
   
-
+  
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-    if (amDeleting) {
-      print("Location changed but delete in progress. Returning.")
-      return
-    }
-    // TODO: use me to update UI
-//    savePointToCoreData(manager: manager)
-    savePointsToCoreData(locations: locations)
-    let data = numberAndLastOfCoreDataTrackpoints()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    locationManager.activityType = CLActivityType.fitness
-
-    if (data.count < 1000) { return; }
-    lastAttemptPushEvery = lastAttemptPushEvery.advanced(by: locations.count);
-    if (lastAttemptPushEvery < mayAttemptPushEvery) {
-      return;
-    }
-    lastAttemptPushEvery = 0;
-      pushLocs() // to the cloud
+    saveAll(locations: locations)    
+    pushLocs(force:false)
   }
 }
 
-class DataController: NSObject {
-  var managedObjectContext: NSManagedObjectContext
 
-  override init() {
-    // This resource is the same name as your xcdatamodeld contained in your project.
-    guard let modelURL = Bundle.main.url(forResource: "TrackPoint", withExtension:"momd") else {
-      fatalError("Error loading model from bundle")
-    }
-    // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
-    guard let mom = NSManagedObjectModel(contentsOf: modelURL) else {
-      fatalError("Error initializing mom from: \(modelURL)")
-    }
-    let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
-    self.managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-    self.managedObjectContext.persistentStoreCoordinator = psc
-
-    let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    let docURL = urls[urls.endIndex-1]
-    /* The directory the application uses to store the Core Data store file.
-     This code uses a file named "DataModel.sqlite" in the application's documents directory.
-     */
-    let storeURL = docURL.appendingPathComponent("TrackPoint.sqlite")
-    do {
-      try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
-    } catch {
-      fatalError("Error migrating store: \(error)")
-    }
-
-  }
-  
-  
-  
-}
