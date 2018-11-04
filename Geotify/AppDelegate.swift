@@ -118,7 +118,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     saveAll(locations: locations)    
     pushLocs(force:false)
   }
-  
 }
   
 

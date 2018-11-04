@@ -55,9 +55,15 @@ func buildURL() -> URL{
 }
 
 
+var attemptingPush=false
+
 func pushLocs(force:Bool) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
     print("non-delegate")
+    return
+  }
+  if attemptingPush {
+    print("in attempt")
     return
   }
   
@@ -71,15 +77,16 @@ func pushLocs(force:Bool) {
       print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points)
     
-      var request = URLRequest(url:buildURL())// will up date to cat scratcher main
+    var request = URLRequest(url:buildURL())// will up date to cat scratcher main
     
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
-
-      
+    attemptingPush=true
+    
     URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
+     
       if error != nil {
         print(error ?? "NONE")
         return //giveup. we'll getemnextime
@@ -91,8 +98,13 @@ func pushLocs(force:Bool) {
         } catch {
           print(error)
         }
+        print("updating push attempt")
+        sleep(10)
+        attemptingPush=false
       }
-    }).resume()
+      }).resume()
+      
   }
+  print("Moving on with push attempt \(attemptingPush)")
 }
 

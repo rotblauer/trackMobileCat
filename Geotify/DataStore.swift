@@ -45,6 +45,7 @@ func saveAll(locations: [CLLocation]) {
     
     do {
       try managedContext.save()
+//      print("saved new points")
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
