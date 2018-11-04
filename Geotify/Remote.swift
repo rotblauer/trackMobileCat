@@ -93,12 +93,12 @@ func pushLocs(force:Bool) {
         return //giveup. we'll getemnextime
       } else {
         clearTrackPointsCD(toDelete: points,currentContext: managedContext)
-        Q=0
         do {
           try managedContext.save()
         } catch {
           print(error)
         }
+        Q=0
         print("updating push attempt")
         attemptingPush=false
       }
