@@ -12,7 +12,7 @@ import CoreData
 import UIKit
 
 
-let pushAtCount=100;
+private let pushAtCount=100;
 
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
@@ -42,7 +42,7 @@ private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMuta
   return points
 }
 
-func buildURL() -> URL{
+private func buildURL() -> URL{
   var urlComponents = URLComponents()
   urlComponents.scheme = "http"
   urlComponents.host = "track.areteh.co"
@@ -53,9 +53,8 @@ func buildURL() -> URL{
   return url
 }
 
-//https://duckrowing.com/2010/03/11/using-core-data-on-multiple-threads/
-var attemptingPush=false
-var success=false
+private var attemptingPush=false
+private var success=false
 
 func pushLocs(force:Bool) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -94,8 +93,8 @@ func pushLocs(force:Bool) {
       } else {
         Q=0
         print("success push, updating push attempt")
-        attemptingPush=false
         success=true
+        attemptingPush=false
       }
     }).resume()
     while(attemptingPush){
