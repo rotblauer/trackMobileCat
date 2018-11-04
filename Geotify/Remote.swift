@@ -13,8 +13,19 @@ import UIKit
 
 
 let pushAtCount=100;
+//guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//}
 
-
+//let managedContext = getManagedContext()
+//
+//func getManagedContext() -> NSManagedObjectContext{
+//  let appDelegate = UIApplication.shared.delegate as? AppDelegate else do {
+//    print("non-delegate")
+//    return nil
+//  }
+//
+//  return (appDelegate?.persistentContainer.viewContext)!
+//}
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
@@ -54,8 +65,9 @@ func buildURL() -> URL{
   return url
 }
 
-
+//https://duckrowing.com/2010/03/11/using-core-data-on-multiple-threads/
 var attemptingPush=false
+var success=false
 
 func pushLocs(force:Bool) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -84,7 +96,6 @@ func pushLocs(force:Bool) {
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
     attemptingPush=true
-    
     URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
       
       if error != nil {
@@ -92,19 +103,27 @@ func pushLocs(force:Bool) {
         attemptingPush=false
         return //giveup. we'll getemnextime
       } else {
-        clearTrackPointsCD(toDelete: points,currentContext: managedContext)
-        do {
-          try managedContext.save()
-        } catch {
-          print(error)
-        }
         Q=0
-        print("updating push attempt")
+        print("success push, updating push attempt")
         attemptingPush=false
+        success=true
       }
     }).resume()
-    
+    while(attemptingPush){
+      sleep(1)
+      print("attempt")
+    }
+    if(success){
+      clearTrackPointsCD(toDelete: points,currentContext: managedContext)
+      do {
+        try managedContext.save()
+      } catch {
+        print(error)
+      }
+    }
+    success=false
   }
+  
   print("Moving on with push attempt \(attemptingPush)")
 }
 
