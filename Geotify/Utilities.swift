@@ -42,3 +42,9 @@ extension String {
     return Date.iso8601Formatter.date(from: self)
   }
 }
+
+func catVersion() -> String {
+  let dictionary = Bundle.main.infoDictionary!
+  let version = dictionary["CFBundleShortVersionString"] as! String
+  return version
+}
