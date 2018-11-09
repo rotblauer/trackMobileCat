@@ -12,10 +12,17 @@ import UIKit
 func save(manager: CLLocationManager){
   var locs:[CLLocation]=[]
   locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))
+  if(currentTripNotes.customNote=="fly"){
+    print("updating to fly mode")
+    manager.desiredAccuracy=kCLLocationAccuracyThreeKilometers
+  }else{
+    print("setting to regular mode")
+    manager.desiredAccuracy=kCLLocationAccuracyBest
+  }
   saveAll(locations: locs)
 }
 
-func saveAll(locations: [CLLocation]) {
+func saveAll(locations: [CLLocation]) {  
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
     return
   }
