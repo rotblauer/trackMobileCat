@@ -92,8 +92,10 @@ extension AppDelegate: CLLocationManagerDelegate {
     
     AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
       
+      
       if let place = placemarks?.first {
         let description = "\(place)"
+        
         self.newVisitReceived(visit, description: description)
       }
     }

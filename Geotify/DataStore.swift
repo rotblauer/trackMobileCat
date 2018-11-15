@@ -47,6 +47,7 @@ func saveAll(locations: [CLLocation]) {
     manageTripVals(lat: lat, lng: lng)
     Q = Q+1
     updateStats(p:point as! TrackPoint)
+//    print("save")
     
     do {
       try managedContext.save()
