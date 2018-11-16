@@ -28,6 +28,8 @@ import UserNotifications
 
 
 var uuid:String = "unset"
+var pushToken:String = "unset"
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,12 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let center = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
   
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    
-    
+  fileprivate func setupLocationManager() {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
-    
     locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
     locationManager.allowsBackgroundLocationUpdates = true
     locationManager.pausesLocationUpdatesAutomatically = false
@@ -51,12 +50,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
+  }
+  
+  fileprivate func registerForPushNotifications() {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+      (granted, error) in
+      print("Permission granted: \(granted)")
+      
+    }
+  }
+  
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+    
+    
+    setupLocationManager()
     print("location activated")
     
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
+    print(uuid)
     startUpdatingActivity()
     print("started activity")
     var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -65,8 +79,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
     freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
     print("started log")
+    registerForPushNotifications()
+    UIApplication.shared.registerForRemoteNotifications()
+    // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
     return true
   }
+  
+  func application(_ application: UIApplication,
+                   didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    let tokenParts = deviceToken.map { data -> String in
+      return String(format: "%02.2hhx", data)
+    }
+    
+    let token = tokenParts.joined()
+    print("Device Token: \(token)")
+    pushToken="\(token)"
+  }
+  
+  func application(_ application: UIApplication,
+                   didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    print("Failed to register: \(error)")
+  }
+  
   
   //  stores trackpoints
   lazy var persistentContainer:   NSPersistentContainer = {
@@ -120,7 +154,7 @@ extension AppDelegate: CLLocationManagerDelegate {
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     saveAll(locations: locations)
-    pushLocs(force:false)
+    pushLocs(force:false,pushToken: pushToken)
   }
 }
 

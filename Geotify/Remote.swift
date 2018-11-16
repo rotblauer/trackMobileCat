@@ -11,9 +11,10 @@ import UIKit
 private let pushAtCount=100;
 
 // send a TrackPoint model -> plain json dict
-private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary? {
+private func objectifyTrackpoint(trackpoint: TrackPoint,pushToken:String) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
-  dict.setValue(trackpoint.uuid, forKey: "uuid");  //set all your values..
+  dict.setValue(trackpoint.uuid, forKey: "uuid");
+  dict.setValue(pushToken, forKey: "pushToken");
   dict.setValue(trackpoint.name, forKey: "name");
   dict.setValue(trackpoint.lat, forKey: "lat");
   dict.setValue(trackpoint.long, forKey: "long");
@@ -26,12 +27,12 @@ private func objectifyTrackpoint(trackpoint: TrackPoint) -> NSMutableDictionary?
   return dict
 }
 
-private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint]) -> NSMutableArray? {
+private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint],pushToken:String) -> NSMutableArray? {
   
   let points: NSMutableArray = []
   
   for point in trackpoints {
-    let jo = objectifyTrackpoint(trackpoint: point)
+    let jo = objectifyTrackpoint(trackpoint: point,pushToken:pushToken)
     points.add(jo as AnyObject)
   }
   
@@ -52,7 +53,7 @@ private func buildURL() -> URL{
 private var attemptingPush=false
 private var success=false
 
-func pushLocs(force:Bool) {
+func pushLocs(force:Bool,pushToken:String) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
     print("non-delegate")
     return
@@ -71,7 +72,7 @@ func pushLocs(force:Bool) {
     }
     if (!force && points.count % pushAtCount>0) { return; }
     print("preparing push for num points:\(points.count)")
-    let json = buildJsonPosterFromTrackpoints(trackpoints: points)
+    let json = buildJsonPosterFromTrackpoints(trackpoints: points,pushToken:pushToken)
     
     var request = URLRequest(url:buildURL())// will up date to cat scratcher main
     

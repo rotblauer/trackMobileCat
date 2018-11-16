@@ -147,7 +147,7 @@ class GeotificationsViewController: UIViewController {
   @IBAction func pushPoints(_ sender: Any) {
     print("time to push")
     updatePointDisplay()
-    pushLocs(force:true)
+    pushLocs(force:true,pushToken: pushToken)
   }
 }
 
