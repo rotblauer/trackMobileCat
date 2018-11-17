@@ -15,6 +15,7 @@ private func objectifyTrackpoint(trackpoint: TrackPoint,pushToken:String) -> NSM
   let dict = NSMutableDictionary()
   dict.setValue(trackpoint.uuid, forKey: "uuid");
   dict.setValue(pushToken, forKey: "pushToken");
+  dict.setValue(version, forKey: "version");
   dict.setValue(trackpoint.name, forKey: "name");
   dict.setValue(trackpoint.lat, forKey: "lat");
   dict.setValue(trackpoint.long, forKey: "long");

@@ -42,5 +42,5 @@ xcuserdata
 # Carthage/Checkouts
 
 Carthage/Build
-
+*.log
 *.DS_Store
