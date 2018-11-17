@@ -31,7 +31,7 @@
 				<key>bundle-identifier</key>
 				<string>com.rotblauer.catTrackMobil2</string>
 				<key>bundle-version</key>
-				<string>V.PUSH</string>
+				<string>V.VersionV2</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
