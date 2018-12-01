@@ -29,9 +29,13 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>always for cats</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string> always for cats</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>always for cats</string>
+	<key>NSMicrophoneUsageDescription</key>
 	<string>always for cats</string>
 	<key>NSMotionUsageDescription</key>
 	<string>For auto labels</string>

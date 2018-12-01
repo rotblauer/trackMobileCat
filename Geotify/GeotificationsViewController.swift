@@ -32,6 +32,10 @@ var P = 0;
 var Q = 0;
 var currentStats="Locking location";
 let version = catVersion()
+//let picker = UIImagePickerController()
+
+//,UIImagePickerControllerDelegate,
+//UINavigationControllerDelegate
 class GeotificationsViewController: UIViewController {
   //  var trackPoints: [NSManagedObject] = []
   
@@ -76,8 +80,6 @@ class GeotificationsViewController: UIViewController {
   @IBOutlet weak var lastPointLabel: UILabel!
   @IBOutlet weak var tripTimeSince: UILabel!
   @IBOutlet weak var tripDistLabel: UILabel!
-  
-  var locationManager = CLLocationManager()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -132,27 +134,39 @@ class GeotificationsViewController: UIViewController {
   }
   
   @IBAction func swiper(_ sender: UISwipeGestureRecognizer) {
-    
     updatePointDisplay()
   }
   
   // MARK: Other mapview functions
   @IBAction func zoomToCurrentLocation(sender: AnyObject) {
     updatePointDisplay()
+
   }
   @IBAction func zoomToCurrentLocationButton(_ sender: UIButton) {
     updatePointDisplay()
+//    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//      let imagePicker = UIImagePickerController()
+//      imagePicker.delegate = self
+//      imagePicker.sourceType = .camera;
+//      imagePicker.allowsEditing = false
+//      self.present(imagePicker, animated: true, completion: nil)
+//    }
+//    print("hiss")
+
   }
+//  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//
+//    imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+//    print("HI image")
+//    picker.dismiss(animated:true,completion:nil)
+//  }
+  
+  
+  
   
   @IBAction func pushPoints(_ sender: Any) {
     print("time to push")
     updatePointDisplay()
     pushLocs(force:true,pushToken: pushToken)
-  }
-}
-
-// MARK: - Location Manager Delegate
-extension GeotificationsViewController: CLLocationManagerDelegate {
-  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
   }
 }
