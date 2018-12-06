@@ -4,7 +4,7 @@
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import Foundation
-import CoreData 
+import CoreData
 import UIKit
 
 
@@ -29,14 +29,14 @@ private func objectifyTrackpoint(trackpoint: TrackPoint,pushToken:String) -> NSM
 }
 
 private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint],pushToken:String) -> NSMutableArray? {
-  
+
   let points: NSMutableArray = []
-  
+
   for point in trackpoints {
     let jo = objectifyTrackpoint(trackpoint: point,pushToken:pushToken)
     points.add(jo as AnyObject)
   }
-  
+
   return points
 }
 
@@ -47,7 +47,7 @@ private func buildURL() -> URL{
   urlComponents.port = 3001
   urlComponents.path = "/populate/"
   guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
-  
+
   return url
 }
 
@@ -63,7 +63,7 @@ func pushLocs(force:Bool,pushToken:String) {
     print("in attempt")
     return
   }
-  
+
   let managedContext = appDelegate.persistentContainer.viewContext
   if let points = fetchPointsFromCoreData(context: managedContext){
     Q=points.count
@@ -74,16 +74,16 @@ func pushLocs(force:Bool,pushToken:String) {
     if (!force && points.count % pushAtCount>0) { return; }
     print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points,pushToken:pushToken)
-    
+
     var request = URLRequest(url:buildURL())// will up date to cat scratcher main
-    
+
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
     request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
     attemptingPush=true
     URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-      
+
       if error != nil {
         print(error ?? "NONE")
         attemptingPush=false
@@ -109,7 +109,6 @@ func pushLocs(force:Bool,pushToken:String) {
     }
     success=false
   }
-  
+
   print("Moving on with push attempt \(attemptingPush)")
 }
-

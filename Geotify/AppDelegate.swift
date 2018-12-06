@@ -33,12 +33,12 @@ var pushToken:String = "unset"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  
+
   var window: UIWindow?
   let locationManager = CLLocationManager()
   let center = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
-  
+
   fileprivate func setupLocationManager() {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
@@ -51,21 +51,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startMonitoringSignificantLocationChanges()
     locationManager.activityType = CLActivityType.fitness
   }
-  
+
   fileprivate func registerForPushNotifications() {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
       (granted, error) in
       print("Permission granted: \(granted)")
-      
+
     }
   }
-  
+
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    
-    
+
+
     setupLocationManager()
     print("location activated")
-    
+
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
     UIDevice.current.isBatteryMonitoringEnabled = true
@@ -84,24 +84,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
     return true
   }
-  
+
   func application(_ application: UIApplication,
                    didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     let tokenParts = deviceToken.map { data -> String in
       return String(format: "%02.2hhx", data)
     }
-    
+
     let token = tokenParts.joined()
     print("Device Token: \(token)")
     pushToken="\(token)"
   }
-  
+
   func application(_ application: UIApplication,
                    didFailToRegisterForRemoteNotificationsWithError error: Error) {
     print("Failed to register: \(error)")
   }
-  
-  
+
+
   //  stores trackpoints
   lazy var persistentContainer:   NSPersistentContainer = {
     let container = NSPersistentContainer(name: "TrackPoint")
@@ -110,52 +110,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Unresolved error \(error), \(error.userInfo)")
       }
     })
-    
+
     return container
   }()
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
-  
-  
+
+
   func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
     // create CLLocation from the coordinates of CLVisit
     let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
-    
+
     // Get location description
-    
+
     AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
-      
-      
+
+
       if let place = placemarks?.first {
         let description = "\(place)"
-        
+
         self.newVisitReceived(visit, description: description)
       }
     }
   }
-  
+
   // Runs when a new visit is detected
   func newVisitReceived(_ visit: CLVisit, description: String) {
     addVisit(visit: visit, place: description)
-    
+
     let content = UNMutableNotificationContent()
     content.title = "New Visit 📌"
     content.body = description
     content.sound = UNNotificationSound.default
-    
+
     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
     let request = UNNotificationRequest(identifier: "Cat visit", content: content, trigger: trigger)
-    
+
     center.add(request, withCompletionHandler: nil)
   }
-  
-  
+
+
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     saveAll(locations: locations)
     pushLocs(force:false,pushToken: pushToken)
   }
 }
-
-

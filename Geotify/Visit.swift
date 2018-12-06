@@ -10,7 +10,7 @@ struct Visit{
   var  arrivalDate:Date;
   var  departureDate:Date;
   var  place:String;
-  
+
   init(fromVisit visit: CLVisit, placeAt:String) {
     arrivalDate = visit.arrivalDate
     departureDate = visit.departureDate

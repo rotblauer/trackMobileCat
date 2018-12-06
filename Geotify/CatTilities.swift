@@ -32,7 +32,7 @@ func setRequireWifi(requireWifi: Bool) {
 private func startTrackingActivityType() {
   activityManager.startActivityUpdates(to: OperationQueue.main) {
     (activity: CMMotionActivity?) in
-    
+
     guard let activity = activity else { return }
     DispatchQueue.main.async {
       if activity.walking {
@@ -57,11 +57,11 @@ private func startCountingSteps() {
   pedometer.startUpdates(from: Date()) {
     pedometerData, error in
     guard let pedometerData = pedometerData, error == nil else { return }
-    
+
     DispatchQueue.main.async {
-      
+
       //    var current=getStoredTripNotes()
-      
+
       if #available(iOS 10.0, *) {
         if(pedometerData.averageActivePace != nil){
           currentTripNotes.averageActivePace=pedometerData.averageActivePace!
@@ -80,7 +80,7 @@ private func startCountingSteps() {
       if(pedometerData.floorsAscended != nil){
         currentTripNotes.floorsAscended=pedometerData.floorsAscended!
       }
-      
+
       if(pedometerData.floorsDescended != nil){
         currentTripNotes.floorsDescended=pedometerData.floorsDescended!
       }
@@ -100,11 +100,11 @@ func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
   }
-  
+
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
-  
+
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
   }
@@ -120,16 +120,16 @@ func addVisit(visit:CLVisit,place:String){
 
 
 func setCurrentTripNotes(s: String) {
-  
+
   save(manager: CLLocationManager())
-  
+
   //  savePointToCoreData(manager: CLLocationManager())
   currentTripNotes = Note()
   currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
   //TODO store actual currentTripNotes
   customTripNote = s
-  
+
   save(manager: CLLocationManager())
   //  savePointToCoreData(manager: CLLocationManager())
 }
@@ -162,7 +162,7 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripDistance = currentTripNotes.currentTripDistance + (lastPoint?.distance(from: curPoint))!;
       // overall
       currentTripNotes.currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
-      
+
       lastPoint = curPoint; // update
     }
   } else {
@@ -174,4 +174,3 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
     }
   }
 }
-
