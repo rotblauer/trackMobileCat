@@ -57,9 +57,53 @@ private func startTrackingActivityType() {
 private func startMonitoringHeartRate() {
 
     // https://www.appcoda.com/healthkit/
-        // STEP 9.1: just as in STEP 6, we're telling the `HealthKitStore`
-        // that we're interested in reading heart rate data
-        let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+    // STEP 9.1: just as in STEP 6, we're telling the `HealthKitStore`
+    // that we're interested in reading heart rate data
+    let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+
+    // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
+    // let tHeartRate = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)
+    // let tHeartRateQuery = HKSampleQuery(sampleType: tHeartRate!, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
+    let tHeartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
+
+        if results?.count > 0
+        {
+            var string:String = ""
+            for result in results as! [HKQuantitySample]
+            {
+                // let HeartRate = result.quantity
+
+                currentTripNotes.hrType = heartRateType
+                currentTripNotes.hr = result.quantity
+                // string = "\(HeartRate)"
+                // print(string)
+            }
+        }
+    }
+
+    // https://developer.apple.com/documentation/healthkit/hkobserverquery
+    let query = HKObserverQuery(sampleType: sampleType, predicate: nil) {
+        query, completionHandler, error in
+
+        if error != nil {
+
+            print(error)
+            // abort()
+        }
+
+        // Take whatever steps are necessary to update your app's data and UI
+        // This may involve executing other queries
+        // self.updateDailyStepCount()
+        // STEP 9.3: execute the query for heart rate data
+        hkspock?.execute(tHeartRateQuery)
+
+        // If you have subscribed for background updates you must call the completion handler here.
+        // completionHandler()
+    }
+
+    // STEP 9.3: execute the query for heart rate data
+    hkspock?.execute(query)
+
 
         // // STEP 9.2: define a query for "recent" heart rate data;
         // // in pseudo-SQL, this would look like:
@@ -84,30 +128,6 @@ private func startMonitoringHeartRate() {
         //     }
 
         // }
-
-
-        // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
-        // let tHeartRate = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)
-        // let tHeartRateQuery = HKSampleQuery(sampleType: tHeartRate!, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
-        let tHeartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
-
-            if results?.count > 0
-            {
-                var string:String = ""
-                for result in results as! [HKQuantitySample]
-                {
-                    // let HeartRate = result.quantity
-
-                    currentTripNotes.hrType = heartRateType
-                    currentTripNotes.hr = result.quantity
-                    // string = "\(HeartRate)"
-                    // print(string)
-                }
-            }
-}
-
-        // STEP 9.3: execute the query for heart rate data
-        hkspock?.execute(query)
 }
 
 private func startCountingSteps() {
