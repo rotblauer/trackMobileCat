@@ -25,8 +25,9 @@ class Note{
   var relativeAltitude:Double = 0;//From the altimeter, an actual altimeter!
   var pressure:Double = 0;//From the altimeter,we get pressure!
   var currentVisit:Visit? = nil;
-  var hrType:String=""; // TODO
-  var hr:Double = 0; // doa
+  var heartRateType:String="";
+  var heartRateRaw:String="";
+  var heartRate:String="";
 
 }
 
@@ -42,10 +43,14 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.floorsAscended, forKey: "floorsAscended");
   dict.setValue(n.floorsDescended, forKey: "floorsDescended");
   dict.setValue(n.currentTripStart.iso8601, forKey: "currentTripStart");
+  
   dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
   dict.setValue(n.pressure, forKey: "pressure");
-  dict.setValue(n.hrType, forKey: "hrType");
-  dict.setValue(n.hr, forKey: "hr");
+  
+  dict.setValue(n.heartRate, forKey: "heartRateS");
+  dict.setValue(n.heartRateRaw, forKey: "heartRateRawS");
+  dict.setValue(n.heartRateType, forKey: "heartRateType");
+  
   dict.setValue(getStringVisit(v:n.currentVisit), forKey: "visit");
 
   return dict

@@ -20,7 +20,7 @@ private var customTripNote = ""
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 private let elly=CMAltimeter();// We have an actual altimeter!
-private let hkspock=HKHealthStore()
+private let hk=HKHealthStore();
 
 var requireWifiForPush:Bool = true;
 
@@ -54,80 +54,62 @@ private func startTrackingActivityType() {
   }
 }
 
+private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySample]) {
+
+//  let sCo = samples.count
+//  let sCa = samples.capacity
+  let sEI = samples.endIndex
+  // print("sco=\(sCo) sCa=\(sCa) sEI=\(sEI)")
+  
+  // take only last
+  let sample = samples[sEI-1]
+  
+  let qS = "\(sample)"
+  let qT = "\(ttype)"
+  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)\nheartRateType= \(qT)"
+  print(pp)
+  currentTripNotes.heartRate = "\(sample.quantity)"
+  currentTripNotes.heartRateRaw = qS
+  currentTripNotes.heartRateType = qT
+}
+
 private func startMonitoringHeartRate() {
-
     // https://www.appcoda.com/healthkit/
-    // STEP 9.1: just as in STEP 6, we're telling the `HealthKitStore`
-    // that we're interested in reading heart rate data
-    let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
-
     // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
-    // let tHeartRate = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)
-    // let tHeartRateQuery = HKSampleQuery(sampleType: tHeartRate!, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
-    let tHeartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
+  
+    let heartRateTypeIdent = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+  
+  var myanchor = HKQueryAnchor.init(fromValue: 0)
+  
+  guard let startDate = NSCalendar.current.date(byAdding: .second, value: -10, to: (NSDate() as Date), wrappingComponents: true) else {
+    fatalError("death in the beginning")
+  }
+  let endDate = NSCalendar.current.date(byAdding: .year, value: 1, to: (NSDate() as Date), wrappingComponents: true)
+  let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
 
-        if results?.count > 0
-        {
-            var string:String = ""
-            for result in results as! [HKQuantitySample]
-            {
-                // let HeartRate = result.quantity
-
-                currentTripNotes.hrType = heartRateType
-                currentTripNotes.hr = result.quantity
-                // string = "\(HeartRate)"
-                // print(string)
-            }
-        }
+      let qq = HKAnchoredObjectQuery(type: heartRateTypeIdent, predicate: predicate, anchor: myanchor, limit: HKObjectQueryNoLimit) {
+  (qq, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+      
+      guard let samples = samplesOrNil as? [HKQuantitySample] else {
+        print("samples nil errrrro")
+        fatalError("an error occururred fetching users quantities")
+      }
+        print("<3 start")
+          myanchor = newAnchor!
+        handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
     }
-
-    // https://developer.apple.com/documentation/healthkit/hkobserverquery
-    let query = HKObserverQuery(sampleType: sampleType, predicate: nil) {
-        query, completionHandler, error in
-
-        if error != nil {
-
-            print(error)
-            // abort()
-        }
-
-        // Take whatever steps are necessary to update your app's data and UI
-        // This may involve executing other queries
-        // self.updateDailyStepCount()
-        // STEP 9.3: execute the query for heart rate data
-        hkspock?.execute(tHeartRateQuery)
-
-        // If you have subscribed for background updates you must call the completion handler here.
-        // completionHandler()
+  // Optionally, add an update handler.
+  qq.updateHandler = { (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+    guard let samples = samplesOrNil as? [HKQuantitySample] else {
+      // Handle the error here.
+      print("samples nil errrrro")
+      fatalError("*** An error occurred during an update: \(errorOrNil!.localizedDescription) ***")
     }
-
-    // STEP 9.3: execute the query for heart rate data
-    hkspock?.execute(query)
-
-
-        // // STEP 9.2: define a query for "recent" heart rate data;
-        // // in pseudo-SQL, this would look like:
-        // // SELECT bpm FROM HealthKitStore WHERE qtyTypeID = '.heartRate';
-        // //
-        // // https://developer.apple.com/documentation/healthkit/hkobjectquerynolimit maybe no lim.. idk
-        // let query = HKAnchoredObjectQuery(type: heartRateType, predicate: nil, anchor: nil, limit: 1) {
-        //     (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
-
-        //     if let samples = samplesOrNil {
-
-        //         let s = samples[0]?
-        //         currentTripNotes.hrType = heartRateType
-        //         currentTripNotes.hr = s.quantity!.doubleValue
-
-        //         // for heartRateSamples in samples {
-        //         //     print(heartRateSamples)
-        //         // }
-
-        //     } else {
-        //         print("No heart rate sample available.")
-        //     }
-
-        // }
+      myanchor = newAnchor!
+    print("<3 updated")
+      handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
+  }
+    hk.execute(qq)
 }
 
 private func startCountingSteps() {
@@ -173,6 +155,13 @@ private func startMonitoringElevation(){
   })
 }
 
+func startUpdatingHeartRate() {
+  if HKHealthStore.isHealthDataAvailable() {
+    print("HKHealthStore - data is available. Starting heart rate monitoring.")
+    startMonitoringHeartRate()
+  }
+}
+
 // TODO toggle for each for battery what not
 func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
@@ -185,10 +174,6 @@ func startUpdatingActivity() {
 
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
-  }
-
-  if HKHealthStore.isHealthDataAvailable() {
-      startMonitoringHeartRate()
   }
 }
 

@@ -33,6 +33,8 @@
 	<string>always for cats</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string> always for cats</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>always for alive cats</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>always for cats</string>
 	<key>NSMicrophoneUsageDescription</key>

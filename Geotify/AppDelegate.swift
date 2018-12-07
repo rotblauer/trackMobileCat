@@ -37,35 +37,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let locationManager = CLLocationManager()
   let center = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
+  let hkds = HKHealthStore()
 
-  fileprivate func setupHKHealthKitStore() {
-      // STEP 2: a placeholder for a conduit to all HealthKit data
-      let healthKitDataStore: HKHealthStore?
-      let readableHKQuantityTypes: Set<HKQuantityType>?
-
-      // STEP 4: make sure HealthKit is available
-      if HKHealthStore.isHealthDataAvailable() {
-
-          // STEP 5: create one instance of the HealthKit store
-          // per app; it's the conduit to all HealthKit data
-          self.healthKitDataStore = HKHealthStore()
-
-          // STEP 7: ask user for permission to read and write
-          // heart rate data
-          healthKitDataStore?.requestAuthorization(
-                                                   read: readableHKQuantityTypes,
-                                                   completion: { (success, error) -> Void in
-                                                       if success {
-                                                           print("Successful healthkit authorization.")
-                                                       } else {
-                                                           print(error.debugDescription)
-                                                       }
-                                                   })
-      } else {
-          self.healthKitDataStore = nil
-          self.readableHKQuantityTypes = nil
-      }
-  }
+//  fileprivate func setupHKHealthKitStore() {
+//      // STEP 2: a placeholder for a conduit to all HealthKit data
+//
+//
+//      // let readableHKQuantityTypes: HK //Set<HKQuantityType>?
+////    let readableHKQuantityTypes = [HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!]
+//    //let readableHKQuantityTypes = // HKObjectType.categoryType(forIdentifier: HKQuantityTypeIdentifier.heartRate)
+////    let readableHKQuantityTypes = [HKQuantityTypeIdentifier.heartRate]
+//
+////    let readableHKQuantityTypes: Set<HKQuantityType>?
+////
+//
+//      // STEP 4: make sure HealthKit is available
+////      if HKHealthStore.isHealthDataAvailable() {
+//
+//          // STEP 5: create one instance of the HealthKit store
+//          // per app; it's the conduit to all HealthKit data
+////          let healthKitDataStore = HKHealthStore()
+//
+////        readableHKQuantityTypes =
+//
+//          // STEP 7: ask user for permission to read and write
+//          // heart rate data
+//        HKHealthStore()
+////      }
+//  }
 
   fileprivate func setupLocationManager() {
     locationManager.delegate = self
@@ -99,8 +98,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
     print(uuid)
 
+//    setupHKHealthKitStore()
+      hkds.requestAuthorization(
+        toShare: nil,
+        read: [HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!],
+        completion: { (success, error) -> Void in
+          if success {
+            print("Successful healthkit authorization.")
+            startUpdatingHeartRate()
+          } else {
+            print(error.debugDescription)
+          }
+      })
+    print("started healthkitstore")
+    
     startUpdatingActivity()
     print("started activity")
+
 
     var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
