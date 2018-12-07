@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let locationManager = CLLocationManager()
   let center = UNUserNotificationCenter.current()
+  let nsnotifc = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
   let hkds = HKHealthStore()
 
@@ -86,6 +87,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
   }
+  
+// @objc     func onBatteryLevelChange(_ notification:Notification) {
+////        let l = DeviceBatteryStat(lev: batteryLevel, stat: batteryState)
+////        currentTripNotes.batteryString = getStringBatteryStatus(bs: l)
+//      }
+//     @objc func onBatteryStatusChange(_ notification:Notification) { }
+////      let l = DeviceBatteryStat(lev: batteryLevel, stat: batteryState)
+////      currentTripNotes.batteryString = getStringBatteryStatus(bs: l)
+//    }
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
@@ -94,7 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
+    
     UIDevice.current.isBatteryMonitoringEnabled = true
+
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
     print(uuid)
 
@@ -126,6 +138,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     registerForPushNotifications()
     UIApplication.shared.registerForRemoteNotifications()
     // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
+
+//    nsnotifc.addObserver(self, forKeyPath: UIDevice.batteryStateDidChangeNotification.rawValue, options: []) {
+//      (l) in
+//
+//    }
+
+//
+////
+//  NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onBatteryLevelChange), name: UIDevice.batteryLevelDidChangeNotification, object: nil)
+//  NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onBatteryStatusChange), name: UIDevice.batteryLevelDidChangeNotification, object: nil)
+////
 
     return true
   }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06CBF75F21BB1E3400521651 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF75E21BB1E3400521651 /* Battery.swift */; };
 		083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */; };
 		087627601E3002F400343882 /* Criel sur Mer.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0876275F1E3002F400343882 /* Criel sur Mer.gpx */; };
 		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
@@ -40,6 +41,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		06CBF75E21BB1E3400521651 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		083760051E2F938900035CAD /* TrackPoint.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrackPoint.xcdatamodel; sourceTree = "<group>"; };
 		0876275F1E3002F400343882 /* Criel sur Mer.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Criel sur Mer.gpx"; sourceTree = "<group>"; };
 		440C0F9478B92A69A041D344 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				D90CB6501A739B7A00228A1F /* Supporting Files */,
 				4FB90F8E21864BC000ADEF7A /* DataStore.swift */,
 				4FB90F902186508A00ADEF7A /* Remote.swift */,
+				06CBF75E21BB1E3400521651 /* Battery.swift */,
 			);
 			path = Geotify;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				4FB90F912186508A00ADEF7A /* Remote.swift in Sources */,
 				D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
+				06CBF75F21BB1E3400521651 /* Battery.swift in Sources */,
 				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
 				4F9609CA209F58FF00B861DE /* Note.swift in Sources */,

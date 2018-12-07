@@ -27,6 +27,7 @@ class Note{
   var currentVisit:Visit? = nil;
   var heartRateRaw:String="";
   var heartRate:String="";
+  var batteryString:String="";
 
 }
 

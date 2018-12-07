@@ -17,6 +17,7 @@ private var firstPoint:CLLocation? = nil;
 private var lastPoint:CLLocation? = nil;
 var currentTripNotes = Note()
 private var customTripNote = ""
+private var batteryStatsField = ""
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 private let elly=CMAltimeter();// We have an actual altimeter!
@@ -54,6 +55,17 @@ private func startTrackingActivityType() {
   }
 }
 
+private func startTrackingBatteryThings() {
+  //    NotificationCenter.default.addObserver(self, selector: func(_ notification:Notification) {
+  //      //  UIDevice.version()
+  //      //  UIDevice.version()
+  //      //  UIDevice.batteryLevelDidChangeNotification
+  //      }, name: UIDevice.batteryStateDidChangeNotification, object: nil)
+  
+
+  
+}
+
 private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySample]) {
 
 //  let sCo = samples.count
@@ -65,7 +77,7 @@ private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySam
   let sample = samples[sEI-1]
   
   let qS = "\(sample)"
-  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
+//  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
 //  print(pp)
   currentTripNotes.heartRate = "\(sample.quantity)"
   currentTripNotes.heartRateRaw = qS
@@ -183,9 +195,8 @@ func addVisit(visit:CLVisit,place:String){
   currentTripNotes.currentVisit=nil
 }
 
-
 func setCurrentTripNotes(s: String) {
-
+  
   save(manager: CLLocationManager())
 
   //  savePointToCoreData(manager: CLLocationManager())

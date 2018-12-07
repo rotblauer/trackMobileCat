@@ -37,7 +37,6 @@ private func objectifyVisit(v: Visit?) -> NSMutableDictionary? {
   return dict
 }
 
-
 func getStringVisit(v: Visit?) -> String{
   let json = try! JSONSerialization.data(withJSONObject: objectifyVisit(v:v) as Any, options: [])
   return String(data: json, encoding: String.Encoding.utf8)!
