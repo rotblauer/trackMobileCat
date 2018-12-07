@@ -65,12 +65,10 @@ private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySam
   let sample = samples[sEI-1]
   
   let qS = "\(sample)"
-  let qT = "\(ttype)"
-  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)\nheartRateType= \(qT)"
-  print(pp)
+  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
+//  print(pp)
   currentTripNotes.heartRate = "\(sample.quantity)"
   currentTripNotes.heartRateRaw = qS
-  currentTripNotes.heartRateType = qT
 }
 
 private func startMonitoringHeartRate() {
@@ -106,7 +104,7 @@ private func startMonitoringHeartRate() {
       fatalError("*** An error occurred during an update: \(errorOrNil!.localizedDescription) ***")
     }
       myanchor = newAnchor!
-    print("<3 updated")
+//    print("<3 updated")
       handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
   }
     hk.execute(qq)
