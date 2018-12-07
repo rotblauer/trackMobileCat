@@ -9,6 +9,7 @@ import CoreLocation
 import UIKit
 import CoreData
 import CoreMotion
+import HealthKit
 
 // mem only
 
@@ -19,6 +20,7 @@ private var customTripNote = ""
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 private let elly=CMAltimeter();// We have an actual altimeter!
+private let hkspock=HKHealthStore()
 
 var requireWifiForPush:Bool = true;
 
@@ -52,6 +54,61 @@ private func startTrackingActivityType() {
   }
 }
 
+private func startMonitoringHeartRate() {
+
+    // https://www.appcoda.com/healthkit/
+        // STEP 9.1: just as in STEP 6, we're telling the `HealthKitStore`
+        // that we're interested in reading heart rate data
+        let heartRateType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+
+        // // STEP 9.2: define a query for "recent" heart rate data;
+        // // in pseudo-SQL, this would look like:
+        // // SELECT bpm FROM HealthKitStore WHERE qtyTypeID = '.heartRate';
+        // //
+        // // https://developer.apple.com/documentation/healthkit/hkobjectquerynolimit maybe no lim.. idk
+        // let query = HKAnchoredObjectQuery(type: heartRateType, predicate: nil, anchor: nil, limit: 1) {
+        //     (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+
+        //     if let samples = samplesOrNil {
+
+        //         let s = samples[0]?
+        //         currentTripNotes.hrType = heartRateType
+        //         currentTripNotes.hr = s.quantity!.doubleValue
+
+        //         // for heartRateSamples in samples {
+        //         //     print(heartRateSamples)
+        //         // }
+
+        //     } else {
+        //         print("No heart rate sample available.")
+        //     }
+
+        // }
+
+
+        // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
+        // let tHeartRate = HKSampleType.quantityTypeForIdentifier(HKQuantityTypeIdentifierHeartRate)
+        // let tHeartRateQuery = HKSampleQuery(sampleType: tHeartRate!, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
+        let tHeartRateQuery = HKSampleQuery(sampleType: heartRateType, predicate:.None, limit: 1, sortDescriptors: nil) { query, results, error in
+
+            if results?.count > 0
+            {
+                var string:String = ""
+                for result in results as! [HKQuantitySample]
+                {
+                    // let HeartRate = result.quantity
+
+                    currentTripNotes.hrType = heartRateType
+                    currentTripNotes.hr = result.quantity
+                    // string = "\(HeartRate)"
+                    // print(string)
+                }
+            }
+}
+
+        // STEP 9.3: execute the query for heart rate data
+        HKHealthStore?.execute(query)
+}
 
 private func startCountingSteps() {
   pedometer.startUpdates(from: Date()) {
@@ -95,6 +152,7 @@ private func startMonitoringElevation(){
     currentTripNotes.pressure = altitudeData!.pressure.doubleValue            // Pressure in kilopascals
   })
 }
+
 // TODO toggle for each for battery what not
 func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
@@ -107,6 +165,10 @@ func startUpdatingActivity() {
 
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
+  }
+
+  if HKHealthStore.isHealthDataAvailable() {
+      startMonitoringHeartRate()
   }
 }
 
@@ -127,6 +189,7 @@ func setCurrentTripNotes(s: String) {
   currentTripNotes = Note()
   currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
+
   //TODO store actual currentTripNotes
   customTripNote = s
 

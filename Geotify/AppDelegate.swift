@@ -25,11 +25,10 @@ import CoreLocation
 import CoreData
 import Intents
 import UserNotifications
-
+import HealthKit
 
 var uuid:String = "unset"
 var pushToken:String = "unset"
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +37,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let locationManager = CLLocationManager()
   let center = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
+
+  fileprivate func setupHKHealthKitStore() {
+      // STEP 2: a placeholder for a conduit to all HealthKit data
+      let healthKitDataStore: HKHealthStore?
+      let readableHKQuantityTypes: Set<HKQuantityType>?
+
+      // STEP 4: make sure HealthKit is available
+      if HKHealthStore.isHealthDataAvailable() {
+
+          // STEP 5: create one instance of the HealthKit store
+          // per app; it's the conduit to all HealthKit data
+          self.healthKitDataStore = HKHealthStore()
+
+          // STEP 7: ask user for permission to read and write
+          // heart rate data
+          healthKitDataStore?.requestAuthorization(
+                                                   read: readableHKQuantityTypes,
+                                                   completion: { (success, error) -> Void in
+                                                       if success {
+                                                           print("Successful healthkit authorization.")
+                                                       } else {
+                                                           print(error.debugDescription)
+                                                       }
+                                                   })
+      } else {
+          self.healthKitDataStore = nil
+          self.readableHKQuantityTypes = nil
+      }
+  }
 
   fileprivate func setupLocationManager() {
     locationManager.delegate = self
@@ -62,7 +90,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
-
     setupLocationManager()
     print("location activated")
 
@@ -71,17 +98,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIDevice.current.isBatteryMonitoringEnabled = true
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
     print(uuid)
+
     startUpdatingActivity()
     print("started activity")
+
     var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
     let fileName = "\(Date()).log"
     let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
     freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
     print("started log")
+
     registerForPushNotifications()
     UIApplication.shared.registerForRemoteNotifications()
     // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
+
     return true
   }
 
