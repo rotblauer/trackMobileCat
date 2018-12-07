@@ -107,7 +107,7 @@ private func startMonitoringHeartRate() {
 }
 
         // STEP 9.3: execute the query for heart rate data
-        HKHealthStore?.execute(query)
+        hkspock?.execute(query)
 }
 
 private func startCountingSteps() {
