@@ -23,11 +23,11 @@ func save(manager: CLLocationManager){
   saveAll(locations: locs)
 }
 
-func saveAll(locations: [CLLocation]) {  
+func saveAll(locations: [CLLocation]) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
     return
   }
-  
+
   let managedContext = appDelegate.persistentContainer.viewContext
   let entity = NSEntityDescription.entity(forEntityName: "TrackPoint", in: managedContext)!
   locations.forEach { p in
@@ -48,7 +48,7 @@ func saveAll(locations: [CLLocation]) {
     Q = Q+1
     updateStats(p:point as! TrackPoint)
 //    print("save")
-    
+
     do {
       try managedContext.save()
       //      print("saved new points")
@@ -70,15 +70,15 @@ private func updateStats(p:TrackPoint){
   let currentTripDistance = String(format: "%.4f", (currentTripNotes.currentTripDistance))
   let relativeAltitude = String(format: "%.4f", (currentTripNotes.relativeAltitude))
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
-  
+
   //      UUID: \(_uuid)\n
-  currentStats = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: \(version)"
+  currentStats = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance) HR: \(currentTripNotes.heartRate)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: \(version)"
 }
 
 // get all trackpoints from data store
 func fetchPointsFromCoreData(context:NSManagedObjectContext) -> [TrackPoint]? {
   let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "TrackPoint")
-  
+
   do {
     let fetchedPoints = try context.fetch(fetchRequest) as! [TrackPoint]
     return fetchedPoints
@@ -90,7 +90,7 @@ func fetchPointsFromCoreData(context:NSManagedObjectContext) -> [TrackPoint]? {
 
 func clearTrackPointsCD(toDelete: [TrackPoint],currentContext:NSManagedObjectContext) {
   print("attempting delete")
-  
+
   for p in toDelete {
     delete(trackPoint: p, context:currentContext)
     P=P+1

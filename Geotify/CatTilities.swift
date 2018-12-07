@@ -9,6 +9,7 @@ import CoreLocation
 import UIKit
 import CoreData
 import CoreMotion
+import HealthKit
 
 // mem only
 
@@ -16,9 +17,11 @@ private var firstPoint:CLLocation? = nil;
 private var lastPoint:CLLocation? = nil;
 var currentTripNotes = Note()
 private var customTripNote = ""
+private var batteryStatsField = ""
 private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 private let elly=CMAltimeter();// We have an actual altimeter!
+private let hk=HKHealthStore();
 
 var requireWifiForPush:Bool = true;
 
@@ -32,7 +35,7 @@ func setRequireWifi(requireWifi: Bool) {
 private func startTrackingActivityType() {
   activityManager.startActivityUpdates(to: OperationQueue.main) {
     (activity: CMMotionActivity?) in
-    
+
     guard let activity = activity else { return }
     DispatchQueue.main.async {
       if activity.walking {
@@ -52,16 +55,82 @@ private func startTrackingActivityType() {
   }
 }
 
+private func startTrackingBatteryThings() {
+  //    NotificationCenter.default.addObserver(self, selector: func(_ notification:Notification) {
+  //      //  UIDevice.version()
+  //      //  UIDevice.version()
+  //      //  UIDevice.batteryLevelDidChangeNotification
+  //      }, name: UIDevice.batteryStateDidChangeNotification, object: nil)
+  
+
+  
+}
+
+private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySample]) {
+
+//  let sCo = samples.count
+//  let sCa = samples.capacity
+  let sEI = samples.endIndex
+  // print("sco=\(sCo) sCa=\(sCa) sEI=\(sEI)")
+  
+  // take only last
+  let sample = samples[sEI-1]
+  
+  let qS = "\(sample)"
+//  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
+//  print(pp)
+  currentTripNotes.heartRate = "\(sample.quantity)"
+  currentTripNotes.heartRateRaw = qS
+}
+
+private func startMonitoringHeartRate() {
+    // https://www.appcoda.com/healthkit/
+    // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
+  
+    let heartRateTypeIdent = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+  
+  var myanchor = HKQueryAnchor.init(fromValue: 0)
+  
+  guard let startDate = NSCalendar.current.date(byAdding: .second, value: -10, to: (NSDate() as Date), wrappingComponents: true) else {
+    fatalError("death in the beginning")
+  }
+  let endDate = NSCalendar.current.date(byAdding: .year, value: 1, to: (NSDate() as Date), wrappingComponents: true)
+  let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+
+      let qq = HKAnchoredObjectQuery(type: heartRateTypeIdent, predicate: predicate, anchor: myanchor, limit: HKObjectQueryNoLimit) {
+  (qq, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+      
+      guard let samples = samplesOrNil as? [HKQuantitySample] else {
+        print("samples nil errrrro")
+        fatalError("an error occururred fetching users quantities")
+      }
+        print("<3 start")
+          myanchor = newAnchor!
+        handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
+    }
+  // Optionally, add an update handler.
+  qq.updateHandler = { (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+    guard let samples = samplesOrNil as? [HKQuantitySample] else {
+      // Handle the error here.
+      print("samples nil errrrro")
+      fatalError("*** An error occurred during an update: \(errorOrNil!.localizedDescription) ***")
+    }
+      myanchor = newAnchor!
+//    print("<3 updated")
+      handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
+  }
+    hk.execute(qq)
+}
 
 private func startCountingSteps() {
   pedometer.startUpdates(from: Date()) {
     pedometerData, error in
     guard let pedometerData = pedometerData, error == nil else { return }
-    
+
     DispatchQueue.main.async {
-      
+
       //    var current=getStoredTripNotes()
-      
+
       if #available(iOS 10.0, *) {
         if(pedometerData.averageActivePace != nil){
           currentTripNotes.averageActivePace=pedometerData.averageActivePace!
@@ -80,7 +149,7 @@ private func startCountingSteps() {
       if(pedometerData.floorsAscended != nil){
         currentTripNotes.floorsAscended=pedometerData.floorsAscended!
       }
-      
+
       if(pedometerData.floorsDescended != nil){
         currentTripNotes.floorsDescended=pedometerData.floorsDescended!
       }
@@ -95,16 +164,24 @@ private func startMonitoringElevation(){
     currentTripNotes.pressure = altitudeData!.pressure.doubleValue            // Pressure in kilopascals
   })
 }
+
+func startUpdatingHeartRate() {
+  if HKHealthStore.isHealthDataAvailable() {
+    print("HKHealthStore - data is available. Starting heart rate monitoring.")
+    startMonitoringHeartRate()
+  }
+}
+
 // TODO toggle for each for battery what not
 func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
   }
-  
+
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
-  
+
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
   }
@@ -118,18 +195,18 @@ func addVisit(visit:CLVisit,place:String){
   currentTripNotes.currentVisit=nil
 }
 
-
 func setCurrentTripNotes(s: String) {
   
   save(manager: CLLocationManager())
-  
+
   //  savePointToCoreData(manager: CLLocationManager())
   currentTripNotes = Note()
   currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
+
   //TODO store actual currentTripNotes
   customTripNote = s
-  
+
   save(manager: CLLocationManager())
   //  savePointToCoreData(manager: CLLocationManager())
 }
@@ -162,7 +239,7 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripDistance = currentTripNotes.currentTripDistance + (lastPoint?.distance(from: curPoint))!;
       // overall
       currentTripNotes.currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
-      
+
       lastPoint = curPoint; // update
     }
   } else {
@@ -174,4 +251,3 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
     }
   }
 }
-

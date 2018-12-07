@@ -25,8 +25,10 @@ class Note{
   var relativeAltitude:Double = 0;//From the altimeter, an actual altimeter!
   var pressure:Double = 0;//From the altimeter,we get pressure!
   var currentVisit:Visit? = nil;
-  
-  
+  var heartRateRaw:String="";
+  var heartRate:String="";
+  var batteryString:String="";
+
 }
 
 private func objectifyNote(n: Note) -> NSMutableDictionary? {
@@ -41,10 +43,15 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.floorsAscended, forKey: "floorsAscended");
   dict.setValue(n.floorsDescended, forKey: "floorsDescended");
   dict.setValue(n.currentTripStart.iso8601, forKey: "currentTripStart");
+  
   dict.setValue(n.relativeAltitude, forKey: "relativeAltitude");
   dict.setValue(n.pressure, forKey: "pressure");
-  dict.setValue(getStringVisit(v:n.currentVisit), forKey: "visit");
   
+  dict.setValue(n.heartRate, forKey: "heartRateS");
+  dict.setValue(n.heartRateRaw, forKey: "heartRateRawS");
+  
+  dict.setValue(getStringVisit(v:n.currentVisit), forKey: "visit");
+
   return dict
 }
 
@@ -53,5 +60,3 @@ func getStringNote(n: Note) -> String{
   let json = try! JSONSerialization.data(withJSONObject: objectifyNote(n:n) as Any, options: [])
   return String(data: json, encoding: String.Encoding.utf8)!
 }
-
-
