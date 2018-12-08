@@ -31,9 +31,11 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>always for cats</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>always for cats</string>
 	<key>NSHealthShareUsageDescription</key>
+	<string>always for cats</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>always for cats</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>always for cats</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>always for cats</string>

@@ -13,6 +13,7 @@
 		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
+		4FA1A7C521BC4AC400EB569C /* HealthKitSetupAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1A7C421BC4AC400EB569C /* HealthKitSetupAssistant.swift */; };
 		4FB90F8D21850BC100ADEF7A /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB90F8C21850BC100ADEF7A /* Visit.swift */; };
 		4FB90F8F21864BC000ADEF7A /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB90F8E21864BC000ADEF7A /* DataStore.swift */; };
 		4FB90F912186508A00ADEF7A /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB90F902186508A00ADEF7A /* Remote.swift */; };
@@ -48,6 +49,7 @@
 		4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
 		4F9609C9209F58FF00B861DE /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		4FA1A7C421BC4AC400EB569C /* HealthKitSetupAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitSetupAssistant.swift; sourceTree = "<group>"; };
 		4FB90F8C21850BC100ADEF7A /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		4FB90F8E21864BC000ADEF7A /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		4FB90F902186508A00ADEF7A /* Remote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				4FB90F8E21864BC000ADEF7A /* DataStore.swift */,
 				4FB90F902186508A00ADEF7A /* Remote.swift */,
 				06CBF75E21BB1E3400521651 /* Battery.swift */,
+				4FA1A7C421BC4AC400EB569C /* HealthKitSetupAssistant.swift */,
 			);
 			path = Geotify;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
 				06CBF75F21BB1E3400521651 /* Battery.swift in Sources */,
+				4FA1A7C521BC4AC400EB569C /* HealthKitSetupAssistant.swift in Sources */,
 				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
 				4F9609CA209F58FF00B861DE /* Note.swift in Sources */,

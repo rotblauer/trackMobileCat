@@ -35,7 +35,7 @@ func setRequireWifi(requireWifi: Bool) {
 private func startTrackingActivityType() {
   activityManager.startActivityUpdates(to: OperationQueue.main) {
     (activity: CMMotionActivity?) in
-
+    
     guard let activity = activity else { return }
     DispatchQueue.main.async {
       if activity.walking {
@@ -62,32 +62,38 @@ private func startTrackingBatteryThings() {
   //      //  UIDevice.batteryLevelDidChangeNotification
   //      }, name: UIDevice.batteryStateDidChangeNotification, object: nil)
   
-
+  
   
 }
 
 private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySample]) {
-
-//  let sCo = samples.count
-//  let sCa = samples.capacity
-  let sEI = samples.endIndex
-  // print("sco=\(sCo) sCa=\(sCa) sEI=\(sEI)")
   
-  // take only last
-  let sample = samples[sEI-1]
+  //  let sCo = samples.count
+  //  let sCa = samples.capacity
   
-  let qS = "\(sample)"
-//  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
-//  print(pp)
-  currentTripNotes.heartRate = "\(sample.quantity)"
-  currentTripNotes.heartRateRaw = qS
+  if samples.count > 0{
+    
+    let sEI = samples.endIndex
+    
+    
+    // print("sco=\(sCo) sCa=\(sCa) sEI=\(sEI)")
+    
+    // take only last
+    let sample = samples[sEI-1]
+    
+    let qS = "\(sample)"
+    //  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
+    //  print(pp)
+    currentTripNotes.heartRate = "\(sample.quantity)"
+    currentTripNotes.heartRateRaw = qS
+  }
 }
 
 private func startMonitoringHeartRate() {
-    // https://www.appcoda.com/healthkit/
-    // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
+  // https://www.appcoda.com/healthkit/
+  // https://stackoverflow.com/questions/40739920/how-to-get-the-calories-and-heart-rate-from-health-kit-sdk-in-swift
   
-    let heartRateTypeIdent = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
+  let heartRateTypeIdent = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
   
   var myanchor = HKQueryAnchor.init(fromValue: 0)
   
@@ -96,18 +102,18 @@ private func startMonitoringHeartRate() {
   }
   let endDate = NSCalendar.current.date(byAdding: .year, value: 1, to: (NSDate() as Date), wrappingComponents: true)
   let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
-
-      let qq = HKAnchoredObjectQuery(type: heartRateTypeIdent, predicate: predicate, anchor: myanchor, limit: HKObjectQueryNoLimit) {
-  (qq, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
-      
-      guard let samples = samplesOrNil as? [HKQuantitySample] else {
-        print("samples nil errrrro")
-        fatalError("an error occururred fetching users quantities")
-      }
-        print("<3 start")
-          myanchor = newAnchor!
-        handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
+  
+  let qq = HKAnchoredObjectQuery(type: heartRateTypeIdent, predicate: predicate, anchor: myanchor, limit: HKObjectQueryNoLimit) {
+    (qq, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
+    
+    guard let samples = samplesOrNil as? [HKQuantitySample] else {
+      print("samples nil errrrro")
+      fatalError("an error occururred fetching users quantities")
     }
+    print("<3 start")
+    myanchor = newAnchor!
+    handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
+  }
   // Optionally, add an update handler.
   qq.updateHandler = { (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
     guard let samples = samplesOrNil as? [HKQuantitySample] else {
@@ -115,22 +121,22 @@ private func startMonitoringHeartRate() {
       print("samples nil errrrro")
       fatalError("*** An error occurred during an update: \(errorOrNil!.localizedDescription) ***")
     }
-      myanchor = newAnchor!
-//    print("<3 updated")
-      handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
+    myanchor = newAnchor!
+    //    print("<3 updated")
+    handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
   }
-    hk.execute(qq)
+  hk.execute(qq)
 }
 
 private func startCountingSteps() {
   pedometer.startUpdates(from: Date()) {
     pedometerData, error in
     guard let pedometerData = pedometerData, error == nil else { return }
-
+    
     DispatchQueue.main.async {
-
+      
       //    var current=getStoredTripNotes()
-
+      
       if #available(iOS 10.0, *) {
         if(pedometerData.averageActivePace != nil){
           currentTripNotes.averageActivePace=pedometerData.averageActivePace!
@@ -149,7 +155,7 @@ private func startCountingSteps() {
       if(pedometerData.floorsAscended != nil){
         currentTripNotes.floorsAscended=pedometerData.floorsAscended!
       }
-
+      
       if(pedometerData.floorsDescended != nil){
         currentTripNotes.floorsDescended=pedometerData.floorsDescended!
       }
@@ -166,10 +172,7 @@ private func startMonitoringElevation(){
 }
 
 func startUpdatingHeartRate() {
-  if HKHealthStore.isHealthDataAvailable() {
-    print("HKHealthStore - data is available. Starting heart rate monitoring.")
-    startMonitoringHeartRate()
-  }
+  startMonitoringHeartRate()
 }
 
 // TODO toggle for each for battery what not
@@ -177,11 +180,11 @@ func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
     startTrackingActivityType()
   }
-
+  
   if CMPedometer.isStepCountingAvailable() {
     startCountingSteps()
   }
-
+  
   if CMAltimeter.isRelativeAltitudeAvailable(){
     startMonitoringElevation()
   }
@@ -198,15 +201,15 @@ func addVisit(visit:CLVisit,place:String){
 func setCurrentTripNotes(s: String) {
   
   save(manager: CLLocationManager())
-
+  
   //  savePointToCoreData(manager: CLLocationManager())
   currentTripNotes = Note()
   currentTripNotes.customNote=s
   startUpdatingActivity()//reset ped etc
-
+  
   //TODO store actual currentTripNotes
   customTripNote = s
-
+  
   save(manager: CLLocationManager())
   //  savePointToCoreData(manager: CLLocationManager())
 }
@@ -239,7 +242,7 @@ func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {
       currentTripNotes.currentTripDistance = currentTripNotes.currentTripDistance + (lastPoint?.distance(from: curPoint))!;
       // overall
       currentTripNotes.currentTripDistanceFromStart = (firstPoint?.distance(from: curPoint))!;
-
+      
       lastPoint = curPoint; // update
     }
   } else {
