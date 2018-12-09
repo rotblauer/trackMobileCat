@@ -29,14 +29,14 @@ private func objectifyTrackpoint(trackpoint: TrackPoint,pushToken:String) -> NSM
 }
 
 private func buildJsonPosterFromTrackpoints(trackpoints: [TrackPoint],pushToken:String) -> NSMutableArray? {
-
+  
   let points: NSMutableArray = []
-
+  
   for point in trackpoints {
     let jo = objectifyTrackpoint(trackpoint: point,pushToken:pushToken)
     points.add(jo as AnyObject)
   }
-
+  
   return points
 }
 
@@ -46,8 +46,9 @@ private func buildURL() -> URL{
   urlComponents.host = "track.areteh.co"
   urlComponents.port = 3001
   urlComponents.path = "/populate/"
+  
   guard let url = urlComponents.url else { fatalError("Could not create URL from components") }
-
+  
   return url
 }
 
@@ -63,7 +64,8 @@ func pushLocs(force:Bool,pushToken:String) {
     print("in attempt")
     return
   }
-
+  let apiCOToken="thecattokenthatunlockstheworldtrackyourcats"
+  
   let managedContext = appDelegate.persistentContainer.viewContext
   if let points = fetchPointsFromCoreData(context: managedContext){
     Q=points.count
@@ -74,16 +76,19 @@ func pushLocs(force:Bool,pushToken:String) {
     if (!force && points.count % pushAtCount>0) { return; }
     print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points,pushToken:pushToken)
-
+    
     var request = URLRequest(url:buildURL())// will up date to cat scratcher main
-
+    
     request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.addValue("application/json", forHTTPHeaderField: "Accept")
+    request.addValue(apiCOToken, forHTTPHeaderField: "AuthorizationOfCats")
+//    print(request.allHTTPHeaderFields!)
+    
     request.httpBody = try! JSONSerialization.data(withJSONObject: json as Any, options: [])
     attemptingPush=true
     URLSession.shared.dataTask(with:request, completionHandler: {(data, response, error) in
-
+      
       if error != nil {
         print(error ?? "NONE")
         attemptingPush=false
@@ -109,6 +114,6 @@ func pushLocs(force:Bool,pushToken:String) {
     }
     success=false
   }
-
+  
   print("Moving on with push attempt \(attemptingPush)")
 }
