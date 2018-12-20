@@ -3,7 +3,6 @@
 //
 //THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 import Foundation
 import CoreLocation
 import UIKit
@@ -61,31 +60,23 @@ private func startTrackingBatteryThings() {
   //      //  UIDevice.version()
   //      //  UIDevice.batteryLevelDidChangeNotification
   //      }, name: UIDevice.batteryStateDidChangeNotification, object: nil)
-  
-  
-  
 }
 
 private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySample]) {
-  
-  //  let sCo = samples.count
-  //  let sCa = samples.capacity
-  
-  if samples.count > 0{
+  if samples.count > 0 {
     
     let sEI = samples.endIndex
-    
-    
-    // print("sco=\(sCo) sCa=\(sCa) sEI=\(sEI)")
     
     // take only last
     let sample = samples[sEI-1]
     
-    let qS = "\(sample)"
-    //  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(qS)"
+    //  let pp = "heartRate= \(sample.quantity)\nheartRateRaw= \(sample)"
     //  print(pp)
+    
     currentTripNotes.heartRate = "\(sample.quantity)"
-    currentTripNotes.heartRateRaw = qS
+    currentTripNotes.heartRateRaw = "\(sample)"
+  } else {
+    setHeartRateNA(note:currentTripNotes)
   }
 }
 
@@ -108,17 +99,20 @@ private func startMonitoringHeartRate() {
     
     guard let samples = samplesOrNil as? [HKQuantitySample] else {
       print("samples nil errrrro")
+      setHeartRateNA(note:currentTripNotes)
       fatalError("an error occururred fetching users quantities")
     }
     print("<3 start")
     myanchor = newAnchor!
     handleHeartRateSamples(ttype: heartRateTypeIdent, samples: samples)
   }
-  // Optionally, add an update handler.
+  
+  // Add update handler to qq query.
   qq.updateHandler = { (query, samplesOrNil, deletedObjectsOrNil, newAnchor, errorOrNil) in
     guard let samples = samplesOrNil as? [HKQuantitySample] else {
       // Handle the error here.
       print("samples nil errrrro")
+      setHeartRateNA(note:currentTripNotes)
       fatalError("*** An error occurred during an update: \(errorOrNil!.localizedDescription) ***")
     }
     myanchor = newAnchor!

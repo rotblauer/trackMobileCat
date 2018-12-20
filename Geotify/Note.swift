@@ -31,6 +31,12 @@ class Note{
 
 }
 
+// setHeartRateNA sets the heart rate values for a note to their zero values
+func setHeartRateNA(note : Note) {
+  note.heartRate = ""
+  note.heartRateRaw = ""
+}
+
 private func objectifyNote(n: Note) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
   dict.setValue(n.activity.rawValue, forKey: "activity");  //set all your values..
