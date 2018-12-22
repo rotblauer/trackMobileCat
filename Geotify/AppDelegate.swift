@@ -67,20 +67,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   ////      }
   //  }
   
+
+  
   fileprivate func setupLocationManager() {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest // kCLLocationAccuracyBest
+    
+    // https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/handling_location_events_in_the_background
     locationManager.allowsBackgroundLocationUpdates = true
-    locationManager.pausesLocationUpdatesAutomatically = false
-    locationManager.distanceFilter = kCLDistanceFilterNone
+
     locationManager.startMonitoringVisits()
-    locationManager.startUpdatingLocation()
-    locationManager.startMonitoringSignificantLocationChanges()
-    // The default value of this property is CLActivityType.other. Note that when the value of activityType is CLActivityType.fitness, indoor positioning is disabled.
-    // https://developer.apple.com/documentation/corelocation/cllocationmanager/1620567-activitytype
-//    locationManager.activityType = CLActivityType.fitness
-    locationManager.activityType = CLActivityType.other
+    
+    // Start default FULL mode
+    locationManagerFull(manager: locationManager)
   }
   
   fileprivate func registerForPushNotifications() {
@@ -152,18 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     registerForPushNotifications()
     UIApplication.shared.registerForRemoteNotifications()
     // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
-    
-    //    nsnotifc.addObserver(self, forKeyPath: UIDevice.batteryStateDidChangeNotification.rawValue, options: []) {
-    //      (l) in
-    //
-    //    }
-    
-    //
-    ////
-    //  NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onBatteryLevelChange), name: UIDevice.batteryLevelDidChangeNotification, object: nil)
-    //  NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onBatteryStatusChange), name: UIDevice.batteryLevelDidChangeNotification, object: nil)
-    ////
-    
+
     return true
   }
   

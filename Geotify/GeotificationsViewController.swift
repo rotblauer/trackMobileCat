@@ -59,10 +59,10 @@ class GeotificationsViewController: UIViewController {
   @IBAction func stopTrip(_ sender: Any) {
     if (getStoredCustomTripNotes() != "") {
       // create the alert
-      let alert = UIAlertController(title: "Quit Trip", message: "Please confirm ending this trip.", preferredStyle: UIAlertController.Style.alert)
+      let alert = UIAlertController(title: "Stop Trip", message: "Please confirm stopping this trip.", preferredStyle: UIAlertController.Style.alert)
       
       // add the actions (buttons)
-      alert.addAction(UIAlertAction(title: "End", style: UIAlertAction.Style.default, handler: { action in
+      alert.addAction(UIAlertAction(title: "STOP", style: UIAlertAction.Style.default, handler: { action in
         self.doStopTrip();
       }))
       alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: { action in

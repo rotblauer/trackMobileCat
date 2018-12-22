@@ -14,12 +14,13 @@ func save(manager: CLLocationManager){
   locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))
   if(currentTripNotes.customNote=="fly"){
     print("updating to fly mode")
-    manager.desiredAccuracy=5000
-    manager.activityType = CLActivityType.airborne
-  }else{
+    locationManagerFly(manager: manager)
+  }else if (currentTripNotes.customNote == "lite") {
+    print("updating to lite mode")
+    locationManagerLite(manager: manager)
+}else{
     print("setting to regular mode")
-    manager.desiredAccuracy=kCLLocationAccuracyBest
-    manager.activityType = CLActivityType.other
+    locationManagerFull(manager: manager)
   }
   print(manager.desiredAccuracy)
   saveAll(locations: locs)

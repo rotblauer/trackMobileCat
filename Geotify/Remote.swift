@@ -7,8 +7,7 @@ import Foundation
 import CoreData
 import UIKit
 
-
-private let pushAtCount=1000;
+var pushAtCount=1000;
 
 // send a TrackPoint model -> plain json dict
 private func objectifyTrackpoint(trackpoint: TrackPoint,pushToken:String) -> NSMutableDictionary? {
