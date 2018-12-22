@@ -3,11 +3,28 @@
 //  Geotify
 //
 //  Created by isaac on 12/22/18.
-//  Copyright © 2018 Ken Toh. All rights reserved.
+//  Copyright © 2018 Rotblauer. All rights reserved.
 //
 
 import Foundation
 import CoreLocation
+
+func locationManagerSetMode(manager: CLLocationManager, mode: String) {
+  if(mode=="fly"){
+    print("updating to fly mode")
+    locationManagerFly(manager: manager)
+  }else if (mode == "lite") {
+    print("updating to lite mode")
+    locationManagerLite(manager: manager)
+  }else{
+    print("setting to regular mode")
+    locationManagerFull(manager: manager)
+  }
+  print("@locationManager.desiredAccuracy=\(manager.desiredAccuracy)")
+  print("@locationManager.distanceFilter=\(manager.distanceFilter)")
+  print("@locationManager.auto_pause=\(manager.pausesLocationUpdatesAutomatically)")
+  print("@locationManager.background_allowed=\(manager.allowsBackgroundLocationUpdates)")
+}
 
 func locationManagerFly(manager: CLLocationManager) {
   pushAtCount=60*60*12
@@ -18,9 +35,14 @@ func locationManagerFly(manager: CLLocationManager) {
 func locationManagerLite(manager: CLLocationManager) {
   pushAtCount=60*60
   manager.pausesLocationUpdatesAutomatically = true
-  manager.desiredAccuracy = kCLLocationAccuracyKilometer
+  manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+  manager.distanceFilter = 10
   manager.activityType = CLActivityType.other
-  
+
+  // https://developer.apple.com/documentation/corelocationgetting_the_user_s_location/
+  manager.stopUpdatingLocation()
+  manager.startMonitoringSignificantLocationChanges()
+
   // https://developer.apple.com/documentation/corelocationgetting_the_user_s_location/
   manager.stopUpdatingLocation()
   manager.startMonitoringSignificantLocationChanges()

@@ -29,6 +29,7 @@ import HealthKit
 
 var uuid:String = "unset"
 var pushToken:String = "unset"
+var locMan : CLLocationManager = CLLocationManager()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -69,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
 
   
-  fileprivate func setupLocationManager() {
+  fileprivate func setupLocationManager() -> CLLocationManager {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
     
@@ -80,6 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Start default FULL mode
     locationManagerFull(manager: locationManager)
+    return locationManager
   }
   
   fileprivate func registerForPushNotifications() {
@@ -124,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     
-    setupLocationManager()
+    locMan = setupLocationManager()
     print("location activated")
     
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in

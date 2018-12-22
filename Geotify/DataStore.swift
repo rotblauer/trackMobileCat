@@ -12,17 +12,7 @@ import UIKit
 func save(manager: CLLocationManager){
   var locs:[CLLocation]=[]
   locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))
-  if(currentTripNotes.customNote=="fly"){
-    print("updating to fly mode")
-    locationManagerFly(manager: manager)
-  }else if (currentTripNotes.customNote == "lite") {
-    print("updating to lite mode")
-    locationManagerLite(manager: manager)
-}else{
-    print("setting to regular mode")
-    locationManagerFull(manager: manager)
-  }
-  print(manager.desiredAccuracy)
+
   saveAll(locations: locs)
 }
 
@@ -82,8 +72,9 @@ private func updateStats(p:TrackPoint){
   Activity: \(currentTripNotes.activity) Trip: \(currentTripNotes.customNote)
   Distance: \(currentTripDistance) Steps: \(currentTripNotes.numberOfSteps)
   Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended) RAltitude: \(relativeAltitude)
-  HR: \(currentTripNotes.heartRate)
-  VERSION: \(version)
+  HR: \(currentTripNotes.heartRate) VERSION: \(version)
+  loc.desired_acc: \(locMan.desiredAccuracy) loc.distance_filter \(locMan.distanceFilter)
+  loc.autopause \(locMan.pausesLocationUpdatesAutomatically) loc.background_allowed \(locMan.allowsBackgroundLocationUpdates)
   """
 }
 

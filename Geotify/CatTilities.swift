@@ -193,8 +193,9 @@ func addVisit(visit:CLVisit,place:String){
 }
 
 func setCurrentTripNotes(s: String) {
+  save(manager: locMan)
   
-  save(manager: CLLocationManager())
+  locationManagerSetMode(manager: locMan, mode: s)
   
   //  savePointToCoreData(manager: CLLocationManager())
   currentTripNotes = Note()
@@ -204,7 +205,7 @@ func setCurrentTripNotes(s: String) {
   //TODO store actual currentTripNotes
   customTripNote = s
   
-  save(manager: CLLocationManager())
+  save(manager: locMan)
   //  savePointToCoreData(manager: CLLocationManager())
 }
 
