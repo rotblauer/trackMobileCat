@@ -15,9 +15,11 @@ func save(manager: CLLocationManager){
   if(currentTripNotes.customNote=="fly"){
     print("updating to fly mode")
     manager.desiredAccuracy=5000
+    manager.activityType = CLActivityType.airborne
   }else{
     print("setting to regular mode")
     manager.desiredAccuracy=kCLLocationAccuracyBest
+    manager.activityType = CLActivityType.other
   }
   print(manager.desiredAccuracy)
   saveAll(locations: locs)
