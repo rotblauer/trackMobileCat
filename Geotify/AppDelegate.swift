@@ -77,7 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManager.startMonitoringVisits()
     locationManager.startUpdatingLocation()
     locationManager.startMonitoringSignificantLocationChanges()
-    locationManager.activityType = CLActivityType.fitness
+    // The default value of this property is CLActivityType.other. Note that when the value of activityType is CLActivityType.fitness, indoor positioning is disabled.
+    // https://developer.apple.com/documentation/corelocation/cllocationmanager/1620567-activitytype
+//    locationManager.activityType = CLActivityType.fitness
+    locationManager.activityType = CLActivityType.other
   }
   
   fileprivate func registerForPushNotifications() {
