@@ -74,7 +74,7 @@ private func updateStats(p:TrackPoint){
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
 
   //      UUID: \(_uuid)\n
-  currentStats = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nCOURSE: \(course)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance) HR: \(currentTripNotes.heartRate)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: \(version)"
+  currentStats = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance) HR: \(currentTripNotes.heartRate)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: \(version)"
 }
 
 // get all trackpoints from data store
