@@ -65,16 +65,25 @@ private func updateStats(p:TrackPoint){
   let acc = String(format: "%.2f", (p.accuracy))
   let lat = String(format: "%.5f", (p.lat))
   let lon = String(format: "%.5f", (p.long))
-  let alt = String(format: "%.5f", (p.altitude))
-  let course = String(format: "%.3f", (p.course))
-  let speed = String(format: "%.5f", (p.speed))
+  let alt = String(format: "%.2f", (p.altitude))
+  let speed = String(format: "%.2f", (p.speed))
   let t = p.time
-  let currentTripDistance = String(format: "%.4f", (currentTripNotes.currentTripDistance))
-  let relativeAltitude = String(format: "%.4f", (currentTripNotes.relativeAltitude))
+  let currentTripDistance = String(format: "%.2f", (currentTripNotes.currentTripDistance))
+  let relativeAltitude = String(format: "%.2f", (currentTripNotes.relativeAltitude))
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
-
+  
   //      UUID: \(_uuid)\n
-  currentStats = "ACC: \(acc)\nLAT: \(lat)\tLON: \(lon)\nALT: \(alt)\nSPEED: \(speed)\nTIME: \(String(describing: t))\nActivity: \(currentTripNotes.activity)\tTrip: \(currentTripNotes.customNote)\nDistance: \(currentTripDistance) HR: \(currentTripNotes.heartRate)\nSteps: \(currentTripNotes.numberOfSteps)\tPressure: \(pressure)\nRAltitude: \(relativeAltitude)\tVERSION: \(version)"
+  currentStats = """
+  ACC: \(acc) SPEED: \(speed)
+  LAT: \(lat) LON: \(lon)
+  ALT: \(alt) Pressure: \(pressure)
+  TIME: \(String(describing: t))
+  Activity: \(currentTripNotes.activity) Trip: \(currentTripNotes.customNote)
+  Distance: \(currentTripDistance) Steps: \(currentTripNotes.numberOfSteps)
+  Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended) RAltitude: \(relativeAltitude)
+  HR: \(currentTripNotes.heartRate)
+  VERSION: \(version)
+  """
 }
 
 // get all trackpoints from data store
