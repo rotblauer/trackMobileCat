@@ -34,7 +34,7 @@ func saveAll(locations: [CLLocation]) {
     point.setValue(p.horizontalAccuracy, forKey: "accuracy");
     point.setValue(p.verticalAccuracy, forKey: "vAccuracy");
     point.setValue(p.altitude, forKey: "altitude");
-    point.setValue(p.floor, forKey: "floor");
+    point.setValue((p.floor ?? -999), forKey: "floor");
     point.setValue(p.speed, forKey: "speed");
     point.setValue(p.course, forKey: "course");
     point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
@@ -54,9 +54,10 @@ func saveAll(locations: [CLLocation]) {
 
 private func updateStats(p:TrackPoint){
   let acc = String(format: "%.2f", (p.accuracy))
+  let vacc = String(format: "%.2f", (p.vAccuracy))
   let lat = String(format: "%.5f", (p.lat))
   let lon = String(format: "%.5f", (p.long))
-  let alt = String(format: "%.2f", (p.altitude))
+  let alt = String(format: "%.1f", (p.altitude))
   let speed = String(format: "%.2f", (p.speed))
   let t = p.time
   let currentTripDistance = String(format: "%.1f", (currentTripNotes.currentTripDistance))
@@ -65,9 +66,9 @@ private func updateStats(p:TrackPoint){
 
   currentStats = """
   VERSION: \(version) WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
-  ACC: \(acc), SPEED: \(speed)
+  ACC.H: \(acc), ACC.V: \(vacc), SPEED: \(speed)
   LAT: \(lat), LON: \(lon)
-  ALT: \(alt), PRESSURE: \(pressure)
+  ALT: \(alt), PRESSURE: \(pressure), FLOOR: \(p.floor)
   TIME: \(String(describing: t))
   ---
   LOC.desired_acc: \(locMan.desiredAccuracy), LOC.distance_filter: \(locMan.distanceFilter)

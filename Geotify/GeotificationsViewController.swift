@@ -125,8 +125,7 @@ class GeotificationsViewController: UIViewController {
     
     if (getStoredCustomTripNotes() != "") {
       tripTimeSince.text = """
-      MODE: \(getCurrentTripCustomNote())
-      TIME: \(stringFromTimeInterval(interval: getCurrentTripTime()) as String)
+      MODE: \(getCurrentTripCustomNote()) TIME: \(stringFromTimeInterval(interval: getCurrentTripTime()) as String)
       """
       
       let d = getCurrentTripDistance()
