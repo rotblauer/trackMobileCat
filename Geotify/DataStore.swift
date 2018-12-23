@@ -40,8 +40,7 @@ func saveAll(locations: [CLLocation]) {
     manageTripVals(lat: lat, lng: lng)
     Q = Q+1
     updateStats(p:point as! TrackPoint)
-//    print("save")
-
+    
     do {
       try managedContext.save()
       //      print("saved new points")
@@ -52,29 +51,30 @@ func saveAll(locations: [CLLocation]) {
 }
 
 private func updateStats(p:TrackPoint){
-  //      let _uuid = (p?.uuid)!
   let acc = String(format: "%.2f", (p.accuracy))
   let lat = String(format: "%.5f", (p.lat))
   let lon = String(format: "%.5f", (p.long))
   let alt = String(format: "%.2f", (p.altitude))
   let speed = String(format: "%.2f", (p.speed))
   let t = p.time
-  let currentTripDistance = String(format: "%.2f", (currentTripNotes.currentTripDistance))
-  let relativeAltitude = String(format: "%.2f", (currentTripNotes.relativeAltitude))
+  let currentTripDistance = String(format: "%.1f", (currentTripNotes.currentTripDistance))
+  let relativeAltitude = String(format: "%.1f", (currentTripNotes.relativeAltitude))
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
-  
-  //      UUID: \(_uuid)\n
+
   currentStats = """
-  ACC: \(acc) SPEED: \(speed)
-  LAT: \(lat) LON: \(lon)
-  ALT: \(alt) Pressure: \(pressure)
+  VERSION: \(version)
+  ACC: \(acc), SPEED: \(speed)
+  LAT: \(lat), LON: \(lon)
+  ALT: \(alt), PRESSURE: \(pressure)
   TIME: \(String(describing: t))
-  Activity: \(currentTripNotes.activity) Trip: \(currentTripNotes.customNote)
-  Distance: \(currentTripDistance) Steps: \(currentTripNotes.numberOfSteps)
-  Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended) RAltitude: \(relativeAltitude)
-  HR: \(currentTripNotes.heartRate) VERSION: \(version)
-  loc.desired_acc: \(locMan.desiredAccuracy) loc.distance_filter \(locMan.distanceFilter)
-  loc.autopause \(locMan.pausesLocationUpdatesAutomatically) loc.background_allowed \(locMan.allowsBackgroundLocationUpdates)
+  ---
+  LOC.desired_acc: \(locMan.desiredAccuracy), LOC.distance_filter: \(locMan.distanceFilter)
+  LOC.autopause: \(locMan.pausesLocationUpdatesAutomatically), LOC.background_allowed: \(locMan.allowsBackgroundLocationUpdates)
+  Q.pushEvery: \(AppSettings.pushAtCount) points
+  ---
+  Activity: \(currentTripNotes.activity), Distance: \(currentTripDistance), Steps: \(currentTripNotes.numberOfSteps)
+  Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended), RelAltitude: \(relativeAltitude) meters
+  HeartRate: \(currentTripNotes.heartRate)
   """
 }
 

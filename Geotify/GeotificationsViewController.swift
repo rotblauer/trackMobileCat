@@ -39,13 +39,18 @@ let version = catVersion()
 class GeotificationsViewController: UIViewController {
   //  var trackPoints: [NSManagedObject] = []
   
-  
+    @IBOutlet weak var stopButton: UIButton!
   @IBAction func setFieldPremade(_ sender: UIButton) {
-    setCurrentTripNotes(s: sender.currentTitle!)
-    setNoteField.text = getStoredCustomTripNotes();
+    let tt = sender.currentTitle!
+    if (tt == getCurrentTripCustomNote()) {
+      return // don't restart same trip
+    }
+    setCurrentTripNotes(s: tt)
+//    setNoteField.text = getStoredCustomTripNotes();
     updatePointDisplay();
+    stopButton?.isHidden = false
   }
-  @IBOutlet weak var setNoteField: UITextField!
+//  @IBOutlet weak var setNoteField: UITextField!
   @IBAction func doneField(_ sender: Any) {
     setCurrentTripNotes(s: (sender as! UITextField).text!)
     (sender as! UITextField).resignFirstResponder()
@@ -53,9 +58,13 @@ class GeotificationsViewController: UIViewController {
   }
   func doStopTrip() {
     setCurrentTripNotes(s: "");
-    setNoteField.text = getStoredCustomTripNotes();
+//    setNoteField.text = getStoredCustomTripNotes();
     updatePointDisplay();
+    stopButton?.isHidden = true
   }
+  
+
+  
   @IBAction func stopTrip(_ sender: Any) {
     if (getStoredCustomTripNotes() != "") {
       // create the alert
@@ -114,21 +123,26 @@ class GeotificationsViewController: UIViewController {
     updateLastPoint(stringer: currentStats)
     
     if (getStoredCustomTripNotes() != "") {
-      tripTimeSince.text = stringFromTimeInterval(interval: getCurrentTripTime()) as String;
+      tripTimeSince.text = """
+      MODE: \(getCurrentTripCustomNote())
+      TIME: \(stringFromTimeInterval(interval: getCurrentTripTime()) as String)
+      """
       
       let d = getCurrentTripDistance()
       let curdist = d.traveled;
       let curdistFromStart = d.fromStart;
-      let meters = String(format: "%.2fme", curdist)
-      let miles = String(format: "%.2fmi", curdist/1609)
+      let meters = String(format: "%.2f", curdist)
+      let miles = String(format: "%.2f", curdist/1609)
       
-      let metersFStart = String(format: "%.2fme", curdistFromStart)
-      let milesFStart = String(format: "%.2fmi", curdistFromStart/1609)
-      tripDistLabel.text = "o:\(meters), \(miles)\nfs:\(metersFStart), \(milesFStart)"
-      
+      let metersFStart = String(format: "%.2f", curdistFromStart)
+      let milesFStart = String(format: "%.2f", curdistFromStart/1609)
+      tripDistLabel.text = """
+      OVERALL:    \(meters) meters, \(miles) miles
+      FROM START: \(metersFStart) meters, \(milesFStart) miles
+      """
     }
     else {
-      tripTimeSince.text = "";
+      tripTimeSince.text = "MODE: NORMAL";
       tripDistLabel.text = "";
     }
   }

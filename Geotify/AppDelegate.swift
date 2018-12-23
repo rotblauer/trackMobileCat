@@ -41,35 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   static let geoCoder = CLGeocoder()
   let hkds = HKHealthStore()
   
-  //  fileprivate func setupHKHealthKitStore() {
-  //      // STEP 2: a placeholder for a conduit to all HealthKit data
-  //
-  //
-  //      // let readableHKQuantityTypes: HK //Set<HKQuantityType>?
-  ////    let readableHKQuantityTypes = [HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!]
-  //    //let readableHKQuantityTypes = // HKObjectType.categoryType(forIdentifier: HKQuantityTypeIdentifier.heartRate)
-  ////    let readableHKQuantityTypes = [HKQuantityTypeIdentifier.heartRate]
-  //
-  ////    let readableHKQuantityTypes: Set<HKQuantityType>?
-  ////
-  //
-  //      // STEP 4: make sure HealthKit is available
-  ////      if HKHealthStore.isHealthDataAvailable() {
-  //
-  //          // STEP 5: create one instance of the HealthKit store
-  //          // per app; it's the conduit to all HealthKit data
-  ////          let healthKitDataStore = HKHealthStore()
-  //
-  ////        readableHKQuantityTypes =
-  //
-  //          // STEP 7: ask user for permission to read and write
-  //          // heart rate data
-  //        HKHealthStore()
-  ////      }
-  //  }
-  
-
-  
   fileprivate func setupLocationManager() -> CLLocationManager {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
@@ -90,15 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
     }
   }
-  
-  // @objc     func onBatteryLevelChange(_ notification:Notification) {
-  ////        let l = DeviceBatteryStat(lev: batteryLevel, stat: batteryState)
-  ////        currentTripNotes.batteryString = getStringBatteryStatus(bs: l)
-  //      }
-  //     @objc func onBatteryStatusChange(_ notification:Notification) { }
-  ////      let l = DeviceBatteryStat(lev: batteryLevel, stat: batteryState)
-  ////      currentTripNotes.batteryString = getStringBatteryStatus(bs: l)
-  //    }
   
   private func authorizeHealthKit() {
     

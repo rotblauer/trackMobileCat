@@ -223,6 +223,9 @@ func getCurrentTripDistance() -> (traveled:Double, fromStart:Double) {
 func getCurrentTripTime() -> TimeInterval {
   return currentTripNotes.currentTripStart.timeIntervalSinceNow;
 }
+func getCurrentTripCustomNote() -> String {
+  return currentTripNotes.customNote
+}
 
 
 func manageTripVals(lat:CLLocationDegrees, lng:CLLocationDegrees) {

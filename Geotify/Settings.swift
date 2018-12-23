@@ -18,7 +18,7 @@ class Settings {
   var locationManagerSettings:LocationManagerSettings = LocationManagerSettings();
   
   func flyMode() -> Settings {
-    self.pushAtCount = 60*60*12 // ~12 hours
+    self.pushAtCount = 60*60*24 // ~24 hours
     
     self.locationManagerSettings.desiredAccuracy = 5000
     self.locationManagerSettings.activityType = LocationManagerActivityType.Airborne
