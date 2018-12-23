@@ -27,7 +27,7 @@
 		D90CB65D1A739B7A00228A1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D90CB65B1A739B7A00228A1F /* LaunchScreen.xib */; };
 		D90CB6731A739D4300228A1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90CB6721A739D4300228A1F /* CoreLocation.framework */; };
 		D90CB6751A73A16700228A1F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90CB6741A73A16700228A1F /* MapKit.framework */; };
-		D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */; };
+		D90CB6771A73B1ED00228A1F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6761A73B1ED00228A1F /* ViewController.swift */; };
 		D9835AF31AA6076800D265BC /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9835AF21AA6076800D265BC /* Utilities.swift */; };
 		D9C1AF6C1A77CD6C00A06B2F /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */; };
 /* End PBXBuildFile section */
@@ -71,7 +71,7 @@
 		D90CB65C1A739B7A00228A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D90CB6721A739D4300228A1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D90CB6741A73A16700228A1F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeotificationsViewController.swift; sourceTree = "<group>"; };
+		D90CB6761A73B1ED00228A1F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D9835AF21AA6076800D265BC /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,7 +128,7 @@
 				4FB90F8C21850BC100ADEF7A /* Visit.swift */,
 				083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
-				D90CB6761A73B1ED00228A1F /* GeotificationsViewController.swift */,
+				D90CB6761A73B1ED00228A1F /* ViewController.swift */,
 				D9835AF21AA6076800D265BC /* Utilities.swift */,
 				D90CB6561A739B7A00228A1F /* Main.storyboard */,
 				D90CB6591A739B7A00228A1F /* Images.xcassets */,
@@ -297,7 +297,7 @@
 				08A591AE21CF35880008D884 /* NFC.swift in Sources */,
 				08A591AA21CEEFC10008D884 /* Settings.swift in Sources */,
 				4FB90F912186508A00ADEF7A /* Remote.swift in Sources */,
-				D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */,
+				D90CB6771A73B1ED00228A1F /* ViewController.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
 				06CBF75F21BB1E3400521651 /* Battery.swift in Sources */,
 				4FA1A7C521BC4AC400EB569C /* HealthKitSetupAssistant.swift in Sources */,

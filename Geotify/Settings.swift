@@ -16,6 +16,8 @@ class Settings {
   var pushAtCount:Int = 100
   var healthKitEnabled:Bool = true
   var batteryMonitoringEnabled:Bool = true
+  var beaconMonitoringEnabled:Bool = true
+  var beaconAdvertisingEnabled:Bool = true
   var networkInformationEnabled:Bool = true
   var locationManagerSettings:LocationManagerSettings = LocationManagerSettings();
   

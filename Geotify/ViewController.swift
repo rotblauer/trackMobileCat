@@ -117,8 +117,6 @@ class GeotificationsViewController: UIViewController {
     return NSString(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
   }
   
-  
-  
   func updatePointDisplay() {
     updatePointsCount(stringer: "P:\(P)Q:\(Q)")
     updateLastPoint(stringer: currentStats)

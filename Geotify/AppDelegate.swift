@@ -26,16 +26,21 @@ import CoreData
 import Intents
 import UserNotifications
 import HealthKit
+import CoreBluetooth
 
 var uuid:String = "unset"
+var uuidN:UInt = 0 //
 var pushToken:String = "unset"
 var locMan : CLLocationManager = CLLocationManager()
+var btMan : CBPeripheralManager = CBPeripheralManager()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   let locationManager = CLLocationManager()
+//  let btManager = CBPeripheralManager(delegate: AppDelegate, queue: nil)!
+  let btManager = CBPeripheralManager()
   let center = UNUserNotificationCenter.current()
   let nsnotifc = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
@@ -47,6 +52,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     locationManagerInstallSettings(manager: locationManager, settings: AppSettings.locationManagerSettings)
     print("location activated")
     return locationManager
+  }
+  
+  fileprivate func setupBluetoothManager() -> CBPeripheralManager {
+    let btAuthStatus = CBPeripheralManager.authorizationStatus()
+//    if btAuthStatus != .authorized {
+//      print(":( bluetooth manager not authorized")
+//      return btManager
+//    }
+    var s:String = ""
+    switch btAuthStatus {
+    case .authorized:
+      s = "authorized"
+    case .denied:
+      s = "denied"
+    case .notDetermined:
+      s = "not determined"
+    case .restricted:
+      s = "restricted"
+    }
+    print("btman: \(s)")
+    return btManager
   }
   
   fileprivate func registerForPushNotifications() {
@@ -111,6 +137,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
+  fileprivate func assignUUIDs() {
+    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
+    print("uuid: \(uuid)")
+    
+    uuidN = UInt((UIDevice.current.identifierForVendor?.hashValue)!)
+    print("uuidN: \(uuidN)")
+  }
+  
+  fileprivate func startBeaconingServices() {
+    startBeaconMonitoringIfEnabled(locman: locMan)
+    startBeaconAdvertisingIfEnabled(btman: btMan)
+  }
+  
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     
     startLog()
@@ -119,8 +158,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set global instances.
     locMan = setupLocationManager()
-    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
-    print("uuid: \(uuid)")
+    btMan = setupBluetoothManager()
+    assignUUIDs()
     
     // Requests, authorizations, and startups.
     setupAlertsAuthorization()
@@ -211,4 +250,56 @@ extension AppDelegate: CLLocationManagerDelegate {
     saveAll(locations: locations)
     pushLocs(force: false, pushToken: pushToken)
   }
+  
+  // Runs when a region is entered
+  func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+    if region is CLBeaconRegion {
+      // Start ranging only if the feature is available.
+      // FIXME: maybe don't care about ranging availability; might be just enough to know they're there
+      if CLLocationManager.isRangingAvailable() {
+        manager.startRangingBeacons(in: region as! CLBeaconRegion)
+        
+        // Store the beacon so that ranging can be stopped on demand.
+        handleBeaconDidEnterRegion(region: (region as! CLBeaconRegion))
+      }
+    }
+  }
+  
+  // Runs when a region is exited
+  func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+    if region is CLBeaconRegion {
+      // Stop ranging only if the feature is available.
+      if CLLocationManager.isRangingAvailable() {
+        handleBeaconDidExitRegion(locman: locMan, region: region as! CLBeaconRegion)
+      }
+    }
+  }
+  
+  // Acting on the nearest beacon
+  func locationManager(_ manager: CLLocationManager,
+                       didRangeBeacons beacons: [CLBeacon],
+                       in region: CLBeaconRegion) {
+    // TODO: collect all beacons, not just closest
+    if beacons.count > 0 {
+      let nearestBeacon = beacons.first!
+      let major = CLBeaconMajorValue(truncating: nearestBeacon.major)
+      let minor = CLBeaconMinorValue(truncating: nearestBeacon.minor)
+      
+      print("did range nearest beacon: [\(nearestBeacon.proximity)] \(major).\(minor)")
+      
+//      switch nearestBeacon.proximity {
+//      case .near, .immediate:
+//        // Display information about the relevant exhibit.
+//        displayInformationAboutExhibit(major: major, minor: minor)
+//        break
+//      case .far:
+//      case .unknown:
+//      default:
+//        // Dismiss exhibit information, if it is displayed.
+//        dismissExhibit(major: major, minor: minor)
+//        break
+//      }
+    }
+  }
+
 }

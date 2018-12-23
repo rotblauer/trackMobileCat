@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 import CoreMotion
 import HealthKit
+import CoreBluetooth
 
 // mem only
 
@@ -21,6 +22,10 @@ private let activityManager = CMMotionActivityManager()
 private let pedometer = CMPedometer()
 private let elly=CMAltimeter();// We have an actual altimeter!
 private let hk=HKHealthStore();
+
+private let catTracksBeaconUUID = "0A4AE5C6-12D1-48B1-A75D-BF0B8A6B1895"
+
+var beaconsToRange:[CLBeaconRegion]=[]
 
 var requireWifiForPush:Bool = true;
 
@@ -198,6 +203,66 @@ func startUpdatingNetworkInformation() {
       DispatchQueue.main.asyncAfter(deadline: .now() + 60*5) {
         startUpdatingActivity()
       }
+  }
+}
+
+func handleBeaconDidEnterRegion(region: CLBeaconRegion) {
+  beaconsToRange.append(region)
+  print("added beacon region: \(region.major ?? -1).\(region.minor ?? -1)")
+}
+
+func handleBeaconDidExitRegion(locman: CLLocationManager, region: CLBeaconRegion) {
+  func knownBeaconRegion(br: CLBeaconRegion) -> Int {
+    for (i, b) in beaconsToRange.enumerated() {
+      if b == br {
+        return i
+      }
+    }
+    return -1
+  }
+  let i = knownBeaconRegion(br: region)
+  locman.stopRangingBeacons(in: region)
+  beaconsToRange.remove(at: i)
+  print("removed beacon region: \(region.major ?? -1).\(region.minor ?? -1)")
+}
+
+func startBeaconMonitoringIfEnabled(locman: CLLocationManager) {
+  if AppSettings.beaconMonitoringEnabled && CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+    // Match all beacons with the specified UUID
+    
+    let proximityUUID = UUID(uuidString: catTracksBeaconUUID)
+    let beaconID = "com.rotblauer.Beaconing"
+    
+    // Create the region and begin monitoring it.
+    let region = CLBeaconRegion(proximityUUID: proximityUUID!, identifier: beaconID)
+    locman.startMonitoring(for: region)
+    print("monitoring beacons: ok")
+  } else {
+    print("monitoring beacons: no")
+  }
+}
+
+func createBeaconRegion() -> CLBeaconRegion? {
+  let proximityUUID = UUID(uuidString: catTracksBeaconUUID)
+  let major : CLBeaconMajorValue = 0 // api@v.0
+  let minor : CLBeaconMinorValue = CLBeaconMinorValue(uuidN) // device uuid hash
+  let beaconID = "com.rotblauer.Beaconing"
+  
+  return CLBeaconRegion(proximityUUID: proximityUUID!,
+                        major: major, minor: minor, identifier: beaconID)
+}
+
+func advertiseDevice(btman: CBPeripheralManager, region : CLBeaconRegion) {
+  let peripheralData = region.peripheralData(withMeasuredPower: nil)
+  btman.startAdvertising(((peripheralData as NSDictionary) as! [String : Any]))
+}
+
+func startBeaconAdvertisingIfEnabled(btman: CBPeripheralManager) {
+  if AppSettings.beaconAdvertisingEnabled {
+    advertiseDevice(btman: btman, region: createBeaconRegion()!)
+    print("advertising beacon: ok")
+  } else {
+    print("advertising beacon: no")
   }
 }
 
