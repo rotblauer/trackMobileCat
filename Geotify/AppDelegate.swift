@@ -44,13 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   fileprivate func setupLocationManager() -> CLLocationManager {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
-    
-    // https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/handling_location_events_in_the_background
-    locationManager.allowsBackgroundLocationUpdates = true
-
-    locationManager.startMonitoringVisits()
-    
     locationManagerInstallSettings(manager: locationManager, settings: AppSettings.locationManagerSettings)
+    print("location activated")
     return locationManager
   }
   
@@ -63,58 +58,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   private func authorizeHealthKit() {
-    
+    if (!AppSettings.healthKitEnabled) {
+      print("health kit disabled")
+      return
+    }
     HealthKitSetupAssistant.authorizeHealthKit { (authorized, error) in
-      
       guard authorized else {
-        
-        let baseMessage = "HealthKit Authorization Failed"
-        
+        let baseMessage = "HealthKit authorization failed"
         if let error = error {
           print("\(baseMessage). Reason: \(error.localizedDescription)")
         } else {
           print(baseMessage)
         }
-        
         return
       }
-      print("HR auth \(authorized)")
       startUpdatingHeartRate()
-      print("HealthKit Successfully Authorized.")
+      print("HealthKit things possibly authorized")
     }
-    
   }
   
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    
-    locMan = setupLocationManager()
-    print("location activated")
-    
+  fileprivate func setupBatteryMonitoring() {
+    if (AppSettings.batteryMonitoringEnabled) {
+        UIDevice.current.isBatteryMonitoringEnabled = true
+    }
+  }
+  
+  fileprivate func setupAlertsAuthorization() {
     center.requestAuthorization(options: [.alert, .sound]) { granted, error in
     }
-    
-    UIDevice.current.isBatteryMonitoringEnabled = true
-    
-    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
-    print(uuid)
-    
-    authorizeHealthKit()
-    
-    startUpdatingActivity()
-    print("started activity")
-    
-    
+  }
+  
+  fileprivate func startLog() {
     var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let documentsDirectory = paths[0]
     let fileName = "\(Date()).log"
     let logFilePath = (documentsDirectory as NSString).appendingPathComponent(fileName)
     freopen(logFilePath.cString(using: String.Encoding.ascii)!, "a+", stderr)
     print("started log")
+  }
+  
+  fileprivate func handleLaunchOptions(launchOpts: [UIApplication.LaunchOptionsKey : Any]?) {
+    func launchedWithLocation(key: UIApplication.LaunchOptionsKey, value: Any) -> Bool {
+      if (key == UIApplication.LaunchOptionsKey.location && (value as! Bool) == true) {
+        return true
+      }
+      return false
+    }
+    if (launchOpts?.contains(where: launchedWithLocation) ?? false) {
+      print("launched because of location update")
+    } else {
+      print("launched for cat reasons")
+    }
+  }
+  
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     
+    startLog()
+    
+    handleLaunchOptions(launchOpts: launchOptions)
+    
+    // Set global instances.
+    locMan = setupLocationManager()
+    uuid = (UIDevice.current.identifierForVendor?.uuidString)!
+    print("uuid: \(uuid)")
+    
+    // Requests, authorizations, and startups.
+    setupAlertsAuthorization()
+    setupBatteryMonitoring()
+    authorizeHealthKit()
+    startUpdatingActivity()
     registerForPushNotifications()
-    UIApplication.shared.registerForRemoteNotifications()
-    // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
-
+    UIApplication.shared.registerForRemoteNotifications() // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
+    
     return true
   }
   
@@ -156,10 +171,7 @@ extension AppDelegate: CLLocationManagerDelegate {
     let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
     
     // Get location description
-    
     AppDelegate.geoCoder.reverseGeocodeLocation(clLocation) { placemarks, _ in
-      
-      
       if let place = placemarks?.first {
         let description = "\(place)"
         
@@ -187,6 +199,6 @@ extension AppDelegate: CLLocationManagerDelegate {
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     saveAll(locations: locations)
-    pushLocs(force:false,pushToken: pushToken)
+    pushLocs(force: false, pushToken: pushToken)
   }
 }

@@ -58,6 +58,7 @@ func locationManagerInstallSettings(manager: CLLocationManager, settings: Locati
   manager.desiredAccuracy = settings.desiredAccuracy
   manager.distanceFilter = settings.distanceFilter
   manager.pausesLocationUpdatesAutomatically = settings.autoPause
+  manager.allowsBackgroundLocationUpdates = settings.backgroundUpdates
   
   switch settings.activityType {
   case LocationManagerActivityType.Airborne:
@@ -104,6 +105,10 @@ func locationManagerInstallSettings(manager: CLLocationManager, settings: Locati
   if !settings.locationManagerVisitsServiceEnabled {
     manager.stopMonitoringVisits()
   } else {
+    if CLLocationManager.authorizationStatus() != .authorizedAlways || !CLLocationManager.locationServicesEnabled() {
+      print(":( visit monitoring not available")
+      return
+    }
     manager.startMonitoringVisits()
   }
 }

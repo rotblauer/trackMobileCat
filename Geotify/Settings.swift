@@ -15,12 +15,16 @@ var AppSettings:Settings = Settings()
 class Settings {
   var pushAtCount:Int = 100
   var healthKitEnabled:Bool = true
+  var batteryMonitoringEnabled:Bool = true
   var locationManagerSettings:LocationManagerSettings = LocationManagerSettings();
   
   func flyMode() -> Settings {
     self.pushAtCount = 60*60*24 // ~24 hours
     
+    self.locationManagerSettings.backgroundUpdates = true
+    self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = 5000
+    self.locationManagerSettings.distanceFilter = 500
     self.locationManagerSettings.activityType = LocationManagerActivityType.Airborne
     
     return self
@@ -29,6 +33,7 @@ class Settings {
   func liteMode() -> Settings {
     self.pushAtCount = 60*60 // ~1 hour
     
+    self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = true
     self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyThreeKilometers
     self.locationManagerSettings.distanceFilter = 500 // because this limit is baked in to the SignficantChange monitoring
@@ -40,6 +45,7 @@ class Settings {
   func fullMode() -> Settings {
     self.pushAtCount = 60*2 // ~2 minutes
     
+    self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyBest
     self.locationManagerSettings.distanceFilter = kCLDistanceFilterNone

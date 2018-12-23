@@ -172,16 +172,20 @@ func startUpdatingHeartRate() {
 // TODO toggle for each for battery what not
 func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
+    print("activity: ok")
     startTrackingActivityType()
   }
   
   if CMPedometer.isStepCountingAvailable() {
+    print("pedometer: ok")
     startCountingSteps()
   }
   
   if CMAltimeter.isRelativeAltitudeAvailable(){
+    print("relative altitude: ok")
     startMonitoringElevation()
   }
+  print("started activity updates")
 }
 
 func addVisit(visit:CLVisit,place:String){
