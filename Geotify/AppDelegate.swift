@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   fileprivate func setupLocationManager() -> CLLocationManager {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
+    // TODO load from peristant
     locationManagerInstallSettings(manager: locationManager, settings: AppSettings.locationManagerSettings)
     print("location activated")
     return locationManager

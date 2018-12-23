@@ -14,7 +14,7 @@ enum LocationManagerService: String {
 }
 
 enum LocationManagerActivityType: String {
-  case Other, OtherNavigation, AutomitiveNavigation, Fitness, Airborne
+  case Other, OtherNavigation, AutomotiveNavigation, Fitness, Airborne
 }
 
 class LocationManagerSettings {
@@ -27,6 +27,7 @@ class LocationManagerSettings {
   var activityType:LocationManagerActivityType = LocationManagerActivityType.Other
 }
 
+// FIXME: this is awkwardly called from setCurrentTripNotes
 func locationManagerSetMode(manager: CLLocationManager, mode: String) {
   switch mode {
   case "fly":
@@ -61,14 +62,17 @@ func locationManagerInstallSettings(manager: CLLocationManager, settings: Locati
   manager.allowsBackgroundLocationUpdates = settings.backgroundUpdates
   
   switch settings.activityType {
-  case LocationManagerActivityType.Airborne:
-    manager.activityType = CLActivityType.airborne
-    break
   case LocationManagerActivityType.Other:
     manager.activityType = CLActivityType.other
     break
   case LocationManagerActivityType.OtherNavigation:
     manager.activityType = CLActivityType.otherNavigation
+    break
+  case LocationManagerActivityType.AutomotiveNavigation:
+    manager.activityType = CLActivityType.automotiveNavigation
+    break
+  case LocationManagerActivityType.Airborne:
+    manager.activityType = CLActivityType.airborne
     break
   case LocationManagerActivityType.Fitness:
     manager.activityType = CLActivityType.fitness

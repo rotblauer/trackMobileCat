@@ -39,6 +39,16 @@ let version = catVersion()
 class GeotificationsViewController: UIViewController {
   //  var trackPoints: [NSManagedObject] = []
   
+  override func didMove(toParent parent: UIViewController?) {
+    super.willMove(toParent: parent)
+    if parent != nil { // idk
+      print("did move to cattracks main view")
+      updatePointDisplay()
+    } else {
+      print("main view parent \(String(describing: parent))")
+    }
+  }
+  
     @IBOutlet weak var stopButton: UIButton!
   @IBAction func setFieldPremade(_ sender: UIButton) {
     let tt = sender.currentTitle!
@@ -47,13 +57,11 @@ class GeotificationsViewController: UIViewController {
     }
     setCurrentTripNotes(s: tt) // updates AppSettings
 //    setNoteField.text = getStoredCustomTripNotes();
-    switch tt {
-    case "fly", "lite":
-      stopBeaconingService(locman: locMan)
-      break
-    default:
-      print("noop")
-    }
+    
+    // TODO: get rid of me
+    startBeaconMonitoringIfEnabled(locman: locMan)
+    startBeaconAdvertisingIfEnabled(btman: btPeripheralManager)
+    
     updateNetworkConfiguration()
     updatePointDisplay();
     stopButton?.isHidden = false
@@ -132,28 +140,28 @@ class GeotificationsViewController: UIViewController {
     updatePointsCount(stringer: "P:\(P)Q:\(Q)")
     updateLastPoint(stringer: currentStats)
     
-    if (getStoredCustomTripNotes() != "") {
-      tripTimeSince.text = """
-      MODE: \(getCurrentTripCustomNote()) TIME: \(stringFromTimeInterval(interval: getCurrentTripTime()) as String)
-      """
-      
-      let d = getCurrentTripDistance()
-      let curdist = d.traveled;
-      let curdistFromStart = d.fromStart;
-      let meters = String(format: "%.2f", curdist)
-      let miles = String(format: "%.2f", curdist/1609)
-      
-      let metersFStart = String(format: "%.2f", curdistFromStart)
-      let milesFStart = String(format: "%.2f", curdistFromStart/1609)
-      tripDistLabel.text = """
-      OVERALL:    \(meters) meters, \(miles) miles
-      FROM START: \(metersFStart) meters, \(milesFStart) miles
-      """
-    }
-    else {
-      tripTimeSince.text = "MODE: NORMAL";
-      tripDistLabel.text = "";
-    }
+//    if (getStoredCustomTripNotes() != "") {
+//      tripTimeSince.text = """
+//      MODE: \(getCurrentTripCustomNote()) TIME: \(stringFromTimeInterval(interval: getCurrentTripTime()) as String)
+//      """
+//
+//      let d = getCurrentTripDistance()
+//      let curdist = d.traveled;
+//      let curdistFromStart = d.fromStart;
+//      let meters = String(format: "%.2f", curdist)
+//      let miles = String(format: "%.2f", curdist/1609)
+//
+//      let metersFStart = String(format: "%.2f", curdistFromStart)
+//      let milesFStart = String(format: "%.2f", curdistFromStart/1609)
+//      tripDistLabel.text = """
+//      OVERALL:    \(meters) meters, \(miles) miles
+//      FROM START: \(metersFStart) meters, \(milesFStart) miles
+//      """
+//    }
+//    else {
+//      tripTimeSince.text = "MODE: NORMAL";
+//      tripDistLabel.text = "";
+//    }
   }
   
   @IBAction func swiper(_ sender: UISwipeGestureRecognizer) {

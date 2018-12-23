@@ -69,7 +69,6 @@ private func updateStats(p:TrackPoint){
   }
 
   currentStats = """
-  VERSION: \(version), WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
   ACC.H: \(acc), ACC.V: \(vacc), SPEED: \(speed)
   LAT: \(lat), LON: \(lon)
   ALT: \(alt), PRESSURE: \(pressure), FLOOR: \(p.floor)
@@ -83,7 +82,10 @@ private func updateStats(p:TrackPoint){
   Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended), RelAltitude: \(relativeAltitude) meters
   HeartRate: \(currentTripNotes.heartRate)
   ---
+  WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
   BEAC.me: \(uuidN1).\(uuidN2), BEAC.catfriends: \(beacsRangs)
+  ---
+  VERSION: \(version)
   """
 }
 

@@ -259,6 +259,7 @@ func startBeaconMonitoringIfEnabled(locman: CLLocationManager) {
     print("monitoring beacons: ok")
   } else {
     print("monitoring beacons: no")
+    stopBeaconingService(locman: locman)
   }
 }
 
@@ -288,6 +289,7 @@ func startBeaconAdvertisingIfEnabled(btman: CBPeripheralManager) {
     print("advertising beacon: ok:\(ok) -> id: \(region.proximityUUID) M.m: \(region.major ?? -1).\(region.minor ?? -1)")
   } else {
     print("advertising beacon: off")
+    btman.stopAdvertising()
   }
 }
 

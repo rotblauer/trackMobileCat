@@ -27,6 +27,7 @@ class Settings {
     
     self.beaconMonitoringEnabled = true
     self.beaconAdvertisingEnabled = true
+    self.locationManagerSettings.locationManagerService = LocationManagerService.SignificantChange
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = 5000
@@ -42,6 +43,7 @@ class Settings {
     
     self.beaconMonitoringEnabled = false
     self.beaconAdvertisingEnabled = false
+    self.locationManagerSettings.locationManagerService = LocationManagerService.SignificantChange
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = true
     self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyThreeKilometers
@@ -57,6 +59,7 @@ class Settings {
     
     self.beaconMonitoringEnabled = true
     self.beaconAdvertisingEnabled = true
+    self.locationManagerSettings.locationManagerService = LocationManagerService.Standard
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyBest
