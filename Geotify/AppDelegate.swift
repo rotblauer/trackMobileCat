@@ -185,8 +185,17 @@ extension AppDelegate: CLLocationManagerDelegate {
   func newVisitReceived(_ visit: CLVisit, description: String) {
     addVisit(visit: visit, place: description)
     
+    var isArrival:Bool // departureSinceArrival is either too-big or impossibly-before
+    let departureSinceArrival = visit.departureDate.timeIntervalSince(visit.arrivalDate)
+    isArrival = departureSinceArrival > 60*60*24*365 || departureSinceArrival < 0
+    
     let content = UNMutableNotificationContent()
-    content.title = "New Visit 📌"
+    if isArrival {
+        content.title = "New Arrival 📌"
+    } else {
+        content.title = "New Visit 📌"
+    }
+    
     content.body = description
     content.sound = UNNotificationSound.default
     
