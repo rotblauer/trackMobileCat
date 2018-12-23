@@ -25,7 +25,8 @@ private let hk=HKHealthStore();
 
 private let catTracksBeaconUUID = "0A4AE5C6-12D1-48B1-A75D-BF0B8A6B1895"
 
-var beaconsToRange:[CLBeaconRegion]=[]
+var beaconRegions:[CLBeaconRegion]=[]
+var beaconsRanging:[CLBeacon] = []
 
 var requireWifiForPush:Bool = true;
 
@@ -206,24 +207,39 @@ func startUpdatingNetworkInformation() {
   }
 }
 
-func handleBeaconDidEnterRegion(region: CLBeaconRegion) {
-  beaconsToRange.append(region)
-  print("added beacon region: \(region.major ?? -1).\(region.minor ?? -1)")
+func knownBeaconRegion(br: CLBeaconRegion) -> Int {
+  for (i, b) in beaconRegions.enumerated() {
+    if matchBeaconRegions(b1: b, b2: br) {
+      return i
+    }
+  }
+  return -1
+}
+
+func handleBeaconDidEnterRegion(locman: CLLocationManager, region: CLBeaconRegion) {
+  if knownBeaconRegion(br: region) >= 0 {
+    return
+  }
+  beaconRegions.append(region)
+  locman.startRangingBeacons(in: region)
+  print("added beacon region: id: \(region.proximityUUID) M.m: \(region.major ?? -1).\(region.minor ?? -1)")
+}
+
+func matchBeaconRegions(b1: CLBeaconRegion, b2: CLBeaconRegion) -> Bool {
+  return b1 == b2 || b1.major == b2.major && b1.minor == b2.minor
+}
+
+func matchBeacons(b1: CLBeacon, b2: CLBeacon) -> Bool {
+  return b1 == b2 || b1.major == b2.major && b1.minor == b2.minor
 }
 
 func handleBeaconDidExitRegion(locman: CLLocationManager, region: CLBeaconRegion) {
-  func knownBeaconRegion(br: CLBeaconRegion) -> Int {
-    for (i, b) in beaconsToRange.enumerated() {
-      if b == br {
-        return i
-      }
-    }
-    return -1
-  }
   let i = knownBeaconRegion(br: region)
-  locman.stopRangingBeacons(in: region)
-  beaconsToRange.remove(at: i)
-  print("removed beacon region: \(region.major ?? -1).\(region.minor ?? -1)")
+  if i >= 0 && beaconRegions.count > 1 {
+    locman.stopRangingBeacons(in: region)
+    beaconRegions.remove(at: i)
+    print("removed beacon region: id: \(region.proximityUUID) M.m: \(region.major ?? -1).\(region.minor ?? -1)")
+  }
 }
 
 func startBeaconMonitoringIfEnabled(locman: CLLocationManager) {
@@ -235,6 +251,8 @@ func startBeaconMonitoringIfEnabled(locman: CLLocationManager) {
     
     // Create the region and begin monitoring it.
     let region = CLBeaconRegion(proximityUUID: proximityUUID!, identifier: beaconID)
+    region.notifyOnEntry = true
+    region.notifyOnExit = true
     locman.startMonitoring(for: region)
     print("monitoring beacons: ok")
   } else {
@@ -244,25 +262,60 @@ func startBeaconMonitoringIfEnabled(locman: CLLocationManager) {
 
 func createBeaconRegion() -> CLBeaconRegion? {
   let proximityUUID = UUID(uuidString: catTracksBeaconUUID)
-  let major : CLBeaconMajorValue = 0 // api@v.0
-  let minor : CLBeaconMinorValue = CLBeaconMinorValue(uuidN) // device uuid hash
+  let major : CLBeaconMajorValue = CLBeaconMinorValue(uuidN1) // device uuid hash
+  let minor : CLBeaconMinorValue = CLBeaconMinorValue(uuidN2) // device uuid hash
   let beaconID = "com.rotblauer.Beaconing"
   
   return CLBeaconRegion(proximityUUID: proximityUUID!,
                         major: major, minor: minor, identifier: beaconID)
 }
 
-func advertiseDevice(btman: CBPeripheralManager, region : CLBeaconRegion) {
-  let peripheralData = region.peripheralData(withMeasuredPower: nil)
-  btman.startAdvertising(((peripheralData as NSDictionary) as! [String : Any]))
+func advertiseDevice(btman: CBPeripheralManager, region : CLBeaconRegion) -> Bool {
+  if btman.state == .poweredOn {
+    let peripheralData = region.peripheralData(withMeasuredPower: nil)
+    btman.startAdvertising(((peripheralData as NSDictionary) as! [String : Any]))
+    return true
+  }
+  return false
 }
 
 func startBeaconAdvertisingIfEnabled(btman: CBPeripheralManager) {
   if AppSettings.beaconAdvertisingEnabled {
-    advertiseDevice(btman: btman, region: createBeaconRegion()!)
-    print("advertising beacon: ok")
+    let region = createBeaconRegion()!
+    let ok = advertiseDevice(btman: btman, region: region)
+    print("advertising beacon: ok:\(ok) -> id: \(region.proximityUUID) M.m: \(region.major ?? -1).\(region.minor ?? -1)")
   } else {
-    print("advertising beacon: no")
+    print("advertising beacon: off")
+  }
+}
+
+func knownBeacon(bb: CLBeacon) -> Int {
+  for (i, b) in beaconsRanging.enumerated() {
+    if matchBeacons(b1: b, b2: bb) {
+      return i
+    }
+  }
+  return -1
+}
+
+func setRangedBeacon(beacon: CLBeacon) {
+  let i = knownBeacon(bb: beacon)
+  if i >= 0 {
+    let kb = beaconsRanging[i]
+    if kb.proximity != beacon.proximity {
+      beaconsRanging.remove(at: i)
+      beaconsRanging.append(beacon)
+    }
+    return
+  }
+  beaconsRanging.append(beacon)
+}
+
+func removeRangedBeacon(beacon: CLBeacon) {
+  let i = knownBeacon(bb: beacon)
+  if i >= 0 {
+    beaconsRanging.remove(at: i)
+    print("removed beacon: id: \(beacon.proximityUUID) M.m: \(beacon.major ).\(beacon.minor )")
   }
 }
 

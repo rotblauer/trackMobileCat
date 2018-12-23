@@ -97,6 +97,7 @@ class GeotificationsViewController: UIViewController {
       (_:Timer)->Void in
       self.updatePointDisplay();
     }
+    
   }
   
   func updatePointsCount(stringer : String) {

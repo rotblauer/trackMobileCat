@@ -63,9 +63,13 @@ private func updateStats(p:TrackPoint){
   let currentTripDistance = String(format: "%.1f", (currentTripNotes.currentTripDistance))
   let relativeAltitude = String(format: "%.1f", (currentTripNotes.relativeAltitude))
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
+  var beacsRangs:[String] = []
+  for beac in beaconsRanging {
+    beacsRangs.append("\(beaconProximityString(prox: beac.proximity)):\(beac.major).\(beac.minor)")
+  }
 
   currentStats = """
-  VERSION: \(version) WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
+  VERSION: \(version), WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
   ACC.H: \(acc), ACC.V: \(vacc), SPEED: \(speed)
   LAT: \(lat), LON: \(lon)
   ALT: \(alt), PRESSURE: \(pressure), FLOOR: \(p.floor)
@@ -78,6 +82,8 @@ private func updateStats(p:TrackPoint){
   Activity: \(currentTripNotes.activity), Distance: \(currentTripDistance), Steps: \(currentTripNotes.numberOfSteps)
   Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended), RelAltitude: \(relativeAltitude) meters
   HeartRate: \(currentTripNotes.heartRate)
+  ---
+  BEAC.me: \(uuidN1).\(uuidN2), BEAC.catfriends: \(beacsRangs)
   """
 }
 

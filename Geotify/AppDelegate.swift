@@ -29,10 +29,12 @@ import HealthKit
 import CoreBluetooth
 
 var uuid:String = "unset"
-var uuidN:UInt = 0 //
+var uuidN1:UInt16 = 0 //
+var uuidN2:UInt16 = 0 //
 var pushToken:String = "unset"
 var locMan : CLLocationManager = CLLocationManager()
-var btMan : CBPeripheralManager = CBPeripheralManager()
+var btCentralMan:CBCentralManager!
+var btPeripheralManager: CBPeripheralManager!
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   let locationManager = CLLocationManager()
 //  let btManager = CBPeripheralManager(delegate: AppDelegate, queue: nil)!
-  let btManager = CBPeripheralManager()
+  
   let center = UNUserNotificationCenter.current()
   let nsnotifc = UNUserNotificationCenter.current()
   static let geoCoder = CLGeocoder()
@@ -54,25 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return locationManager
   }
   
-  fileprivate func setupBluetoothManager() -> CBPeripheralManager {
-    let btAuthStatus = CBPeripheralManager.authorizationStatus()
-//    if btAuthStatus != .authorized {
-//      print(":( bluetooth manager not authorized")
-//      return btManager
-//    }
-    var s:String = ""
-    switch btAuthStatus {
-    case .authorized:
-      s = "authorized"
-    case .denied:
-      s = "denied"
-    case .notDetermined:
-      s = "not determined"
-    case .restricted:
-      s = "restricted"
-    }
-    print("btman: \(s)")
-    return btManager
+  fileprivate func setupBluetoothManager() {
+//    btCentralMan = CBCentralManager(delegate: self, queue: nil)
+    btPeripheralManager = CBPeripheralManager(delegate: self, queue: nil, options: nil)
   }
   
   fileprivate func registerForPushNotifications() {
@@ -141,13 +127,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     uuid = (UIDevice.current.identifierForVendor?.uuidString)!
     print("uuid: \(uuid)")
     
-    uuidN = UInt((UIDevice.current.identifierForVendor?.hashValue)!)
-    print("uuidN: \(uuidN)")
+    let uuidHex = uuid.replacingOccurrences(of: "-", with: "")
+//    print("uuidHex: \(uuidHex)")
+    
+    uuidN1 = UInt16(uuidHex.prefix(4).lowercased(), radix: 16)!
+    uuidN2 = UInt16(uuidHex.suffix(4).lowercased(), radix: 16)!
+    print("uuidN1.2: \(uuidN1).\(uuidN2)")
   }
   
   fileprivate func startBeaconingServices() {
+    // TODO: check for bluetooth availability at central level
+//    switch btCentralMan.state {
+//    case .poweredOn:
+//      print("bt powered on")
+//
+//      break
+//    case .poweredOff:
+//      print("Bluetooth is Off.")
+//      break
+//    case .resetting:
+//      print("bt resetting")
+//      break
+//    case .unauthorized:
+//      print("bt unauthorized")
+//      break
+//    case .unsupported:
+//      print("bt unsupported")
+//      break
+//    case .unknown:
+//      print("bt unknown")
+//      break
+//    default:
+//      print("bt def")
+//      break
+//    }
     startBeaconMonitoringIfEnabled(locman: locMan)
-    startBeaconAdvertisingIfEnabled(btman: btMan)
+    startBeaconAdvertisingIfEnabled(btman: btPeripheralManager)
   }
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -157,9 +172,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     handleLaunchOptions(launchOpts: launchOptions)
     
     // Set global instances.
-    locMan = setupLocationManager()
-    btMan = setupBluetoothManager()
     assignUUIDs()
+    locMan = setupLocationManager()
+ 
+    setupBluetoothManager()
     
     // Requests, authorizations, and startups.
     setupAlertsAuthorization()
@@ -169,7 +185,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     registerForPushNotifications()
     updateNetworkConfiguration()
     UIApplication.shared.registerForRemoteNotifications() // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
-    
+
     return true
   }
   
@@ -201,6 +217,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     return container
   }()
+}
+
+extension AppDelegate: CBPeripheralManagerDelegate {
+  
+  func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+    
+    var statusMessage = ""
+    
+    switch peripheral.state {
+    case .poweredOn:
+      statusMessage = "Bluetooth Status: Turned On"
+      startBeaconingServices()
+      break
+    case .poweredOff:
+//      if isBroadcasting {
+//        switchBroadcastingState(self)
+//      }
+      statusMessage = "Bluetooth Status: Turned Off"
+      break
+    case .resetting:
+      statusMessage = "Bluetooth Status: Resetting"
+      break
+    case .unauthorized:
+      statusMessage = "Bluetooth Status: Not Authorized"
+      break
+    case .unsupported:
+      statusMessage = "Bluetooth Status: Not Supported"
+      break
+    default:
+      statusMessage = "Bluetooth Status: Unknown"
+      break
+    }
+    print("bt peripheral manager state: \(statusMessage)")
+  }
+//
+//  fileprivate func setupBluetoothManager() {
+//    //    let btAuthStatus = CBCentralManager.auth
+//    //    if btAuthStatus != .authorized {
+//    //      print(":( bluetooth manager not authorized")
+//    //      return btManager
+//    //    }
+//    //    var s:String = ""
+//    //    switch btAuthStatus {
+//    //    case .authorized:
+//    //      s = "authorized"
+//    //    case .denied:
+//    //      s = "denied"
+//    //    case .notDetermined:
+//    //      s = "not determined"
+//    //    case .restricted:
+//    //      s = "restricted"
+//    //    }
+//    //    print("Bluetooth Central Manager authorization: \(s)")
+//
+//    //    btCentralMan = CBCentralManager(delegate:btCentralMan.delegate, queue:nil)
+//    //    btCentralMan.delegate = self as! CBCentralManagerDelegate
+//
+//    return
+//  }
 }
 
 extension AppDelegate: CLLocationManagerDelegate {
@@ -251,16 +326,49 @@ extension AppDelegate: CLLocationManagerDelegate {
     pushLocs(force: false, pushToken: pushToken)
   }
   
+  func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+    locationManager.requestState(for: region)
+  }
+
+  func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+    if region is CLBeaconRegion {
+      if state == .inside {
+        print("inside beacon region")
+        handleBeaconDidEnterRegion(locman: locMan, region: region as! CLBeaconRegion)
+      } else {
+        print("outside beacon region")
+        handleBeaconDidExitRegion(locman: locMan, region: region  as! CLBeaconRegion)
+      }
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print(error)
+  }
+  
+  func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+    print(error)
+  }
+  
+  func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
+    print(error)
+  }
+  
   // Runs when a region is entered
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
     if region is CLBeaconRegion {
+      print("beacon region entered...")
       // Start ranging only if the feature is available.
       // FIXME: maybe don't care about ranging availability; might be just enough to know they're there
       if CLLocationManager.isRangingAvailable() {
         manager.startRangingBeacons(in: region as! CLBeaconRegion)
-        
+        print("ranging available")
         // Store the beacon so that ranging can be stopped on demand.
-        handleBeaconDidEnterRegion(region: (region as! CLBeaconRegion))
+        handleBeaconDidEnterRegion(locman: locMan, region: (region as! CLBeaconRegion))
+      } else {
+        print("no ranging available")
+        // Store the beacon so that ranging can be stopped on demand.
+        handleBeaconDidEnterRegion(locman: locMan, region: (region as! CLBeaconRegion))
       }
     }
   }
@@ -268,38 +376,43 @@ extension AppDelegate: CLLocationManagerDelegate {
   // Runs when a region is exited
   func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
     if region is CLBeaconRegion {
+      print("beacon region exited...")
       // Stop ranging only if the feature is available.
       if CLLocationManager.isRangingAvailable() {
+        print("ranging available")
+        handleBeaconDidExitRegion(locman: locMan, region: region as! CLBeaconRegion)
+      } else {
+        print("no ranging available")
         handleBeaconDidExitRegion(locman: locMan, region: region as! CLBeaconRegion)
       }
     }
   }
   
   // Acting on the nearest beacon
-  func locationManager(_ manager: CLLocationManager,
-                       didRangeBeacons beacons: [CLBeacon],
-                       in region: CLBeaconRegion) {
+  func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
     // TODO: collect all beacons, not just closest
-    if beacons.count > 0 {
-      let nearestBeacon = beacons.first!
-      let major = CLBeaconMajorValue(truncating: nearestBeacon.major)
-      let minor = CLBeaconMinorValue(truncating: nearestBeacon.minor)
+    let beaconLen = beacons.count
+    var i = 1
+    for beacon in beacons {
       
-      print("did range nearest beacon: [\(nearestBeacon.proximity)] \(major).\(minor)")
+      let major = CLBeaconMajorValue(truncating: beacon.major)
+      let minor = CLBeaconMinorValue(truncating: beacon.minor)
       
-//      switch nearestBeacon.proximity {
-//      case .near, .immediate:
-//        // Display information about the relevant exhibit.
-//        displayInformationAboutExhibit(major: major, minor: minor)
-//        break
-//      case .far:
-//      case .unknown:
-//      default:
-//        // Dismiss exhibit information, if it is displayed.
+      print("did range beacon \(i)/\(beaconLen): [\(beaconProximityString(prox: beacon.proximity))] \(major).\(minor)")
+      i = i+1
+      switch beacon.proximity {
+      case .near, .immediate, .far:
+        setRangedBeacon(beacon: beacon)
+        break
+      case .unknown:
+        fallthrough
+      default:
+        // Dismiss exhibit information, if it is displayed.
 //        dismissExhibit(major: major, minor: minor)
-//        break
-//      }
+        handleBeaconDidExitRegion(locman: locMan, region: region)
+        removeRangedBeacon(beacon: beacon)
+        break
+      }
     }
   }
-
 }

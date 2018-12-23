@@ -5,6 +5,7 @@
 
 import UIKit
 import SystemConfiguration
+import CoreLocation
 
 extension Date {
   static let iso8601Formatter: DateFormatter = {
@@ -32,3 +33,15 @@ func catVersion() -> String {
   return version
 }
 
+func beaconProximityString(prox: CLProximity) -> String {
+  switch prox {
+  case .far:
+    return "far"
+  case .immediate:
+    return "immediate"
+  case .near:
+    return "near"
+  case .unknown:
+    return "unknown"
+  }
+}
