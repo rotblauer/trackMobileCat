@@ -32,7 +32,9 @@ func saveAll(locations: [CLLocation]) {
     point.setValue(lat, forKey: "lat");
     point.setValue(lng, forKey: "long");
     point.setValue(p.horizontalAccuracy, forKey: "accuracy");
+    point.setValue(p.verticalAccuracy, forKey: "vAccuracy");
     point.setValue(p.altitude, forKey: "altitude");
+    point.setValue(p.floor, forKey: "floor");
     point.setValue(p.speed, forKey: "speed");
     point.setValue(p.course, forKey: "course");
     point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
