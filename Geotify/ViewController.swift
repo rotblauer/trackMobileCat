@@ -45,8 +45,15 @@ class GeotificationsViewController: UIViewController {
     if (tt == getCurrentTripCustomNote()) {
       return // don't restart same trip
     }
-    setCurrentTripNotes(s: tt)
+    setCurrentTripNotes(s: tt) // updates AppSettings
 //    setNoteField.text = getStoredCustomTripNotes();
+    switch tt {
+    case "fly", "lite":
+      stopBeaconingService(locman: locMan)
+      break
+    default:
+      print("noop")
+    }
     updateNetworkConfiguration()
     updatePointDisplay();
     stopButton?.isHidden = false
@@ -58,8 +65,11 @@ class GeotificationsViewController: UIViewController {
     updatePointDisplay();
   }
   func doStopTrip() {
-    setCurrentTripNotes(s: "");
+    setCurrentTripNotes(s: ""); // updates AppSettings
 //    setNoteField.text = getStoredCustomTripNotes();
+    startBeaconAdvertisingIfEnabled(btman: btPeripheralManager)
+    startBeaconMonitoringIfEnabled(locman: locMan)
+    
     updateNetworkConfiguration()
     
     updatePointDisplay();

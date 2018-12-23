@@ -25,6 +25,8 @@ class Settings {
     self.pushAtCount = 60*60*24 // ~24 hours
     self.networkInformationEnabled = false
     
+    self.beaconMonitoringEnabled = true
+    self.beaconAdvertisingEnabled = true
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = 5000
@@ -38,10 +40,12 @@ class Settings {
     self.pushAtCount = 60*60 // ~1 hour
     self.networkInformationEnabled = true
     
+    self.beaconMonitoringEnabled = false
+    self.beaconAdvertisingEnabled = false
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = true
     self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-    self.locationManagerSettings.distanceFilter = 500 // because this limit is baked in to the SignficantChange monitoring
+    self.locationManagerSettings.distanceFilter = 10 // because 500 is limit is baked in to the SignficantChange monitoring
     self.locationManagerSettings.activityType = LocationManagerActivityType.Other
     
     return self
@@ -51,6 +55,8 @@ class Settings {
     self.pushAtCount = 60*2 // ~2 minutes
     self.networkInformationEnabled = true
     
+    self.beaconMonitoringEnabled = true
+    self.beaconAdvertisingEnabled = true
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyBest

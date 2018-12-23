@@ -216,7 +216,8 @@ func knownBeaconRegion(br: CLBeaconRegion) -> Int {
   return -1
 }
 
-func handleBeaconDidEnterRegion(locman: CLLocationManager, region: CLBeaconRegion) {
+func handleDidEnterBeaconRegion(locman: CLLocationManager, region: CLBeaconRegion) {
+  // Never dupe beacon regions. This whole array thing in case there are ever more kinds of beacon regioning, eg. diff region UUIDs
   if knownBeaconRegion(br: region) >= 0 {
     return
   }
@@ -233,8 +234,9 @@ func matchBeacons(b1: CLBeacon, b2: CLBeacon) -> Bool {
   return b1 == b2 || b1.major == b2.major && b1.minor == b2.minor
 }
 
-func handleBeaconDidExitRegion(locman: CLLocationManager, region: CLBeaconRegion) {
+func handleDidExitBeaconRegion(locman: CLLocationManager, region: CLBeaconRegion) {
   let i = knownBeaconRegion(br: region)
+  // Always keep
   if i >= 0 && beaconRegions.count > 1 {
     locman.stopRangingBeacons(in: region)
     beaconRegions.remove(at: i)
@@ -287,6 +289,15 @@ func startBeaconAdvertisingIfEnabled(btman: CBPeripheralManager) {
   } else {
     print("advertising beacon: off")
   }
+}
+
+func stopBeaconingService(locman: CLLocationManager) {
+  for r in beaconRegions {
+    locman.stopMonitoring(for: r)
+    locman.stopRangingBeacons(in: r)
+  }
+  beaconRegions = []
+  beaconsRanging = []
 }
 
 func knownBeacon(bb: CLBeacon) -> Int {
