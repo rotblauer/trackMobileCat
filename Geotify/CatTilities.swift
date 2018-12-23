@@ -188,10 +188,29 @@ func startUpdatingActivity() {
   print("started activity updates")
 }
 
+func updateNetworkConfiguration() {
+  currentTripNotes.networkInfo = getNetworkInfo()
+}
+
+func startUpdatingNetworkInformation() {
+  if (AppSettings.networkInformationEnabled) {
+      updateNetworkConfiguration()
+      DispatchQueue.main.asyncAfter(deadline: .now() + 60*5) {
+        startUpdatingActivity()
+      }
+  }
+}
+
 func addVisit(visit:CLVisit,place:String){
   let v = Visit.init(fromVisit: visit, placeAt: place)
   save(manager: CLLocationManager())
   currentTripNotes.currentVisit=v
+  
+  // update network whenever visit happens... or ~a little~ 6 minutes later, b/c it takes a hot minute to politey steal the coffeeshop's password
+  DispatchQueue.main.asyncAfter(deadline: .now() + 60*6) {
+      updateNetworkConfiguration()
+  }
+  
   save(manager: CLLocationManager())
   currentTripNotes.currentVisit=nil
 }

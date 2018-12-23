@@ -27,7 +27,8 @@ class Note{
   var currentVisit:Visit? = nil;
   var heartRateRaw:String="";
   var heartRate:String="";
-  var batteryString:String="";
+  var batteryString:String=""; // FIXME: use Battery struct instead
+  var networkInfo:NetworkInfo?=nil;
 }
 
 // setHeartRateNA sets the heart rate values for a note to their zero values
@@ -56,6 +57,8 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   dict.setValue(n.heartRateRaw, forKey: "heartRateRawS");
   
   dict.setValue(getStringVisit(v:n.currentVisit), forKey: "visit");
+  
+  dict.setValue(getStringNetworkInfo(ni: n.networkInfo), forKey: "networkInfo")
 
   return dict
 }

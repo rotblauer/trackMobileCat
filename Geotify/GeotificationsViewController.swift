@@ -47,6 +47,7 @@ class GeotificationsViewController: UIViewController {
     }
     setCurrentTripNotes(s: tt)
 //    setNoteField.text = getStoredCustomTripNotes();
+    updateNetworkConfiguration()
     updatePointDisplay();
     stopButton?.isHidden = false
   }
@@ -59,11 +60,11 @@ class GeotificationsViewController: UIViewController {
   func doStopTrip() {
     setCurrentTripNotes(s: "");
 //    setNoteField.text = getStoredCustomTripNotes();
+    updateNetworkConfiguration()
+    
     updatePointDisplay();
     stopButton?.isHidden = true
   }
-  
-
   
   @IBAction func stopTrip(_ sender: Any) {
     if (getStoredCustomTripNotes() != "") {

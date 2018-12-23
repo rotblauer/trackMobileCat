@@ -31,3 +31,4 @@ func catVersion() -> String {
   let version = dictionary["CFBundleShortVersionString"] as! String
   return version
 }
+

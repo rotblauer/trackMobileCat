@@ -62,7 +62,7 @@ private func updateStats(p:TrackPoint){
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
 
   currentStats = """
-  VERSION: \(version)
+  VERSION: \(version) WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
   ACC: \(acc), SPEED: \(speed)
   LAT: \(lat), LON: \(lon)
   ALT: \(alt), PRESSURE: \(pressure)

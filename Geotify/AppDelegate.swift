@@ -128,6 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     authorizeHealthKit()
     startUpdatingActivity()
     registerForPushNotifications()
+    updateNetworkConfiguration()
     UIApplication.shared.registerForRemoteNotifications() // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
     
     return true

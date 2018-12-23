@@ -16,10 +16,12 @@ class Settings {
   var pushAtCount:Int = 100
   var healthKitEnabled:Bool = true
   var batteryMonitoringEnabled:Bool = true
+  var networkInformationEnabled:Bool = true
   var locationManagerSettings:LocationManagerSettings = LocationManagerSettings();
   
   func flyMode() -> Settings {
     self.pushAtCount = 60*60*24 // ~24 hours
+    self.networkInformationEnabled = false
     
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
@@ -32,6 +34,7 @@ class Settings {
   
   func liteMode() -> Settings {
     self.pushAtCount = 60*60 // ~1 hour
+    self.networkInformationEnabled = true
     
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = true
@@ -44,6 +47,7 @@ class Settings {
   
   func fullMode() -> Settings {
     self.pushAtCount = 60*2 // ~2 minutes
+    self.networkInformationEnabled = true
     
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
