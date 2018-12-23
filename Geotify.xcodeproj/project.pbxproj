@@ -11,6 +11,7 @@
 		083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */; };
 		087627601E3002F400343882 /* Criel sur Mer.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0876275F1E3002F400343882 /* Criel sur Mer.gpx */; };
 		08A591A821CEBC180008D884 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591A721CEBC180008D884 /* LocationManager.swift */; };
+		08A591AA21CEEFC10008D884 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591A921CEEFC10008D884 /* Settings.swift */; };
 		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
@@ -47,6 +48,7 @@
 		083760051E2F938900035CAD /* TrackPoint.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrackPoint.xcdatamodel; sourceTree = "<group>"; };
 		0876275F1E3002F400343882 /* Criel sur Mer.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Criel sur Mer.gpx"; sourceTree = "<group>"; };
 		08A591A721CEBC180008D884 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		08A591A921CEEFC10008D884 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		440C0F9478B92A69A041D344 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
 		4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				06CBF75E21BB1E3400521651 /* Battery.swift */,
 				4FA1A7C421BC4AC400EB569C /* HealthKitSetupAssistant.swift */,
 				08A591A721CEBC180008D884 /* LocationManager.swift */,
+				08A591A921CEEFC10008D884 /* Settings.swift */,
 			);
 			path = Geotify;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 			files = (
 				D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */,
 				4FB90F8F21864BC000ADEF7A /* DataStore.swift in Sources */,
+				08A591AA21CEEFC10008D884 /* Settings.swift in Sources */,
 				4FB90F912186508A00ADEF7A /* Remote.swift in Sources */,
 				D90CB6771A73B1ED00228A1F /* GeotificationsViewController.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,

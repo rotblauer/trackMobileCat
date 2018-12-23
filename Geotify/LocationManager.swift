@@ -9,68 +9,101 @@
 import Foundation
 import CoreLocation
 
+enum LocationManagerService: String {
+  case SignificantChange, Standard
+}
+
+enum LocationManagerActivityType: String {
+  case Other, OtherNavigation, AutomitiveNavigation, Fitness, Airborne
+}
+
+class LocationManagerSettings {
+  var locationManagerService:LocationManagerService = LocationManagerService.Standard
+  var locationManagerVisitsServiceEnabled:Bool = true
+  var desiredAccuracy:Double = kCLLocationAccuracyBest
+  var distanceFilter:Double = kCLDistanceFilterNone
+  var autoPause:Bool = false
+  var backgroundUpdates:Bool = true
+  var activityType:LocationManagerActivityType = LocationManagerActivityType.Other
+}
+
 func locationManagerSetMode(manager: CLLocationManager, mode: String) {
-  if (mode=="fly") {
+  switch mode {
+  case "fly":
     print("updating to fly mode")
-    locationManagerFly(manager: manager)
-  } else if (mode == "lite") {
+    _ = AppSettings.flyMode()
+    break
+  case "lite":
     print("updating to lite mode")
-    locationManagerLite(manager: manager)
-  } else {
+    _ = AppSettings.liteMode()
+    break
+  case "full", "":
+    fallthrough
+  default:
     print("setting to regular mode")
-    locationManagerFull(manager: manager)
+    _ = AppSettings.fullMode()
   }
+  
+  locationManagerInstallSettings(manager: manager, settings: AppSettings.locationManagerSettings)
+
   print("@locationManager.desiredAccuracy=\(manager.desiredAccuracy)")
   print("@locationManager.distanceFilter=\(manager.distanceFilter)")
   print("@locationManager.auto_pause=\(manager.pausesLocationUpdatesAutomatically)")
   print("@locationManager.background_allowed=\(manager.allowsBackgroundLocationUpdates)")
 }
 
-func locationManagerFly(manager: CLLocationManager) {
-  pushAtCount=60*60*12
-  manager.desiredAccuracy=5000
-  manager.activityType = CLActivityType.airborne
-}
-
-func locationManagerLite(manager: CLLocationManager) {
-  pushAtCount=60*60
+// locationManagerInstallSettings validates and assigns settings to the manager, stopping and starting location updates as needed.
+func locationManagerInstallSettings(manager: CLLocationManager, settings: LocationManagerSettings) {
   
-  if !CLLocationManager.significantLocationChangeMonitoringAvailable() {
-    // The service is not available.
-    print(":( significant change monitoring not available")
+  manager.desiredAccuracy = settings.desiredAccuracy
+  manager.distanceFilter = settings.distanceFilter
+  manager.pausesLocationUpdatesAutomatically = settings.autoPause
+  
+  switch settings.activityType {
+  case LocationManagerActivityType.Airborne:
+    manager.activityType = CLActivityType.airborne
+    break
+  case LocationManagerActivityType.Other:
+    manager.activityType = CLActivityType.other
+    break
+  case LocationManagerActivityType.OtherNavigation:
+    manager.activityType = CLActivityType.otherNavigation
+    break
+  case LocationManagerActivityType.Fitness:
+    manager.activityType = CLActivityType.fitness
+    break
+  default:
+    print("impossible activity type: \(settings.activityType)")
     return
   }
   
-  manager.pausesLocationUpdatesAutomatically = true
-  manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-  manager.distanceFilter = 500
-  manager.activityType = CLActivityType.other
-
-  // https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_significant-change_location_service
+  // Stop both possible location services.
   manager.stopUpdatingLocation()
-  // The significant-change location service offers a more power-friendly alternative for apps that need location data but do not need frequent updates or the precision of GPS. The service relies on lower-power alternatives (such as Wi-Fi and cellular information) to determine the user’s location. It then delivers location updates to your app only when the user’s position changes by a significant amount, such as 500 meters or more.
-  manager.startMonitoringSignificantLocationChanges()
-}
-
-func locationManagerFull(manager: CLLocationManager) {
-  pushAtCount=60*2
+  manager.stopMonitoringSignificantLocationChanges()
   
-  // Do not start services that aren't available.
-  if !CLLocationManager.locationServicesEnabled() {
-    // Location services is not available.
-        print(":( location updates not available")
-    return
+  // Validate and start one location service.
+  switch settings.locationManagerService {
+  case LocationManagerService.Standard:
+    if !CLLocationManager.locationServicesEnabled() {
+      print(":( location updates not available")
+      return
+    }
+    manager.startUpdatingLocation()
+    break
+  case LocationManagerService.SignificantChange:
+    if !CLLocationManager.significantLocationChangeMonitoringAvailable() {
+      print(":( significant change monitoring not available")
+      return
+    }
+    // https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_significant-change_location_service
+    // The significant-change location service offers a more power-friendly alternative for apps that need location data but do not need frequent updates or the precision of GPS. The service relies on lower-power alternatives (such as Wi-Fi and cellular information) to determine the user’s location. It then delivers location updates to your app only when the user’s position changes by a significant amount, such as 500 meters or more.
+    manager.startMonitoringSignificantLocationChanges()
+    break
   }
   
-  manager.pausesLocationUpdatesAutomatically = false
-  
-  // The default value of this property is CLActivityType.other. Note that when the value of activityType is CLActivityType.fitness, indoor positioning is disabled.
-  // https://developer.apple.com/documentation/corelocation/cllocationmanager/1620567-activitytype
-  manager.activityType = CLActivityType.other
-  
-  // https://developer.apple.com/documentation/corelocation/getting_the_user_s_location/using_the_standard_location_service
-  manager.desiredAccuracy = kCLLocationAccuracyBest
-  manager.distanceFilter = kCLDistanceFilterNone
-  manager.stopMonitoringSignificantLocationChanges()
-  manager.startUpdatingLocation()
+  if !settings.locationManagerVisitsServiceEnabled {
+    manager.stopMonitoringVisits()
+  } else {
+    manager.startMonitoringVisits()
+  }
 }

@@ -5,12 +5,12 @@
 	<key>compressed-paths</key>
 	<array>
 		<string>run1/core/table-manager</string>
-		<string>run1/core/core-config</string>
 		<string>run1/core/uniquing</string>
 		<string>run1/core/uniquing</string>
 		<string>run1/core/uniquing</string>
 		<string>currentRun/core/stores/indexed-store-1</string>
 		<string>run1/core/stores/indexed-store-0</string>
+		<string>run1/core/core-config</string>
 		<string>run1/core/stores/indexed-store-1</string>
 		<string>currentRun/core/uniquing</string>
 		<string>currentRun/core/uniquing</string>
@@ -22,10 +22,10 @@
 	<key>paths</key>
 	<array>
 		<string>run1/core/table-manager</string>
-		<string>run1/core/core-config</string>
 		<string>run1/core/uniquing</string>
 		<string>currentRun/core/stores/indexed-store-1</string>
 		<string>run1/core/stores/indexed-store-0</string>
+		<string>run1/core/core-config</string>
 		<string>run1/core/stores/indexed-store-1</string>
 		<string>currentRun/core/uniquing</string>
 		<string>run1/core/stores/indexed-store-2</string>

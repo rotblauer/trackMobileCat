@@ -28,7 +28,6 @@ class Note{
   var heartRateRaw:String="";
   var heartRate:String="";
   var batteryString:String="";
-
 }
 
 // setHeartRateNA sets the heart rate values for a note to their zero values

@@ -79,8 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     locationManager.startMonitoringVisits()
     
-    // Start default FULL mode
-    locationManagerFull(manager: locationManager)
+    locationManagerInstallSettings(manager: locationManager, settings: AppSettings.locationManagerSettings)
     return locationManager
   }
   
