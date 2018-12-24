@@ -10,7 +10,13 @@ import Foundation
 import CoreData
 import UIKit
 
-func settingsRM(managedContext:NSManagedObjectContext) {
+func rmSettings() {
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    print("non-delegate")
+    return
+  }
+  let managedContext = appDelegate.persistentContainer.viewContext
+  
   let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SettingsEnt")
   let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
   do {
@@ -24,21 +30,23 @@ func settingsRM(managedContext:NSManagedObjectContext) {
   }
 }
 
-func saveSettings(managedContext:NSManagedObjectContext) {
+func saveSettings() {
 
-  settingsRM(managedContext: managedContext)
+  rmSettings()
   
-  let entity = NSEntityDescription.entity(forEntityName: "SettingsEnt", in: managedContext)
-  var settingsO:NSManagedObject
-  if entity == nil {
-    print("nil entityt")
-    settingsO = NSEntityDescription.insertNewObject(forEntityName: "SettingsEnt", into: managedContext) as! SettingsEnt
-    //    return
-  } else {
-    print("ok entity")
-    settingsO = NSManagedObject(entity: entity!, insertInto: managedContext)
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    print("non-delegate")
+    return
   }
+  let managedContext = appDelegate.persistentContainer.viewContext
 
+  let entity = NSEntityDescription.entity(forEntityName: "SettingsEnt", in: managedContext)
+  if entity == nil {
+      print("nil Settings entity")
+      return
+  }
+  
+  let settingsO = NSManagedObject(entity: entity!, insertInto: managedContext)
   settingsO.setValue(AppSettings.pushAtCount, forKey: "pushAtCount")
   settingsO.setValue(AppSettings.batteryMonitoringEnabled, forKey: "batteryMonitoringEnabled")
   settingsO.setValue(AppSettings.beaconAdvertisingEnabled, forKey: "beaconAdvertisingEnabled")
@@ -54,21 +62,15 @@ func saveSettings(managedContext:NSManagedObjectContext) {
   }
 }
 
-func loadSavedSettings(context:NSManagedObjectContext) {
-//  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//    print("h0")
-//    return
-//  }
-  print("h1")
-//  let managedContext = appDelegate.persistentContainer.viewContext
+func loadSavedSettings() {
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    return
+  }
+  let context = appDelegate.persistentContainer.viewContext
   let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "SettingsEnt")
-//  let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SettingsEnt")
-  print("h2")
   do {
     let loadedSettings = try context.fetch(fetchRequest)
-    print("h3")
     for data in loadedSettings {
-      print("h4")
       AppSettings.pushAtCount = data.value(forKey: "pushAtCount") as! Int64
       AppSettings.batteryMonitoringEnabled = (data.value(forKey: "batteryMonitoringEnabled") != nil)
       AppSettings.beaconAdvertisingEnabled = (data.value(forKey: "beaconAdvertisingEnabled") != nil)

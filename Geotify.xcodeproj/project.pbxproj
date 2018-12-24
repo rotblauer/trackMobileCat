@@ -8,9 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		06CBF75F21BB1E3400521651 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF75E21BB1E3400521651 /* Battery.swift */; };
-		083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */; };
+		083158C421D1229900279543 /* CatTracksData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083158C221D1229900279543 /* CatTracksData.xcdatamodeld */; };
 		087627601E3002F400343882 /* Criel sur Mer.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0876275F1E3002F400343882 /* Criel sur Mer.gpx */; };
-		087BA1CE21D0642200C692CE /* LMEntity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 087BA1CC21D0642200C692CE /* LMEntity.xcdatamodeld */; };
 		08A591A821CEBC180008D884 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591A721CEBC180008D884 /* LocationManager.swift */; };
 		08A591AA21CEEFC10008D884 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591A921CEEFC10008D884 /* Settings.swift */; };
 		08A591AC21CF353D0008D884 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591AB21CF353D0008D884 /* Network.swift */; };
@@ -18,7 +17,6 @@
 		08A591B021D02C100008D884 /* ViewControllerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591AF21D02C100008D884 /* ViewControllerSettings.swift */; };
 		08A591B221D05FF10008D884 /* DataStoreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591B121D05FF10008D884 /* DataStoreSettings.swift */; };
 		08A591B421D060190008D884 /* DataStoreLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591B321D060190008D884 /* DataStoreLM.swift */; };
-		08A591B721D0627D0008D884 /* SettingsEnt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08A591B521D0627D0008D884 /* SettingsEnt.xcdatamodeld */; };
 		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
 		4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F558EA41E2C262A002C3743 /* CatTilities.swift */; };
 		4F9609CA209F58FF00B861DE /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9609C9209F58FF00B861DE /* Note.swift */; };
@@ -52,9 +50,8 @@
 
 /* Begin PBXFileReference section */
 		06CBF75E21BB1E3400521651 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
-		083760051E2F938900035CAD /* TrackPoint.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrackPoint.xcdatamodel; sourceTree = "<group>"; };
+		083158C321D1229900279543 /* CatTracksData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CatTracksData.xcdatamodel; sourceTree = "<group>"; };
 		0876275F1E3002F400343882 /* Criel sur Mer.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Criel sur Mer.gpx"; sourceTree = "<group>"; };
-		087BA1CD21D0642200C692CE /* LMEntity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LMEntity.xcdatamodel; sourceTree = "<group>"; };
 		08A591A721CEBC180008D884 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		08A591A921CEEFC10008D884 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		08A591AB21CF353D0008D884 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -62,7 +59,6 @@
 		08A591AF21D02C100008D884 /* ViewControllerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSettings.swift; sourceTree = "<group>"; };
 		08A591B121D05FF10008D884 /* DataStoreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreSettings.swift; sourceTree = "<group>"; };
 		08A591B321D060190008D884 /* DataStoreLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreLM.swift; sourceTree = "<group>"; };
-		08A591B621D0627D0008D884 /* SettingsEnt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SettingsEnt.xcdatamodel; sourceTree = "<group>"; };
 		440C0F9478B92A69A041D344 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
 		4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		4F558EA41E2C262A002C3743 /* CatTilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatTilities.swift; sourceTree = "<group>"; };
@@ -133,9 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				4FC1D8522094ECDD002C5593 /* Geotify.entitlements */,
-				083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */,
-				08A591B521D0627D0008D884 /* SettingsEnt.xcdatamodeld */,
-				087BA1CC21D0642200C692CE /* LMEntity.xcdatamodeld */,
+				083158C221D1229900279543 /* CatTracksData.xcdatamodeld */,
 				D90CB6561A739B7A00228A1F /* Main.storyboard */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
 				D90CB6761A73B1ED00228A1F /* ViewControllerMain.swift */,
@@ -307,21 +301,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				083158C421D1229900279543 /* CatTracksData.xcdatamodeld in Sources */,
 				D90CB6531A739B7A00228A1F /* AppDelegate.swift in Sources */,
 				4FB90F8F21864BC000ADEF7A /* DataStoreTP.swift in Sources */,
 				08A591B421D060190008D884 /* DataStoreLM.swift in Sources */,
-				087BA1CE21D0642200C692CE /* LMEntity.xcdatamodeld in Sources */,
 				08A591AE21CF35880008D884 /* NFC.swift in Sources */,
 				08A591B221D05FF10008D884 /* DataStoreSettings.swift in Sources */,
 				08A591AA21CEEFC10008D884 /* Settings.swift in Sources */,
 				4FB90F912186508A00ADEF7A /* Remote.swift in Sources */,
 				D90CB6771A73B1ED00228A1F /* ViewControllerMain.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
-				08A591B721D0627D0008D884 /* SettingsEnt.xcdatamodeld in Sources */,
 				08A591B021D02C100008D884 /* ViewControllerSettings.swift in Sources */,
 				06CBF75F21BB1E3400521651 /* Battery.swift in Sources */,
 				4FA1A7C521BC4AC400EB569C /* HealthKitSetupAssistant.swift in Sources */,
-				083760061E2F938900035CAD /* TrackPoint.xcdatamodeld in Sources */,
 				08A591A821CEBC180008D884 /* LocationManager.swift in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
 				4F9609CA209F58FF00B861DE /* Note.swift in Sources */,
@@ -517,33 +509,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		083760041E2F938900035CAD /* TrackPoint.xcdatamodeld */ = {
+		083158C221D1229900279543 /* CatTracksData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				083760051E2F938900035CAD /* TrackPoint.xcdatamodel */,
+				083158C321D1229900279543 /* CatTracksData.xcdatamodel */,
 			);
-			currentVersion = 083760051E2F938900035CAD /* TrackPoint.xcdatamodel */;
-			path = TrackPoint.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		087BA1CC21D0642200C692CE /* LMEntity.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				087BA1CD21D0642200C692CE /* LMEntity.xcdatamodel */,
-			);
-			currentVersion = 087BA1CD21D0642200C692CE /* LMEntity.xcdatamodel */;
-			path = LMEntity.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		08A591B521D0627D0008D884 /* SettingsEnt.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				08A591B621D0627D0008D884 /* SettingsEnt.xcdatamodel */,
-			);
-			currentVersion = 08A591B621D0627D0008D884 /* SettingsEnt.xcdatamodel */;
-			path = SettingsEnt.xcdatamodeld;
+			currentVersion = 083158C321D1229900279543 /* CatTracksData.xcdatamodel */;
+			path = CatTracksData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

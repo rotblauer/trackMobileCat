@@ -70,12 +70,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     super.willMove(toParent: parent)
     if parent == nil { // idk
       print("moving back to cattracks main view")
+      saveSettings()
+      saveLM()
+      
       startBeaconMonitoringIfEnabled(locman: locMan)
       startBeaconAdvertisingIfEnabled(btman: btPeripheralManager)
       
       updateNetworkConfiguration()
-      saveSettingsExternalFromDelegate()
       locationManagerInstallSettings(manager: locMan, settings: AppSettings.locationManagerSettings)
+      
     } else {
       print("parent \(String(describing: parent))")
     }

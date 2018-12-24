@@ -200,24 +200,6 @@ func updateNetworkConfiguration() {
   }
 }
 
-func loadSavedSettingsExternalFromDelegate() {
-  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-    print("non-delegate")
-    return
-  }
-  let managedContext = appDelegate.persistentContainer.viewContext
-  loadSavedSettings(context:managedContext)
-}
-
-func saveSettingsExternalFromDelegate() {
-  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-    print("non-delegate")
-    return
-  }
-  let managedContext = appDelegate.persistentContainer.viewContext
-  saveSettings(managedContext:managedContext)
-}
-
 func startUpdatingNetworkInformation() {
   if (AppSettings.networkInformationEnabled) {
       updateNetworkConfiguration()

@@ -39,10 +39,6 @@ var btPeripheralManager: CBPeripheralManager!
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
-  override init() {
-      loadSavedSettingsExternalFromDelegate()
-  }
-  
   var window: UIWindow?
   let locationManager = CLLocationManager()
 //  let btManager = CBPeripheralManager(delegate: AppDelegate, queue: nil)!
@@ -152,6 +148,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set global instances.
     assignUUIDs()
+    loadSavedSettings()
+    loadLM()
     
     locMan = setupLocationManager()
     setupBluetoothManager()
@@ -184,17 +182,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     print("Failed to register: \(error)")
   }
   
-  
   //  stores trackpoints
   lazy var persistentContainer:   NSPersistentContainer = {
-    
-    var container = NSPersistentContainer(name: "TrackPoint")
-    container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-      if let error = error as NSError? {
-        print("Unresolved error \(error), \(error.userInfo)")
-      }
-    })
-    container = NSPersistentContainer(name: "SettingsEnt")
+    var container = NSPersistentContainer(name: "CatTracksData")
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
       if let error = error as NSError? {
         print("Unresolved error \(error), \(error.userInfo)")
