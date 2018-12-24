@@ -63,6 +63,8 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   if AppSettings.batteryMonitoringEnabled {
     dict.setValue(getStringBatteryStatus(bs: DeviceBatteryStat(lev: batteryLevel, stat: batteryState)), forKey: "batteryStatus")
   }
+  
+  dict.setValue(getStringNetworkInfo(ni: n.networkInfo), forKey: "networkInfo")
 
   return dict
 }

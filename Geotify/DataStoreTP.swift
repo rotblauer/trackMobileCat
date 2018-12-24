@@ -8,6 +8,8 @@ import CoreLocation
 import CoreData
 import UIKit
 
+var lastTP:TrackPoint!
+
 func save(manager: CLLocationManager){
   var locs:[CLLocation]=[]
   locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))
@@ -46,21 +48,30 @@ func savePointsToCoreData(locations: [CLLocation]) {
     do {
       try managedContext.save()
       //      print("saved new points")
+      lastTP = point as? TrackPoint
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
     }
   }
 }
 
-private func updatePrintableStats(p:TrackPoint){
+func updatePrintableStats(p:TrackPoint){
   let acc = String(format: "%.2f", (p.accuracy))
   let vacc = String(format: "%.2f", (p.vAccuracy))
   let lat = String(format: "%.5f", (p.lat))
   let lon = String(format: "%.5f", (p.long))
   let alt = String(format: "%.1f", (p.altitude))
   let speed = String(format: "%.2f", (p.speed))
-  let t = p.time
-  let currentTripDistance = String(format: "%.1f", (currentTripNotes.currentTripDistance))
+  let ti = p.time?.dateFromISO8601?.timeIntervalSinceNow
+  var tt = "n/a"
+  if ti != nil {
+    tt =  stringFromTimeInterval(interval: ti!) as String
+  }
+  var dd = currentTripNotes.distance
+  if dd.decimalValue <= 0 {
+    dd = 0
+  }
+  let currentTripDistance = String(format: "%.1f", (currentTripNotes.distance))
   let relativeAltitude = String(format: "%.1f", (currentTripNotes.relativeAltitude))
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
   var beacsRangs:[String] = []
@@ -72,15 +83,15 @@ private func updatePrintableStats(p:TrackPoint){
   ACC.H: \(acc), ACC.V: \(vacc), SPEED: \(speed)
   LAT: \(lat), LON: \(lon)
   ALT: \(alt), PRESSURE: \(pressure), FLOOR: \(p.floor)
-  TIME: \(String(describing: t))
+  TIME SINCE LAST POINT: \(tt)
   ---
   LOC.desired_acc: \(locMan.desiredAccuracy), LOC.distance_filter: \(locMan.distanceFilter)
   LOC.autopause: \(locMan.pausesLocationUpdatesAutomatically), LOC.background_allowed: \(locMan.allowsBackgroundLocationUpdates)
   Q.pushEvery: \(AppSettings.pushAtCount) points
   ---
-  Activity: \(currentTripNotes.activity), Distance: \(currentTripDistance), Steps: \(currentTripNotes.numberOfSteps)
+  Activity: \(currentTripNotes.activity), HeartRate: \(currentTripNotes.heartRate)
+  Distance: \(currentTripDistance), Steps: \(currentTripNotes.numberOfSteps)
   Floors(U/D): \(currentTripNotes.floorsAscended)/\(currentTripNotes.floorsDescended), RelAltitude: \(relativeAltitude) meters
-  HeartRate: \(currentTripNotes.heartRate)
   ---
   WLAN: \(currentTripNotes.networkInfo?.ssid ?? "")
   BEAC.me: \(uuidN1).\(uuidN2), BEAC.catfriends: \(beacsRangs)

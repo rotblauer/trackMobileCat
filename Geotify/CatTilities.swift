@@ -201,6 +201,15 @@ func startUpdatingNetworkInformation() {
   }
 }
 
+func startUpdatingMainView() {
+  if lastTP != nil {
+      updatePrintableStats(p: lastTP)
+  }
+  DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+    startUpdatingMainView()
+  }
+}
+
 func knownBeaconRegion(br: CLBeaconRegion) -> Int {
   for (i, b) in beaconRegions.enumerated() {
     if matchBeaconRegions(b1: b, b2: br) {

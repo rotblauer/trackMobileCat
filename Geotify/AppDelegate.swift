@@ -162,7 +162,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     registerForPushNotifications()
     updateNetworkConfiguration()
     UIApplication.shared.registerForRemoteNotifications() // https://www.raywenderlich.com/584-push-notifications-tutorial-getting-started
-
+    startUpdatingMainView()
+    
     return true
   }
   
