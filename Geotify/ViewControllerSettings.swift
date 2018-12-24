@@ -24,6 +24,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var presetLiteBT: UIButton!
   @IBOutlet weak var presetFullBT: UIButton!
   @IBOutlet weak var locationActivityTypeSC: UISegmentedControl!
+  @IBOutlet weak var locationVisitsEnabledT: UISwitch!
   
   func setDisplayFromSettings() {
     self.pushAtNTF.text = "\(AppSettings.pushAtCount)"
@@ -59,7 +60,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
       break
     }
     self.locationActivityTypeSC.selectedSegmentIndex = activityTypeSegIndex
-    
+    self.locationVisitsEnabledT.isOn = AppSettings.locationManagerSettings.locationManagerVisitsServiceEnabled
   }
   
   override func viewDidLoad() {
@@ -128,6 +129,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
   @IBAction func btBeaconMonitoringTChanged(_ sender: UISwitch, forEvent event: UIEvent) {
     AppSettings.beaconMonitoringEnabled = sender.isOn
   }
+  @IBAction func locationVisitsEnabledTChanged(_ sender: UISwitch, forEvent event: UIEvent) {
+    AppSettings.locationManagerSettings.locationManagerVisitsServiceEnabled = sender.isOn
+  }
+  
   @IBAction func presetFlyBTPushed(_ sender: UIButton, forEvent event: UIEvent) {
     _ = AppSettings.flyMode()
     setDisplayFromSettings()

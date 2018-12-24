@@ -121,7 +121,7 @@ func loadLM() {
         break
       }
       AppSettings.locationManagerSettings.activityType = activity
-      
+      AppSettings.locationManagerSettings.autoPause = (data.value(forKey: "lmAutoPause") as! NSNumber != 0)
       AppSettings.locationManagerSettings.backgroundUpdates = (data.value(forKey: "lmBackgroundUpdates") as! NSNumber != 0)
       AppSettings.locationManagerSettings.locationManagerVisitsServiceEnabled = (data.value(forKey: "lmVisitsEnabled") as! NSNumber != 0)
       AppSettings.locationManagerSettings.desiredAccuracy = data.value(forKey: "lmDesiredAccuracy") as! Double

@@ -240,6 +240,11 @@
                                     <action selector="locationBackgroundUpdatesTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="GsL-NT-EQ6"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth beacon monitoring" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0T-k8-qH5">
+                                <rect key="frame" x="165" y="516" width="207" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tE9-cD-C12">
                                 <rect key="frame" x="249" y="539" width="52" height="31"/>
                                 <connections>
@@ -269,6 +274,13 @@
                                 <rect key="frame" x="61" y="539" width="51" height="31"/>
                                 <connections>
                                     <action selector="btBeaconAdvertisingTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="nGP-V1-zj3"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eAG-a9-4G3">
+                                <rect key="frame" x="250" y="584" width="51" height="31"/>
+                                <connections>
+                                    <action selector="btBeaconAdvertisingTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="Gi0-fz-qin"/>
+                                    <action selector="locationVisitsEnabledTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="nMu-aK-Ynl"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable HealthKit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVs-up-F2j">
@@ -364,14 +376,15 @@
                                     <action selector="locationAutopauseTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="KLp-Yh-SJ8"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth beacon monitoring" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0T-k8-qH5">
-                                <rect key="frame" x="165" y="516" width="207" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Enable Visits monitoring" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNc-9k-jUi">
+                                <rect key="frame" x="74" y="592" width="168" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.096093453529999998" green="0.35914760299999998" blue="0.72820191059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="vEd-E3-1qb" firstAttribute="top" secondItem="eAG-a9-4G3" secondAttribute="bottom" constant="8" symbolic="YES" id="0ID-WF-Qco"/>
                             <constraint firstItem="P1Y-0L-IoS" firstAttribute="top" secondItem="bbe-Y6-YOA" secondAttribute="bottom" constant="10" id="0TL-L4-B1e"/>
                             <constraint firstItem="Csz-iB-Ap1" firstAttribute="leading" secondItem="qyR-3F-dbr" secondAttribute="leading" id="0ac-ea-n6J"/>
                             <constraint firstItem="jg1-wN-4HY" firstAttribute="centerX" secondItem="GWZ-jZ-gtO" secondAttribute="centerX" id="2LW-P5-NVz"/>
@@ -389,7 +402,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="EVD-Fh-SY8" secondAttribute="trailing" constant="3" id="AXm-vC-L2J"/>
                             <constraint firstItem="iau-xr-nGp" firstAttribute="leading" secondItem="HDi-dT-tut" secondAttribute="leading" id="Agj-zt-cRK"/>
                             <constraint firstItem="a6o-tO-eFY" firstAttribute="top" secondItem="rcx-dB-GWG" secondAttribute="bottom" constant="8" symbolic="YES" id="CIh-RS-xra"/>
+                            <constraint firstItem="VNc-9k-jUi" firstAttribute="leading" secondItem="GWZ-jZ-gtO" secondAttribute="leadingMargin" constant="58" id="CMY-tB-S4b"/>
                             <constraint firstItem="6M6-d0-bJD" firstAttribute="top" secondItem="PE6-cr-Zu0" secondAttribute="bottom" constant="8" symbolic="YES" id="D8H-lL-mLf"/>
+                            <constraint firstItem="VNc-9k-jUi" firstAttribute="centerY" secondItem="eAG-a9-4G3" secondAttribute="centerY" id="E2v-oX-rnP"/>
                             <constraint firstItem="r7t-L4-9my" firstAttribute="leading" secondItem="GWZ-jZ-gtO" secondAttribute="leadingMargin" constant="-3" id="ECi-N8-R9W"/>
                             <constraint firstItem="2Wf-op-SE2" firstAttribute="leading" secondItem="uqK-K5-ZlE" secondAttribute="leading" id="EmE-Ac-CpL"/>
                             <constraint firstItem="x7s-oL-xqC" firstAttribute="top" secondItem="jg1-wN-4HY" secondAttribute="top" id="F72-iO-4KI"/>
@@ -400,6 +415,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="HDi-dT-tut" secondAttribute="trailing" constant="-20" id="Jpc-fn-W6q"/>
                             <constraint firstItem="jg1-wN-4HY" firstAttribute="baseline" secondItem="Q3T-fj-DDt" secondAttribute="firstBaseline" id="K4i-cU-bQ6"/>
                             <constraint firstItem="PE6-cr-Zu0" firstAttribute="leading" secondItem="GWZ-jZ-gtO" secondAttribute="leadingMargin" constant="45" id="LYg-or-DWI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eAG-a9-4G3" secondAttribute="trailing" constant="60" id="MO7-x2-nRs"/>
                             <constraint firstItem="PE6-cr-Zu0" firstAttribute="leading" secondItem="2Wf-op-SE2" secondAttribute="leading" id="Nrf-M8-1q3"/>
                             <constraint firstItem="bbe-Y6-YOA" firstAttribute="top" secondItem="HDi-dT-tut" secondAttribute="bottom" constant="3" id="O2A-WJ-PGf"/>
                             <constraint firstItem="TNu-qG-ASp" firstAttribute="top" secondItem="P1Y-0L-IoS" secondAttribute="bottom" constant="15" id="PkO-cv-x1x"/>
@@ -445,10 +461,12 @@
                             <constraint firstItem="2Wf-op-SE2" firstAttribute="top" secondItem="6M6-d0-bJD" secondAttribute="bottom" constant="8" symbolic="YES" id="gK3-BJ-jdu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Q3T-fj-DDt" secondAttribute="trailing" constant="33" id="hZy-3b-ypc"/>
                             <constraint firstItem="jg1-wN-4HY" firstAttribute="top" secondItem="Q3T-fj-DDt" secondAttribute="top" id="hxI-xY-SFq"/>
+                            <constraint firstItem="eAG-a9-4G3" firstAttribute="centerX" secondItem="0tO-yP-KWD" secondAttribute="centerX" id="iav-MC-1gi"/>
                             <constraint firstItem="KV7-KP-h8b" firstAttribute="leading" secondItem="Csz-iB-Ap1" secondAttribute="leading" id="imI-so-RV8"/>
                             <constraint firstItem="INR-jC-kkH" firstAttribute="leading" secondItem="a6o-tO-eFY" secondAttribute="trailing" constant="64" id="kDH-th-RrA"/>
                             <constraint firstItem="HDi-dT-tut" firstAttribute="top" secondItem="qyR-3F-dbr" secondAttribute="bottom" constant="20" id="kIu-wk-Qkn"/>
                             <constraint firstItem="a6o-tO-eFY" firstAttribute="leading" secondItem="KV7-KP-h8b" secondAttribute="leading" id="kL2-Nx-ge9"/>
+                            <constraint firstItem="eAG-a9-4G3" firstAttribute="leading" secondItem="VNc-9k-jUi" secondAttribute="trailing" constant="8" symbolic="YES" id="l7J-mw-5fJ"/>
                             <constraint firstItem="Hwj-bN-d75" firstAttribute="top" secondItem="2Wf-op-SE2" secondAttribute="bottom" constant="8" symbolic="YES" id="llQ-6w-WZB"/>
                             <constraint firstItem="TOj-nv-bWW" firstAttribute="leading" secondItem="qyR-3F-dbr" secondAttribute="trailing" constant="65" id="lvE-zN-MuQ"/>
                             <constraint firstItem="EVD-Fh-SY8" firstAttribute="leading" secondItem="rcx-dB-GWG" secondAttribute="trailing" constant="16" id="m6v-R5-v7O"/>
@@ -490,6 +508,7 @@
                         <outlet property="locationAutopausesT" destination="PE6-cr-Zu0" id="Hau-Rp-G0A"/>
                         <outlet property="locationBackgroundUpdatesT" destination="WGe-m6-lUi" id="S6m-jE-OUt"/>
                         <outlet property="locationServiceSC" destination="bbe-Y6-YOA" id="ZlL-Vt-t3h"/>
+                        <outlet property="locationVisitsEnabledT" destination="eAG-a9-4G3" id="rYG-gx-Uci"/>
                         <outlet property="presetFlyBT" destination="jg1-wN-4HY" id="p1l-JT-7wJ"/>
                         <outlet property="presetFullBT" destination="x7s-oL-xqC" id="4VX-Zw-0ua"/>
                         <outlet property="presetLiteBT" destination="Q3T-fj-DDt" id="SBm-YK-MM9"/>
