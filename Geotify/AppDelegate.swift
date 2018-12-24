@@ -273,7 +273,7 @@ extension AppDelegate: CLLocationManagerDelegate {
   
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    saveAll(locations: locations)
+    savePointsToCoreData(locations: locations)
     pushLocs(force: false, pushToken: pushToken)
   }
   

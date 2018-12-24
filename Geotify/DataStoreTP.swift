@@ -8,15 +8,14 @@ import CoreLocation
 import CoreData
 import UIKit
 
-
 func save(manager: CLLocationManager){
   var locs:[CLLocation]=[]
   locs.append(CLLocation(latitude: CLLocationManager().location!.coordinate.latitude, longitude: CLLocationManager().location!.coordinate.longitude))
 
-  saveAll(locations: locs)
+  savePointsToCoreData(locations: locs)
 }
 
-func saveAll(locations: [CLLocation]) {
+func savePointsToCoreData(locations: [CLLocation]) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
     return
   }
