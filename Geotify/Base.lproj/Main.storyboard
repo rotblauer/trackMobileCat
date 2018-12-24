@@ -28,7 +28,7 @@
         <!--cat tracks-->
         <scene sceneID="QSg-Wp-O1B">
             <objects>
-                <viewController id="LYI-dq-R4y" customClass="GeotificationsViewController" customModule="Geotify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LYI-dq-R4y" customClass="MainViewController" customModule="Geotify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kGy-dK-Sza"/>
                         <viewControllerLayoutGuide type="bottom" id="hBM-ll-xSu"/>
@@ -240,18 +240,13 @@
                                     <action selector="locationBackgroundUpdatesTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="GsL-NT-EQ6"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth beacon monitoring" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0T-k8-qH5">
-                                <rect key="frame" x="6" y="516" width="353" height="15"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tE9-cD-C12">
                                 <rect key="frame" x="249" y="539" width="52" height="31"/>
                                 <connections>
                                     <action selector="btBeaconMonitoringTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="b3u-RW-USe"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable WLAN info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-d0-bJD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Network info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6M6-d0-bJD">
                                 <rect key="frame" x="29" y="454" width="104" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="104" id="RYc-t1-g6z"/>
@@ -287,7 +282,7 @@
                                     <action selector="settingsHealthKitEnabledTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="iCG-Zf-fzI"/>
                                 </connections>
                             </switch>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bbe-Y6-YOA">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bbe-Y6-YOA">
                                 <rect key="frame" x="12" y="279" width="340" height="29"/>
                                 <segments>
                                     <segment title="Standard"/>
@@ -369,6 +364,11 @@
                                     <action selector="locationAutopauseTChanged:forEvent:" destination="nP8-ZN-amx" eventType="valueChanged" id="KLp-Yh-SJ8"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bluetooth beacon monitoring" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0T-k8-qH5">
+                                <rect key="frame" x="165" y="516" width="207" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.096093453529999998" green="0.35914760299999998" blue="0.72820191059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -420,7 +420,7 @@
                             <constraint firstItem="6M6-d0-bJD" firstAttribute="baseline" secondItem="VVs-up-F2j" secondAttribute="baseline" id="VGZ-sg-JKQ"/>
                             <constraint firstItem="Eyf-GZ-ktC" firstAttribute="top" secondItem="TNu-qG-ASp" secondAttribute="bottom" constant="9" id="VkG-Od-UbL"/>
                             <constraint firstItem="y4M-8e-GwI" firstAttribute="top" secondItem="EVD-Fh-SY8" secondAttribute="top" id="W57-mU-f9i"/>
-                            <constraint firstItem="t0T-k8-qH5" firstAttribute="trailing" secondItem="GWZ-jZ-gtO" secondAttribute="trailingMargin" id="Ymg-WS-Yah"/>
+                            <constraint firstItem="t0T-k8-qH5" firstAttribute="trailing" secondItem="GWZ-jZ-gtO" secondAttribute="trailingMargin" constant="13" id="Ymg-WS-Yah"/>
                             <constraint firstItem="Q3T-fj-DDt" firstAttribute="leading" secondItem="jg1-wN-4HY" secondAttribute="trailing" constant="38" id="Yov-jD-eZ3"/>
                             <constraint firstItem="Csz-iB-Ap1" firstAttribute="top" secondItem="KV7-KP-h8b" secondAttribute="bottom" constant="8" symbolic="YES" id="Yph-X6-fiQ"/>
                             <constraint firstItem="y4M-8e-GwI" firstAttribute="top" secondItem="x7s-oL-xqC" secondAttribute="bottom" constant="8" symbolic="YES" id="ZYE-cD-Frt"/>
@@ -453,10 +453,10 @@
                             <constraint firstItem="TOj-nv-bWW" firstAttribute="leading" secondItem="qyR-3F-dbr" secondAttribute="trailing" constant="65" id="lvE-zN-MuQ"/>
                             <constraint firstItem="EVD-Fh-SY8" firstAttribute="leading" secondItem="rcx-dB-GWG" secondAttribute="trailing" constant="16" id="m6v-R5-v7O"/>
                             <constraint firstItem="qyR-3F-dbr" firstAttribute="centerX" secondItem="iau-xr-nGp" secondAttribute="centerX" id="myk-6F-eqg"/>
-                            <constraint firstItem="t0T-k8-qH5" firstAttribute="leading" secondItem="GWZ-jZ-gtO" secondAttribute="leadingMargin" constant="-10" id="mz6-W6-yzb"/>
+                            <constraint firstItem="t0T-k8-qH5" firstAttribute="leading" secondItem="GWZ-jZ-gtO" secondAttribute="leadingMargin" constant="149" id="mz6-W6-yzb"/>
                             <constraint firstItem="qyR-3F-dbr" firstAttribute="bottom" secondItem="TOj-nv-bWW" secondAttribute="bottom" id="oMk-Lq-0ZT"/>
                             <constraint firstItem="Ozw-da-8mR" firstAttribute="leading" secondItem="rcx-dB-GWG" secondAttribute="leading" id="oMv-F4-SZj"/>
-                            <constraint firstItem="bbe-Y6-YOA" firstAttribute="centerX" secondItem="t0T-k8-qH5" secondAttribute="centerX" id="oS5-B7-iWs"/>
+                            <constraint firstItem="bbe-Y6-YOA" firstAttribute="centerX" secondItem="t0T-k8-qH5" secondAttribute="centerX" constant="-86.5" id="oS5-B7-iWs"/>
                             <constraint firstItem="r7t-L4-9my" firstAttribute="trailing" secondItem="y4M-8e-GwI" secondAttribute="trailing" id="oUn-8R-uNE"/>
                             <constraint firstItem="x7s-oL-xqC" firstAttribute="baseline" secondItem="jg1-wN-4HY" secondAttribute="baseline" id="oX9-aC-hzd"/>
                             <constraint firstItem="Ozw-da-8mR" firstAttribute="top" secondItem="r7t-L4-9my" secondAttribute="bottom" id="q6X-mU-2Zy"/>

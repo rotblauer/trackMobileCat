@@ -41,7 +41,7 @@ func savePointsToCoreData(locations: [CLLocation]) {
     point.setValue(getCurrentTripNoteString(), forKey: "notes");
     manageTripVals(lat: lat, lng: lng)
     Q = Q+1
-    updateStats(p:point as! TrackPoint)
+    updatePrintableStats(p:point as! TrackPoint)
     
     do {
       try managedContext.save()
@@ -52,7 +52,7 @@ func savePointsToCoreData(locations: [CLLocation]) {
   }
 }
 
-private func updateStats(p:TrackPoint){
+private func updatePrintableStats(p:TrackPoint){
   let acc = String(format: "%.2f", (p.accuracy))
   let vacc = String(format: "%.2f", (p.vAccuracy))
   let lat = String(format: "%.5f", (p.lat))

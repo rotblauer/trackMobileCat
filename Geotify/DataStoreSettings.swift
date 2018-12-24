@@ -24,7 +24,6 @@ func rmSettings() {
     try managedContext.save()
     print("rm'ed existing settings")
   } catch let error as NSError {
-    // TODO: handle the error
     print("could not delete all old settings: \(error), \(error.userInfo)")
     return
   }
@@ -72,11 +71,11 @@ func loadSavedSettings() {
     let loadedSettings = try context.fetch(fetchRequest)
     for data in loadedSettings {
       AppSettings.pushAtCount = data.value(forKey: "pushAtCount") as! Int64
-      AppSettings.batteryMonitoringEnabled = (data.value(forKey: "batteryMonitoringEnabled") != nil)
-      AppSettings.beaconAdvertisingEnabled = (data.value(forKey: "beaconAdvertisingEnabled") != nil)
-      AppSettings.beaconMonitoringEnabled = (data.value(forKey: "beaconMonitoringEnabled") != nil)
-      AppSettings.healthKitEnabled = (data.value(forKey: "healthKitEnabled") != nil)
-      AppSettings.networkInformationEnabled = (data.value(forKey: "networkInformationEnabled") != nil)
+      AppSettings.batteryMonitoringEnabled = (data.value(forKey: "batteryMonitoringEnabled") as! NSNumber != 0)
+      AppSettings.beaconAdvertisingEnabled = (data.value(forKey: "beaconAdvertisingEnabled") as! NSNumber != 0)
+      AppSettings.beaconMonitoringEnabled = (data.value(forKey: "beaconMonitoringEnabled") as! NSNumber != 0)
+      AppSettings.healthKitEnabled = (data.value(forKey: "healthKitEnabled") as! NSNumber != 0)
+      AppSettings.networkInformationEnabled = (data.value(forKey: "networkInformationEnabled") as! NSNumber != 0)
     }
   } catch let error as NSError {
     print("Could not fetch. \(error), \(error.userInfo)")

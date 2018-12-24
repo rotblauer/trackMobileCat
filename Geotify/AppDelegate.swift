@@ -51,7 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   fileprivate func setupLocationManager() -> CLLocationManager {
     locationManager.delegate = self
     locationManager.requestAlwaysAuthorization()
-    // TODO load from peristant
     locationManagerInstallSettings(manager: locationManager, settings: AppSettings.locationManagerSettings)
     print("location activated")
     return locationManager
@@ -148,6 +147,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set global instances.
     assignUUIDs()
+    
     loadSavedSettings()
     loadLM()
     
@@ -235,7 +235,12 @@ extension AppDelegate: CBPeripheralManagerDelegate {
 
 extension AppDelegate: CLLocationManagerDelegate {
   
+  // Run when CLLocationManager fails.
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print(error)
+  }
   
+  // Runs when a visit is detected.
   func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
     // create CLLocation from the coordinates of CLVisit
     let clLocation = CLLocation(latitude: visit.coordinate.latitude, longitude: visit.coordinate.longitude)
@@ -249,15 +254,18 @@ extension AppDelegate: CLLocationManagerDelegate {
       }
     }
   }
-  
+
   // Runs when a new visit is detected
   func newVisitReceived(_ visit: CLVisit, description: String) {
+    // Save visit
     addVisit(visit: visit, place: description)
     
+    // Determine if is arrival
     var isArrival:Bool // departureSinceArrival is either too-big or impossibly-before
     let departureSinceArrival = visit.departureDate.timeIntervalSince(visit.arrivalDate)
     isArrival = departureSinceArrival > 60*60*24*365 || departureSinceArrival < 0
     
+    // Make notification
     let content = UNMutableNotificationContent()
     if isArrival {
         content.title = "New Arrival 📌"
@@ -274,17 +282,18 @@ extension AppDelegate: CLLocationManagerDelegate {
     center.add(request, withCompletionHandler: nil)
   }
   
-  
   // Runs when the location is updated
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     savePointsToCoreData(locations: locations)
     pushLocs(force: false, pushToken: pushToken)
   }
   
+  // Runs when monitoring starts for a region
   func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
     locationManager.requestState(for: region)
   }
 
+  // Runs when state (in/out) is determined for a region.
   func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
     if region is CLBeaconRegion {
       if state == .inside {
@@ -297,19 +306,17 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
   }
   
-  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    print(error)
-  }
-  
+  // Runs when monitoring fails for a region.
   func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
     print(error)
   }
   
+  // Runs when monitoring fails for a beacon region.
   func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
     print(error)
   }
   
-  // Runs when a region is entered
+  // Runs when a region is entered.
   func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
     if region is CLBeaconRegion {
       print("beacon region entered...")
@@ -342,9 +349,8 @@ extension AppDelegate: CLLocationManagerDelegate {
     }
   }
   
-  // Acting on the nearest beacon
+  // Runs when beacons have been ranged for a region.
   func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-    // TODO: collect all beacons, not just closest
     let beaconLen = beacons.count
     var i = 1
     for beacon in beacons {

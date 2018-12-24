@@ -27,32 +27,6 @@ class LocationManagerSettings {
   var activityType:LocationManagerActivityType = LocationManagerActivityType.Other
 }
 
-// FIXME: this is awkwardly called from setCurrentTripNotes
-func locationManagerSetMode(manager: CLLocationManager, mode: String) {
-  switch mode {
-  case "fly":
-    print("updating to fly mode")
-    _ = AppSettings.flyMode()
-    break
-  case "lite":
-    print("updating to lite mode")
-    _ = AppSettings.liteMode()
-    break
-  case "full", "":
-    fallthrough
-  default:
-    print("setting to regular mode")
-    _ = AppSettings.fullMode()
-  }
-  
-  locationManagerInstallSettings(manager: manager, settings: AppSettings.locationManagerSettings)
-
-  print("@locationManager.desiredAccuracy=\(manager.desiredAccuracy)")
-  print("@locationManager.distanceFilter=\(manager.distanceFilter)")
-  print("@locationManager.auto_pause=\(manager.pausesLocationUpdatesAutomatically)")
-  print("@locationManager.background_allowed=\(manager.allowsBackgroundLocationUpdates)")
-}
-
 // locationManagerInstallSettings validates and assigns settings to the manager, stopping and starting location updates as needed.
 func locationManagerInstallSettings(manager: CLLocationManager, settings: LocationManagerSettings) {
   
@@ -77,9 +51,6 @@ func locationManagerInstallSettings(manager: CLLocationManager, settings: Locati
   case LocationManagerActivityType.Fitness:
     manager.activityType = CLActivityType.fitness
     break
-  default:
-    print("impossible activity type: \(settings.activityType)")
-    return
   }
   
   // Stop both possible location services.

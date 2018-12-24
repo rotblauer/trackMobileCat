@@ -36,6 +36,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     self.locationServiceSC.selectedSegmentIndex = lsSegIndex
     self.locationBackgroundUpdatesT.isOn = AppSettings.locationManagerSettings.backgroundUpdates
     self.locationAutopausesT.isOn = AppSettings.locationManagerSettings.autoPause
+    self.settingsWLANEnabledT.isOn = AppSettings.networkInformationEnabled
     self.settingsHealthKitEnabled.isOn = AppSettings.healthKitEnabled
     self.btBeaconAdvertisingT.isOn = AppSettings.beaconAdvertisingEnabled
     self.btBeaconMonitoringT.isOn = AppSettings.beaconMonitoringEnabled
@@ -58,6 +59,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
       break
     }
     self.locationActivityTypeSC.selectedSegmentIndex = activityTypeSegIndex
+    
   }
   
   override func viewDidLoad() {

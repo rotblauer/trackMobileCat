@@ -24,7 +24,6 @@ func rmLM() {
     try managedContext.save()
     print("rm'ed existing lm")
   } catch let error as NSError {
-    // TODO: handle the error
     print("could not delete all old lms: \(error), \(error.userInfo)")
     return
   }
@@ -123,8 +122,8 @@ func loadLM() {
       }
       AppSettings.locationManagerSettings.activityType = activity
       
-      AppSettings.locationManagerSettings.backgroundUpdates = (data.value(forKey: "lmBackgroundUpdates") != nil)
-      AppSettings.locationManagerSettings.locationManagerVisitsServiceEnabled = (data.value(forKey: "lmVisitsEnabled") != nil)
+      AppSettings.locationManagerSettings.backgroundUpdates = (data.value(forKey: "lmBackgroundUpdates") as! NSNumber != 0)
+      AppSettings.locationManagerSettings.locationManagerVisitsServiceEnabled = (data.value(forKey: "lmVisitsEnabled") as! NSNumber != 0)
       AppSettings.locationManagerSettings.desiredAccuracy = data.value(forKey: "lmDesiredAccuracy") as! Double
       AppSettings.locationManagerSettings.distanceFilter = data.value(forKey: "lmDistanceFilter") as! Double
       

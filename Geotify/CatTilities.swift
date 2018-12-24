@@ -60,16 +60,8 @@ private func startTrackingActivityType() {
   }
 }
 
-private func startTrackingBatteryThings() {
-  //    NotificationCenter.default.addObserver(self, selector: func(_ notification:Notification) {
-  //      //  UIDevice.version()
-  //      //  UIDevice.version()
-  //      //  UIDevice.batteryLevelDidChangeNotification
-  //      }, name: UIDevice.batteryStateDidChangeNotification, object: nil)
-}
-
 private func handleHeartRateSamples(ttype:HKQuantityType, samples:[HKQuantitySample]) {
-  if samples.count > 0 {
+  if samples.count > 0 && AppSettings.healthKitEnabled {
     
     let sEI = samples.endIndex
     
@@ -134,9 +126,6 @@ private func startCountingSteps() {
     guard let pedometerData = pedometerData, error == nil else { return }
     
     DispatchQueue.main.async {
-      
-      //    var current=getStoredTripNotes()
-      
       if #available(iOS 10.0, *) {
         if(pedometerData.averageActivePace != nil){
           currentTripNotes.averageActivePace=pedometerData.averageActivePace!
@@ -175,7 +164,6 @@ func startUpdatingHeartRate() {
   startMonitoringHeartRate()
 }
 
-// TODO toggle for each for battery what not
 func startUpdatingActivity() {
   if CMMotionActivityManager.isActivityAvailable() {
     print("activity: ok")
@@ -197,6 +185,8 @@ func startUpdatingActivity() {
 func updateNetworkConfiguration() {
   if AppSettings.networkInformationEnabled {
       currentTripNotes.networkInfo = getNetworkInfo()
+  } else {
+      currentTripNotes.networkInfo = nil
   }
 }
 
@@ -204,8 +194,10 @@ func startUpdatingNetworkInformation() {
   if (AppSettings.networkInformationEnabled) {
       updateNetworkConfiguration()
       DispatchQueue.main.asyncAfter(deadline: .now() + 60*5) {
-        startUpdatingActivity()
+        startUpdatingNetworkInformation()
       }
+  } else {
+    currentTripNotes.networkInfo = nil
   }
 }
 
@@ -350,13 +342,11 @@ func addVisit(visit:CLVisit,place:String){
 
 func setCurrentTripNotes(s: String) {
   save(manager: locMan)
-  
-  locationManagerSetMode(manager: locMan, mode: s)
-  
+ 
   //  savePointToCoreData(manager: CLLocationManager())
   currentTripNotes = Note()
   currentTripNotes.customNote=s
-  startUpdatingActivity()//reset ped etc
+  startUpdatingActivity() //reset ped etc
   
   //TODO store actual currentTripNotes
   customTripNote = s
