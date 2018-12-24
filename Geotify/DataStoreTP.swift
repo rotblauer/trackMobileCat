@@ -17,6 +17,7 @@ func save(manager: CLLocationManager){
 
 func savePointsToCoreData(locations: [CLLocation]) {
   guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    print("non-delegate")
     return
   }
 

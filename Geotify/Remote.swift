@@ -72,7 +72,7 @@ func pushLocs(force:Bool,pushToken:String) {
       print("No points to push, returning.")
       return
     }
-    if (!force && points.count % AppSettings.pushAtCount>0) { return; }
+    if (!force && points.count % Int(AppSettings.pushAtCount)>0) { return; }
     print("preparing push for num points:\(points.count)")
     let json = buildJsonPosterFromTrackpoints(trackpoints: points,pushToken:pushToken)
     

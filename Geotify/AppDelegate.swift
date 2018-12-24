@@ -39,6 +39,10 @@ var btPeripheralManager: CBPeripheralManager!
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
+  override init() {
+      loadSavedSettingsExternalFromDelegate()
+  }
+  
   var window: UIWindow?
   let locationManager = CLLocationManager()
 //  let btManager = CBPeripheralManager(delegate: AppDelegate, queue: nil)!
@@ -58,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   fileprivate func setupBluetoothManager() {
-//    btCentralMan = CBCentralManager(delegate: self, queue: nil)
     btPeripheralManager = CBPeripheralManager(delegate: self, queue: nil, options: nil)
   }
   
@@ -149,8 +152,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Set global instances.
     assignUUIDs()
+    
     locMan = setupLocationManager()
- 
     setupBluetoothManager()
     
     // Requests, authorizations, and startups.
@@ -184,15 +187,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   //  stores trackpoints
   lazy var persistentContainer:   NSPersistentContainer = {
-    let container = NSPersistentContainer(name: "TrackPoint")
+    
+    var container = NSPersistentContainer(name: "TrackPoint")
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
       if let error = error as NSError? {
         print("Unresolved error \(error), \(error.userInfo)")
       }
     })
-    
+    container = NSPersistentContainer(name: "SettingsEnt")
+    container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+      if let error = error as NSError? {
+        print("Unresolved error \(error), \(error.userInfo)")
+      }
+    })
     return container
   }()
+//  //  stores settings
+//  lazy var persistentContainer:   NSPersistentContainer = {
+//
+//    return container
+//  }()
 }
 
 extension AppDelegate: CBPeripheralManagerDelegate {

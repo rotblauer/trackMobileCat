@@ -74,6 +74,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
       startBeaconAdvertisingIfEnabled(btman: btPeripheralManager)
       
       updateNetworkConfiguration()
+      saveSettingsExternalFromDelegate()
       locationManagerInstallSettings(manager: locMan, settings: AppSettings.locationManagerSettings)
     } else {
       print("parent \(String(describing: parent))")
@@ -81,7 +82,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
   }
   
   @IBAction func pushAtNTextFieldEditingEnded(_ sender: UITextField, forEvent event: UIEvent) {
-      AppSettings.pushAtCount = Int(sender.text!)!
+      AppSettings.pushAtCount = Int64(sender.text!)!
   }
   @IBAction func desiredAccuracyEditingEnded(_ sender: UITextField, forEvent event: UIEvent) {
       var d = Double(sender.text!)!

@@ -195,7 +195,27 @@ func startUpdatingActivity() {
 }
 
 func updateNetworkConfiguration() {
-  currentTripNotes.networkInfo = getNetworkInfo()
+  if AppSettings.networkInformationEnabled {
+      currentTripNotes.networkInfo = getNetworkInfo()
+  }
+}
+
+func loadSavedSettingsExternalFromDelegate() {
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    print("non-delegate")
+    return
+  }
+  let managedContext = appDelegate.persistentContainer.viewContext
+  loadSavedSettings(context:managedContext)
+}
+
+func saveSettingsExternalFromDelegate() {
+  guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+    print("non-delegate")
+    return
+  }
+  let managedContext = appDelegate.persistentContainer.viewContext
+  saveSettings(managedContext:managedContext)
 }
 
 func startUpdatingNetworkInformation() {
@@ -334,7 +354,7 @@ func removeRangedBeacon(beacon: CLBeacon) {
 
 func addVisit(visit:CLVisit,place:String){
   let v = Visit.init(fromVisit: visit, placeAt: place)
-  save(manager: CLLocationManager())
+  save(manager: locMan)
   currentTripNotes.currentVisit=v
   
   // update network whenever visit happens... or ~a little~ 6 minutes later, b/c it takes a hot minute to politey steal the coffeeshop's password
@@ -342,7 +362,7 @@ func addVisit(visit:CLVisit,place:String){
       updateNetworkConfiguration()
   }
   
-  save(manager: CLLocationManager())
+  save(manager: locMan)
   currentTripNotes.currentVisit=nil
 }
 

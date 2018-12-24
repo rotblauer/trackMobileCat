@@ -13,7 +13,7 @@ import CoreLocation
 var AppSettings:Settings = Settings()
 
 class Settings {
-  var pushAtCount:Int = 100
+  var pushAtCount:Int64 = 100
   var healthKitEnabled:Bool = true
   var batteryMonitoringEnabled:Bool = true
   var beaconMonitoringEnabled:Bool = true
