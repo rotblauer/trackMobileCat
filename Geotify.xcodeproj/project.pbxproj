@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		06CBF75F21BB1E3400521651 /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CBF75E21BB1E3400521651 /* Battery.swift */; };
 		083158C421D1229900279543 /* CatTracksData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 083158C221D1229900279543 /* CatTracksData.xcdatamodeld */; };
+		083158C621D1C2A600279543 /* VCCatSnap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083158C521D1C2A600279543 /* VCCatSnap.swift */; };
 		087627601E3002F400343882 /* Criel sur Mer.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0876275F1E3002F400343882 /* Criel sur Mer.gpx */; };
 		08A591A821CEBC180008D884 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591A721CEBC180008D884 /* LocationManager.swift */; };
 		08A591AA21CEEFC10008D884 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591A921CEEFC10008D884 /* Settings.swift */; };
 		08A591AC21CF353D0008D884 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591AB21CF353D0008D884 /* Network.swift */; };
 		08A591AE21CF35880008D884 /* NFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591AD21CF35880008D884 /* NFC.swift */; };
-		08A591B021D02C100008D884 /* ViewControllerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591AF21D02C100008D884 /* ViewControllerSettings.swift */; };
+		08A591B021D02C100008D884 /* VCSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591AF21D02C100008D884 /* VCSettings.swift */; };
 		08A591B221D05FF10008D884 /* DataStoreSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591B121D05FF10008D884 /* DataStoreSettings.swift */; };
 		08A591B421D060190008D884 /* DataStoreLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A591B321D060190008D884 /* DataStoreLM.swift */; };
 		4F3B9F3F2183DFDC0087A482 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B9F3E2183DFDC0087A482 /* HealthKit.framework */; };
@@ -30,7 +31,7 @@
 		D90CB65D1A739B7A00228A1F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D90CB65B1A739B7A00228A1F /* LaunchScreen.xib */; };
 		D90CB6731A739D4300228A1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90CB6721A739D4300228A1F /* CoreLocation.framework */; };
 		D90CB6751A73A16700228A1F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90CB6741A73A16700228A1F /* MapKit.framework */; };
-		D90CB6771A73B1ED00228A1F /* ViewControllerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6761A73B1ED00228A1F /* ViewControllerMain.swift */; };
+		D90CB6771A73B1ED00228A1F /* VCMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90CB6761A73B1ED00228A1F /* VCMain.swift */; };
 		D9835AF31AA6076800D265BC /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9835AF21AA6076800D265BC /* Utilities.swift */; };
 		D9C1AF6C1A77CD6C00A06B2F /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */; };
 /* End PBXBuildFile section */
@@ -51,12 +52,13 @@
 /* Begin PBXFileReference section */
 		06CBF75E21BB1E3400521651 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
 		083158C321D1229900279543 /* CatTracksData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CatTracksData.xcdatamodel; sourceTree = "<group>"; };
+		083158C521D1C2A600279543 /* VCCatSnap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCCatSnap.swift; sourceTree = "<group>"; };
 		0876275F1E3002F400343882 /* Criel sur Mer.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Criel sur Mer.gpx"; sourceTree = "<group>"; };
 		08A591A721CEBC180008D884 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		08A591A921CEEFC10008D884 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		08A591AB21CF353D0008D884 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		08A591AD21CF35880008D884 /* NFC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFC.swift; sourceTree = "<group>"; };
-		08A591AF21D02C100008D884 /* ViewControllerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSettings.swift; sourceTree = "<group>"; };
+		08A591AF21D02C100008D884 /* VCSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCSettings.swift; sourceTree = "<group>"; };
 		08A591B121D05FF10008D884 /* DataStoreSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreSettings.swift; sourceTree = "<group>"; };
 		08A591B321D060190008D884 /* DataStoreLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreLM.swift; sourceTree = "<group>"; };
 		440C0F9478B92A69A041D344 /* Pods-Geotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Geotify.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Geotify/Pods-Geotify.debug.xcconfig"; sourceTree = "<group>"; };
@@ -77,7 +79,7 @@
 		D90CB65C1A739B7A00228A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		D90CB6721A739D4300228A1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D90CB6741A73A16700228A1F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		D90CB6761A73B1ED00228A1F /* ViewControllerMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerMain.swift; sourceTree = "<group>"; };
+		D90CB6761A73B1ED00228A1F /* VCMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCMain.swift; sourceTree = "<group>"; };
 		D9835AF21AA6076800D265BC /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		D9C1AF6B1A77CD6C00A06B2F /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,8 +134,9 @@
 				083158C221D1229900279543 /* CatTracksData.xcdatamodeld */,
 				D90CB6561A739B7A00228A1F /* Main.storyboard */,
 				D90CB6521A739B7A00228A1F /* AppDelegate.swift */,
-				D90CB6761A73B1ED00228A1F /* ViewControllerMain.swift */,
-				08A591AF21D02C100008D884 /* ViewControllerSettings.swift */,
+				D90CB6761A73B1ED00228A1F /* VCMain.swift */,
+				083158C521D1C2A600279543 /* VCCatSnap.swift */,
+				08A591AF21D02C100008D884 /* VCSettings.swift */,
 				4F558EA41E2C262A002C3743 /* CatTilities.swift */,
 				D9835AF21AA6076800D265BC /* Utilities.swift */,
 				4FB90F8E21864BC000ADEF7A /* DataStoreTP.swift */,
@@ -309,13 +312,14 @@
 				08A591B221D05FF10008D884 /* DataStoreSettings.swift in Sources */,
 				08A591AA21CEEFC10008D884 /* Settings.swift in Sources */,
 				4FB90F912186508A00ADEF7A /* Remote.swift in Sources */,
-				D90CB6771A73B1ED00228A1F /* ViewControllerMain.swift in Sources */,
+				D90CB6771A73B1ED00228A1F /* VCMain.swift in Sources */,
 				D9835AF31AA6076800D265BC /* Utilities.swift in Sources */,
-				08A591B021D02C100008D884 /* ViewControllerSettings.swift in Sources */,
+				08A591B021D02C100008D884 /* VCSettings.swift in Sources */,
 				06CBF75F21BB1E3400521651 /* Battery.swift in Sources */,
 				4FA1A7C521BC4AC400EB569C /* HealthKitSetupAssistant.swift in Sources */,
 				08A591A821CEBC180008D884 /* LocationManager.swift in Sources */,
 				4F558EA51E2C262A002C3743 /* CatTilities.swift in Sources */,
+				083158C621D1C2A600279543 /* VCCatSnap.swift in Sources */,
 				4F9609CA209F58FF00B861DE /* Note.swift in Sources */,
 				08A591AC21CF353D0008D884 /* Network.swift in Sources */,
 				4FB90F8D21850BC100ADEF7A /* Visit.swift in Sources */,

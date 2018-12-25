@@ -25,10 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-586" y="505"/>
         </scene>
-        <!--cat tracks-->
+        <!--cattracksvc-->
         <scene sceneID="QSg-Wp-O1B">
             <objects>
-                <viewController id="LYI-dq-R4y" customClass="MainViewController" customModule="Geotify" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="cattracksvc" id="LYI-dq-R4y" customClass="MainViewController" customModule="Geotify" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kGy-dK-Sza"/>
                         <viewControllerLayoutGuide type="bottom" id="hBM-ll-xSu"/>
@@ -38,7 +38,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnH-BY-OcH">
-                                <rect key="frame" x="16" y="64" width="343" height="50"/>
+                                <rect key="frame" x="16" y="64" width="0.0" height="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="QfH-3F-tVd"/>
@@ -48,23 +48,39 @@
                                 <color key="highlightedColor" red="0.093308731749999999" green="0.68869601349999998" blue="0.36501130570000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5V-2C-Fyg">
-                                <rect key="frame" x="0.0" y="122" width="375" height="493"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5V-2C-Fyg">
+                                <rect key="frame" x="0.0" y="122" width="375" height="389"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NgJ-I0-ehm">
+                                <rect key="frame" x="0.0" y="519" width="375" height="104"/>
+                                <color key="backgroundColor" red="0.096093453529999998" green="0.35914760299999998" blue="0.72820191059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="104" id="6Rk-r7-53P"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="CatSnap">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="GZg-Yg-uVW" kind="show" id="qPU-nq-4SU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="hBM-ll-xSu" firstAttribute="top" secondItem="K5V-2C-Fyg" secondAttribute="bottom" constant="8" id="0tf-zS-kbQ"/>
-                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="leading" secondItem="YSL-HX-BG1" secondAttribute="leading" id="0wV-x1-NDH"/>
+                            <constraint firstItem="NgJ-I0-ehm" firstAttribute="bottom" secondItem="hBM-ll-xSu" secondAttribute="top" id="2j6-uy-xIZ"/>
                             <constraint firstItem="gnH-BY-OcH" firstAttribute="top" secondItem="kGy-dK-Sza" secondAttribute="bottom" id="2yq-EQ-pN0"/>
-                            <constraint firstAttribute="trailing" secondItem="K5V-2C-Fyg" secondAttribute="trailing" id="hcp-Qs-n9f"/>
-                            <constraint firstItem="gnH-BY-OcH" firstAttribute="centerX" secondItem="K5V-2C-Fyg" secondAttribute="centerX" id="hyr-cP-uEb"/>
-                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="top" secondItem="gnH-BY-OcH" secondAttribute="bottom" constant="8" symbolic="YES" id="nAb-zH-fjn"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="leading" secondItem="NgJ-I0-ehm" secondAttribute="leading" id="AgI-H6-RsD"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="top" secondItem="gnH-BY-OcH" secondAttribute="bottom" constant="8" symbolic="YES" id="Cu2-lP-oFc"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="trailing" secondItem="NgJ-I0-ehm" secondAttribute="trailing" id="KFo-Iu-Sz2"/>
+                            <constraint firstItem="K5V-2C-Fyg" firstAttribute="leading" secondItem="YSL-HX-BG1" secondAttribute="leading" id="h1Y-RR-f3w"/>
+                            <constraint firstAttribute="trailing" secondItem="K5V-2C-Fyg" secondAttribute="trailing" id="hd1-2T-vfE"/>
                             <constraint firstItem="gnH-BY-OcH" firstAttribute="leading" secondItem="YSL-HX-BG1" secondAttribute="leadingMargin" id="pHM-Bz-Ww6"/>
+                            <constraint firstItem="NgJ-I0-ehm" firstAttribute="top" secondItem="K5V-2C-Fyg" secondAttribute="bottom" constant="8" symbolic="YES" id="ph2-MD-jPV"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -98,6 +114,102 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="125.59999999999999" y="502.39880059970017"/>
+        </scene>
+        <!--Cat Snap View Controller-->
+        <scene sceneID="HzG-H2-FS2">
+            <objects>
+                <viewController id="GZg-Yg-uVW" customClass="CatSnapViewController" customModule="Geotify" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wag-OH-oRB"/>
+                        <viewControllerLayoutGuide type="bottom" id="EWV-Sv-HdA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hNb-9t-NgW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jt3-h6-qYh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="430"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtb-uY-RaX">
+                                <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="take a cat snap">
+                                    <color key="titleColor" red="0.096093453529999998" green="0.35914760299999998" blue="0.72820191059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="openCameraButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="DuN-Pl-b6s"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9X-FF-BL3">
+                                <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="track it!">
+                                    <color key="titleColor" red="0.0" green="0.69948186530000001" blue="0.0066921161970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="trackSnapButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="9gQ-Pt-qAu"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JH-SM-lRB">
+                                <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="pzl-H4-j9i"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="save cat snap to Photos">
+                                    <color key="titleColor" red="0.0" green="0.69948186530000001" blue="0.0066921161970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveSnapButtonPushed:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="3D6-aG-8nZ"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc0-1A-qJh">
+                                <rect key="frame" x="16" y="570" width="343" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="ZKh-Fu-hj3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="no, reset">
+                                    <color key="titleColor" red="0.91048008420000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="noSaveSnapButtonPushed:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="pUq-3A-TA6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="top" secondItem="a9X-FF-BL3" secondAttribute="top" id="0AA-gD-p98"/>
+                            <constraint firstAttribute="trailing" secondItem="Jt3-h6-qYh" secondAttribute="trailing" id="3S4-ON-qmf"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="trailing" secondItem="Rc0-1A-qJh" secondAttribute="trailing" id="6Dj-ck-XUx"/>
+                            <constraint firstItem="a9X-FF-BL3" firstAttribute="trailing" secondItem="dtb-uY-RaX" secondAttribute="trailing" id="7Gf-Ua-9f4"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="leading" secondItem="hNb-9t-NgW" secondAttribute="leadingMargin" id="86q-YS-myf"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Rc0-1A-qJh" secondAttribute="bottom" constant="-7" id="C2q-6F-Cqg"/>
+                            <constraint firstItem="Jt3-h6-qYh" firstAttribute="leading" secondItem="hNb-9t-NgW" secondAttribute="leading" id="Qxo-E5-zVm"/>
+                            <constraint firstItem="dtb-uY-RaX" firstAttribute="top" secondItem="2JH-SM-lRB" secondAttribute="top" id="R5X-83-aXV"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="baseline" secondItem="a9X-FF-BL3" secondAttribute="firstBaseline" id="R6P-69-kec"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="leading" secondItem="dtb-uY-RaX" secondAttribute="leading" id="X2J-JM-Pbw"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="baseline" secondItem="dtb-uY-RaX" secondAttribute="firstBaseline" id="b46-zS-lnb"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="top" secondItem="Jt3-h6-qYh" secondAttribute="bottom" constant="8" symbolic="YES" id="ezS-jK-MuX"/>
+                            <constraint firstItem="Jt3-h6-qYh" firstAttribute="top" secondItem="Wag-OH-oRB" secondAttribute="bottom" id="fvR-iq-A5Y"/>
+                            <constraint firstItem="2JH-SM-lRB" firstAttribute="leading" secondItem="a9X-FF-BL3" secondAttribute="leading" id="kY8-tl-pTm"/>
+                            <constraint firstItem="a9X-FF-BL3" firstAttribute="trailing" secondItem="2JH-SM-lRB" secondAttribute="trailing" id="oDl-uo-dii"/>
+                            <constraint firstItem="Jt3-h6-qYh" firstAttribute="centerX" secondItem="2JH-SM-lRB" secondAttribute="centerX" id="thV-d6-rHE"/>
+                            <constraint firstItem="a9X-FF-BL3" firstAttribute="leading" secondItem="Rc0-1A-qJh" secondAttribute="leading" id="toI-zH-AlD"/>
+                            <constraint firstItem="Rc0-1A-qJh" firstAttribute="top" secondItem="a9X-FF-BL3" secondAttribute="bottom" constant="8" symbolic="YES" id="xVq-ZV-roB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imagePicked" destination="Jt3-h6-qYh" id="hNb-r8-xF3"/>
+                        <outlet property="resetSnapButton" destination="Rc0-1A-qJh" id="p1V-hF-qpC"/>
+                        <outlet property="saveSnapButton" destination="2JH-SM-lRB" id="FKE-K8-iIg"/>
+                        <outlet property="takeSnapButton" destination="dtb-uY-RaX" id="Nx8-KR-zL9"/>
+                        <outlet property="trackSnapButtonButton" destination="a9X-FF-BL3" id="eJE-6V-nVc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bwb-6m-T8P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1120.8" y="-161.46926536731635"/>
         </scene>
         <!--settings-->
         <scene sceneID="v3B-Mb-nj2">
@@ -520,7 +632,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ey9-KD-tjI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="829.60000000000002" y="503.29835082458777"/>
+            <point key="canvasLocation" x="1122" y="520"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.32123821189517454" green="0.72959543756737477" blue="0.91067979916548114" alpha="1" colorSpace="calibratedRGB"/>
