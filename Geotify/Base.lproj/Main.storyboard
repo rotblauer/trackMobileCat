@@ -132,25 +132,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtb-uY-RaX">
-                                <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <rect key="frame" x="16" y="303" width="343" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="take a cat snap">
+                                <state key="normal" title="tap anywhere to take a cat snap">
                                     <color key="titleColor" red="0.096093453529999998" green="0.35914760299999998" blue="0.72820191059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="openCameraButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="DuN-Pl-b6s"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9X-FF-BL3">
-                                <rect key="frame" x="16" y="502" width="343" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="track it!">
-                                    <color key="titleColor" red="0.0" green="0.69948186530000001" blue="0.0066921161970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="trackSnapButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="9gQ-Pt-qAu"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JH-SM-lRB">
@@ -175,8 +164,23 @@
                                     <action selector="noSaveSnapButtonPushed:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="pUq-3A-TA6"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9X-FF-BL3">
+                                <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="track it!">
+                                    <color key="titleColor" red="0.0" green="0.69948186530000001" blue="0.0066921161970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="trackSnapButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="9gQ-Pt-qAu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="1OU-4y-E90" appends="YES" id="usD-jz-ZkZ"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="imagePicked" destination="Jt3-h6-qYh" id="hNb-r8-xF3"/>
@@ -187,6 +191,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bwb-6m-T8P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="1OU-4y-E90">
+                    <connections>
+                        <action selector="didTap:" destination="GZg-Yg-uVW" id="mzQ-Qv-X0v"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1120.8" y="-161.46926536731635"/>
         </scene>

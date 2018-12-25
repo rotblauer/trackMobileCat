@@ -33,6 +33,19 @@ class CatSnapViewController: UIViewController, UIImagePickerControllerDelegate, 
     resetSnapButton.isHidden = true
   }
   
+  func startSnapping() {
+    if UIImagePickerController.isSourceTypeAvailable(.camera) {
+      let imagePicker = UIImagePickerController()
+      imagePicker.delegate = self
+      imagePicker.sourceType = .camera;
+      imagePicker.allowsEditing = false
+      self.present(imagePicker, animated: true, completion: nil)
+    }
+  }
+  
+  @IBAction func didTap(_ sender: UITapGestureRecognizer) {
+    startSnapping()
+  }
   @IBAction func trackSnapButton(_ sender: UIButton, forEvent event: UIEvent) {
     
     print("tracking cat snap")
@@ -57,13 +70,7 @@ class CatSnapViewController: UIViewController, UIImagePickerControllerDelegate, 
   }
   
   @IBAction func openCameraButton(_ sender: UIButton, forEvent event: UIEvent) {
-    if UIImagePickerController.isSourceTypeAvailable(.camera) {
-      let imagePicker = UIImagePickerController()
-      imagePicker.delegate = self
-      imagePicker.sourceType = .camera;
-      imagePicker.allowsEditing = false
-      self.present(imagePicker, animated: true, completion: nil)
-    }
+    startSnapping()
   }
   @IBAction func saveSnapButtonPushed(_ sender: UIButton, forEvent event: UIEvent) {
     print("save button pushed")
