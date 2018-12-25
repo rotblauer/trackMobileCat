@@ -36,7 +36,17 @@ class CatSnapViewController: UIViewController, UIImagePickerControllerDelegate, 
   @IBAction func trackSnapButton(_ sender: UIButton, forEvent event: UIEvent) {
     
     print("tracking cat snap")
-    
+  
+    let imageData = imagePicked.image!.jpegData(compressionQuality: 0.6)
+    if imageData == nil {
+      print("image data nil")
+      return
+    }
+    imgb64 = (imageData?.base64EncodedString())!
+//    let printy = (imageData?.base64EncodedString(options: .lineLength64Characters))!
+//    print("printing printy")
+//    print("\(printy)")
+
     currentTripNotes.imgB64 = imgb64
     save(manager:locMan)
     pushLocs(force:true,pushToken: pushToken)
@@ -62,7 +72,6 @@ class CatSnapViewController: UIViewController, UIImagePickerControllerDelegate, 
       print("image data nil")
       return
     }
-    imgb64 = (imageData?.base64EncodedString())!
     let compressedJPGImage = UIImage(data: imageData!)
     if compressedJPGImage == nil {
       print("compimg nil")

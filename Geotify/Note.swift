@@ -67,7 +67,7 @@ private func objectifyNote(n: Note) -> NSMutableDictionary? {
   
   dict.setValue(getStringNetworkInfo(ni: n.networkInfo), forKey: "networkInfo")
   
-//  dict.setValue(n.imgB64, forKey: "imgb64")
+  dict.setValue(n.imgB64, forKey: "imgb64")
 
   return dict
 }

@@ -127,11 +127,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jt3-h6-qYh">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jt3-h6-qYh">
                                 <rect key="frame" x="0.0" y="64" width="375" height="430"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtb-uY-RaX">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtb-uY-RaX">
                                 <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="take a cat snap">
                                     <color key="titleColor" red="0.096093453529999998" green="0.35914760299999998" blue="0.72820191059999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -140,8 +142,9 @@
                                     <action selector="openCameraButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="DuN-Pl-b6s"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9X-FF-BL3">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9X-FF-BL3">
                                 <rect key="frame" x="16" y="502" width="343" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="track it!">
                                     <color key="titleColor" red="0.0" green="0.69948186530000001" blue="0.0066921161970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -150,11 +153,9 @@
                                     <action selector="trackSnapButton:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="9gQ-Pt-qAu"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JH-SM-lRB">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2JH-SM-lRB">
                                 <rect key="frame" x="16" y="502" width="343" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="pzl-H4-j9i"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="save cat snap to Photos">
                                     <color key="titleColor" red="0.0" green="0.69948186530000001" blue="0.0066921161970000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -163,11 +164,9 @@
                                     <action selector="saveSnapButtonPushed:forEvent:" destination="GZg-Yg-uVW" eventType="touchUpInside" id="3D6-aG-8nZ"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc0-1A-qJh">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rc0-1A-qJh">
                                 <rect key="frame" x="16" y="570" width="343" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="ZKh-Fu-hj3"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="no, reset">
                                     <color key="titleColor" red="0.91048008420000004" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -178,26 +177,6 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="top" secondItem="a9X-FF-BL3" secondAttribute="top" id="0AA-gD-p98"/>
-                            <constraint firstAttribute="trailing" secondItem="Jt3-h6-qYh" secondAttribute="trailing" id="3S4-ON-qmf"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="trailing" secondItem="Rc0-1A-qJh" secondAttribute="trailing" id="6Dj-ck-XUx"/>
-                            <constraint firstItem="a9X-FF-BL3" firstAttribute="trailing" secondItem="dtb-uY-RaX" secondAttribute="trailing" id="7Gf-Ua-9f4"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="leading" secondItem="hNb-9t-NgW" secondAttribute="leadingMargin" id="86q-YS-myf"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="Rc0-1A-qJh" secondAttribute="bottom" constant="-7" id="C2q-6F-Cqg"/>
-                            <constraint firstItem="Jt3-h6-qYh" firstAttribute="leading" secondItem="hNb-9t-NgW" secondAttribute="leading" id="Qxo-E5-zVm"/>
-                            <constraint firstItem="dtb-uY-RaX" firstAttribute="top" secondItem="2JH-SM-lRB" secondAttribute="top" id="R5X-83-aXV"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="baseline" secondItem="a9X-FF-BL3" secondAttribute="firstBaseline" id="R6P-69-kec"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="leading" secondItem="dtb-uY-RaX" secondAttribute="leading" id="X2J-JM-Pbw"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="baseline" secondItem="dtb-uY-RaX" secondAttribute="firstBaseline" id="b46-zS-lnb"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="top" secondItem="Jt3-h6-qYh" secondAttribute="bottom" constant="8" symbolic="YES" id="ezS-jK-MuX"/>
-                            <constraint firstItem="Jt3-h6-qYh" firstAttribute="top" secondItem="Wag-OH-oRB" secondAttribute="bottom" id="fvR-iq-A5Y"/>
-                            <constraint firstItem="2JH-SM-lRB" firstAttribute="leading" secondItem="a9X-FF-BL3" secondAttribute="leading" id="kY8-tl-pTm"/>
-                            <constraint firstItem="a9X-FF-BL3" firstAttribute="trailing" secondItem="2JH-SM-lRB" secondAttribute="trailing" id="oDl-uo-dii"/>
-                            <constraint firstItem="Jt3-h6-qYh" firstAttribute="centerX" secondItem="2JH-SM-lRB" secondAttribute="centerX" id="thV-d6-rHE"/>
-                            <constraint firstItem="a9X-FF-BL3" firstAttribute="leading" secondItem="Rc0-1A-qJh" secondAttribute="leading" id="toI-zH-AlD"/>
-                            <constraint firstItem="Rc0-1A-qJh" firstAttribute="top" secondItem="a9X-FF-BL3" secondAttribute="bottom" constant="8" symbolic="YES" id="xVq-ZV-roB"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="imagePicked" destination="Jt3-h6-qYh" id="hNb-r8-xF3"/>
