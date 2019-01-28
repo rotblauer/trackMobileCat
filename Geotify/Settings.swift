@@ -25,14 +25,14 @@ class Settings {
     self.pushAtCount = 60*60*24 // ~24 hours
     self.networkInformationEnabled = false
     
-    self.beaconMonitoringEnabled = true
-    self.beaconAdvertisingEnabled = true
-    self.locationManagerSettings.locationManagerService = LocationManagerService.SignificantChange
+    self.beaconMonitoringEnabled = false
+    self.beaconAdvertisingEnabled = false
+    self.locationManagerSettings.locationManagerService = LocationManagerService.Standard
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = false
     self.locationManagerSettings.desiredAccuracy = 5000
     self.locationManagerSettings.distanceFilter = 500
-    self.locationManagerSettings.activityType = LocationManagerActivityType.Airborne
+    self.locationManagerSettings.activityType = LocationManagerActivityType.Other
     
     return self
   }
@@ -41,13 +41,15 @@ class Settings {
     self.pushAtCount = 60*60 // ~1 hour
     self.networkInformationEnabled = true
     
+    // distanceFilter=~500 is baked in to LocationManagerService.SignficantChange, which is overkill for the intentions of this feature
+    // adhoc testing shows that da=30/df=5 is sufficient to reduce battery usage significantly (eg. 60-80%battery/night -> 10%/night and 100% bats/8hrs -> 60%bats/24hrs (granted a frequently stationary lifestyle)
     self.beaconMonitoringEnabled = false
     self.beaconAdvertisingEnabled = false
-    self.locationManagerSettings.locationManagerService = LocationManagerService.SignificantChange
+    self.locationManagerSettings.locationManagerService = LocationManagerService.Standard
     self.locationManagerSettings.backgroundUpdates = true
     self.locationManagerSettings.autoPause = true
-    self.locationManagerSettings.desiredAccuracy = kCLLocationAccuracyThreeKilometers
-    self.locationManagerSettings.distanceFilter = 10 // because 500 is limit is baked in to the SignficantChange monitoring
+    self.locationManagerSettings.desiredAccuracy = 50
+    self.locationManagerSettings.distanceFilter = 5 // tracking at least movements to the kitchen once in a while
     self.locationManagerSettings.activityType = LocationManagerActivityType.Other
     
     return self

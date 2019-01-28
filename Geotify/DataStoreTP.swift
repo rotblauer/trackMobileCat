@@ -36,7 +36,6 @@ func savePointsToCoreData(locations: [CLLocation]) {
     point.setValue(p.horizontalAccuracy, forKey: "accuracy");
     point.setValue(p.verticalAccuracy, forKey: "vAccuracy");
     point.setValue(p.altitude, forKey: "altitude");
-    point.setValue((p.floor ?? -999), forKey: "floor");
     point.setValue(p.speed, forKey: "speed");
     point.setValue(p.course, forKey: "course");
     point.setValue(p.timestamp.iso8601, forKey: "time"); //leave ios for now
@@ -82,7 +81,7 @@ func updatePrintableStats(p:TrackPoint){
   currentStats = """
   ACC.H: \(acc), ACC.V: \(vacc), SPEED: \(speed)
   LAT: \(lat), LON: \(lon)
-  ALT: \(alt), PRESSURE: \(pressure), FLOOR: \(p.floor)
+  ALT: \(alt), PRESSURE: \(pressure)
   TIME SINCE LAST POINT: \(tt)
   ---
   LOC.desired_acc: \(locMan.desiredAccuracy), LOC.distance_filter: \(locMan.distanceFilter)
