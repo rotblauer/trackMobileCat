@@ -46,26 +46,24 @@ class HealthKitSetupAssistant {
     }
     
     //2. Prepare the data types that will interact with HealthKit
-    guard   let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
-      let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
-      let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
-      let bodyMassIndex = HKObjectType.quantityType(forIdentifier: .bodyMassIndex),
-      let height = HKObjectType.quantityType(forIdentifier: .height),
+    guard
       let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
-      let heart = HKObjectType.quantityType(forIdentifier: .heartRate),
-      let activeEnergy = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) else {
+      let bodyMassIndex = HKObjectType.quantityType(forIdentifier: .bodyMassIndex),
+      let bodyFatPercentage = HKObjectType.quantityType(forIdentifier: .bodyFatPercentage),
+      let leanBodyMass = HKObjectType.quantityType(forIdentifier: .leanBodyMass),
+      let heart = HKObjectType.quantityType(forIdentifier: .heartRate)else {
         
         completion(false, HealthkitSetupError.dataTypeNotAvailable)
         return
     }
-
-//    ,
-//    HKObjectType.workoutType(
+    
+    //    ,
+    //    HKObjectType.workoutType(
     
     //3. Prepare a list of types you want HealthKit to read and write
     let healthKitTypesToWrite: Set<HKSampleType> = [heart,bodyMass]
     
-    let healthKitTypesToRead: Set<HKObjectType> = [heart,bodyMass,bloodType,height]
+    let healthKitTypesToRead: Set<HKObjectType> = [heart,bodyMass,bodyMassIndex,bodyFatPercentage,leanBodyMass]
     
     //4. Request Authorization
     HKHealthStore().requestAuthorization(toShare: healthKitTypesToWrite,
