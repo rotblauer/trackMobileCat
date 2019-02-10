@@ -56,6 +56,7 @@ private func startTrackingActivityType() {
       }else{
         currentTripNotes.activity=Activity.Unknown
       }
+      currentTripNotes.activityConfidence=activity.confidence.rawValue
     }
   }
 }

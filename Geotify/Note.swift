@@ -11,6 +11,7 @@ enum Activity: String {
 
 class Note{
   var activity:Activity = Activity.Unknown;// Maybe one of the coolest thing,
+  var activityConfidence:Int = 0//  how confident iOS is in the activity; 0=low,Confidence is low.1=medium,Confidence is good.2=high,Confidence is high.
   var numberOfSteps:NSNumber = 0;// only when stepping, pedometer
   var averageActivePace:NSNumber = 0;// only when stepping, pedometer
   var currentPace:NSNumber = 0;// only when stepping, pedometer
@@ -41,6 +42,7 @@ func setHeartRateNA(note : Note) {
 private func objectifyNote(n: Note) -> NSMutableDictionary? {
   let dict = NSMutableDictionary()
   dict.setValue(n.activity.rawValue, forKey: "activity");  //set all your values..
+  dict.setValue(n.activityConfidence, forKey: "activityConfidence");
   dict.setValue(n.numberOfSteps, forKey: "numberOfSteps");
   dict.setValue(n.averageActivePace, forKey: "averageActivePace");
   dict.setValue(n.currentPace, forKey: "currentPace");
