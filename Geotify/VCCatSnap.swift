@@ -62,7 +62,7 @@ class CatSnapViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     currentTripNotes.imgB64 = imgb64
     save(manager:locMan)
-    pushLocs(force:true,pushToken: pushToken)
+//    pushLocs(force:true,pushToken: pushToken)
     currentTripNotes.imgB64 = ""
     
     trackSnapButtonButton.isHidden = true
