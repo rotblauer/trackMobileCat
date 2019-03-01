@@ -99,9 +99,23 @@ func updatePrintableStats(p:TrackPoint){
   """
 }
 
-// get all trackpoints from data store
-func fetchPointsFromCoreData(context:NSManagedObjectContext) -> [TrackPoint]? {
+func getTrackPointsStoredCount(context: NSManagedObjectContext) -> Int {
   let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "TrackPoint")
+  do {
+    let pc = try context.count(for: fetchRequest) as Int
+    return pc
+  } catch let err as NSError {
+    print("could not count track points \(err)")
+    return -1
+  }
+}
+
+// get all trackpoints from data store
+func fetchPointsFromCoreData(context:NSManagedObjectContext, limit:Int) -> [TrackPoint]? {
+  let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "TrackPoint")
+  if limit > 0 {
+      fetchRequest.fetchLimit = limit
+  }
 
   do {
     let fetchedPoints = try context.fetch(fetchRequest) as! [TrackPoint]

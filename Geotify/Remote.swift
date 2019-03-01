@@ -66,15 +66,22 @@ func pushLocs(force:Bool,pushToken:String) {
   let apiCOToken="thecattokenthatunlockstheworldtrackyourcats"
   
   let managedContext = appDelegate.persistentContainer.viewContext
-  if let points = fetchPointsFromCoreData(context: managedContext){
-    Q=points.count
-    if points.count == 0 {
-      print("No points to push, returning.")
-      return
-    }
-    if (!force && points.count % Int(AppSettings.pushAtCount)>0) { return; }
-    print("preparing push for num points:\(points.count)")
-    let json = buildJsonPosterFromTrackpoints(trackpoints: points,pushToken:pushToken)
+  let pc = getTrackPointsStoredCount(context: managedContext)
+  Q = pc
+  if pc == 0 {
+    print("No points to push, returning.")
+    return
+  }
+  if (!force && pc % Int(AppSettings.pushAtCount)>0) { return; }
+  
+  var pushLim = 5000
+  if Int(AppSettings.pushAtCount)*2 > pushLim {
+    pushLim = Int(AppSettings.pushAtCount)*2
+  }
+  
+  if let points = fetchPointsFromCoreData(context: managedContext, limit: pushLim){ // note, out of ass
+    print("preparing push for num points:\(pc)")
+    let json = buildJsonPosterFromTrackpoints(trackpoints: points, pushToken:pushToken)
     
     var request = URLRequest(url:buildURL())// will up date to cat scratcher main
     
@@ -93,7 +100,7 @@ func pushLocs(force:Bool,pushToken:String) {
         attemptingPush=false
         return //giveup. we'll getemnextime
       } else {
-        Q=0
+//        Q=0
         print("success push, updating push attempt")
         success=true
         attemptingPush=false
