@@ -70,7 +70,11 @@ func updatePrintableStats(p:TrackPoint){
   if dd.decimalValue <= 0 {
     dd = 0
   }
-  let currentTripDistance = String(format: "%.1f", (currentTripNotes.distance))
+  var curtdis = currentTripNotes.distance.floatValue
+  if curtdis <= 0 {
+    curtdis = 0
+  }
+  let currentTripDistance = String(format: "%.1f", (curtdis))
   let relativeAltitude = String(format: "%.1f", (currentTripNotes.relativeAltitude))
   let pressure = String(format: "%.4f", (currentTripNotes.pressure))
   var beacsRangs:[String] = []
@@ -84,8 +88,10 @@ func updatePrintableStats(p:TrackPoint){
   ALT: \(alt), PRESSURE: \(pressure)
   TIME SINCE LAST POINT: \(tt)
   ---
-  LOC.desired_acc: \(locMan.desiredAccuracy), LOC.distance_filter: \(locMan.distanceFilter)
-  LOC.autopause: \(locMan.pausesLocationUpdatesAutomatically), LOC.background_allowed: \(locMan.allowsBackgroundLocationUpdates)
+  LOC.desired_acc: \(locMan.desiredAccuracy)
+  LOC.distance_filter: \(locMan.distanceFilter)
+  LOC.autopause: \(locMan.pausesLocationUpdatesAutomatically)
+  LOC.background_allowed: \(locMan.allowsBackgroundLocationUpdates)
   Q.pushEvery: \(AppSettings.pushAtCount) points
   ---
   Activity: \(currentTripNotes.activity), HeartRate: \(currentTripNotes.heartRate)
