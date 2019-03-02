@@ -38,7 +38,7 @@ class Settings {
   }
   
   func liteMode() -> Settings {
-    self.pushAtCount = 60*60 // ~1 hour
+    self.pushAtCount = 60*10 // ~10 min
     self.networkInformationEnabled = true
     
     // distanceFilter=~500 is baked in to LocationManagerService.SignficantChange, which is overkill for the intentions of this feature
