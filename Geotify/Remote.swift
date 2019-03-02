@@ -78,6 +78,12 @@ func pushLocs(force:Bool,pushToken:String) {
   if Int(AppSettings.pushAtCount)*2 > pushLim {
     pushLim = Int(AppSettings.pushAtCount)*2
   }
+  if pushLim > 10000 {
+    pushLim = 10000
+  }
+  if pushLim > pc {
+    pushLim = pc
+  }
   
   if let points = fetchPointsFromCoreData(context: managedContext, limit: pushLim){ // note, out of ass
     print("preparing push for num points:\(pc)")
@@ -112,11 +118,15 @@ func pushLocs(force:Bool,pushToken:String) {
     }
     if(success){
       clearTrackPointsCD(toDelete: points,currentContext: managedContext)
+
       do {
         try managedContext.save()
       } catch {
         print(error)
+        return
       }
+      
+      Q = Q - pushLim
     }
     success=false
   }
